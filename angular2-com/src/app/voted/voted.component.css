@@ -1,0 +1,7 @@
+.voted_button {
+    outline: 0;
+    cursor: pointer;
+    height: 30px;
+    border: 0;
+    border-radius: 3px;
+}
