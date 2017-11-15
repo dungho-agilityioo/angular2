@@ -1,0 +1,14 @@
+version: "2"
+services:
+  angular-cli:
+    build:
+      context: docker
+    ports:
+      - "9876:9876"
+      - "9000:9000"
+    volumes:
+      - ./angular2-com:/workspace
+    command: ng serve --host 0.0.0.0 --port 9000
+    environment:
+      # ng build --env=stag
+      BUILD_ENVIRONMENT: ""
