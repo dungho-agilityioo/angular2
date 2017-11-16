@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-voted',
   templateUrl: './voted.component.html',
-  styleUrls: ['./voted.component.css']
+  styleUrls: ['./voted.component.css'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class VotedComponent implements OnInit {
   @Input() author: string;
