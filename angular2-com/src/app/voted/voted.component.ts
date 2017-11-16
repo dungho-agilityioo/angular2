@@ -3,8 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
 @Component({
   selector: 'app-voted',
   templateUrl: './voted.component.html',
-  styleUrls: ['./voted.component.css'],
-  encapsulation: ViewEncapsulation.Emulated
+  styleUrls: ['./voted.component.css']
 
 })
 export class VotedComponent implements OnInit {

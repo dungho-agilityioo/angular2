@@ -7,3 +7,12 @@
 <select [(ngModel)]="selection2" (change)="cityChanged()">
   <option *ngFor="let city of cities" [value]="city.id">{{ city.name }} </option>
 </select> {{ message }}
+<hr>
+<h1>Transclusion in voted component</h1>
+<app-transclusion>
+    <!-- put your dynamic content here -->
+    <div class="card-block">
+        <p class="card-text">Delete a something?</p>
+    </div>
+    <!-- end dynamic content -->
+</app-transclusion>
