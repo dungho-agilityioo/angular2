@@ -4,7 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } fro
   selector: 'app-voted',
   templateUrl: './voted.component.html',
   styleUrls: ['./voted.component.css'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.Emulated
 
 })
 export class VotedComponent implements OnInit {
