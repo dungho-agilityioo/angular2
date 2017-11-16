@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class VotedComponent implements OnInit {
   @Input() author: string;
-  @Output() onVoted = new EventEmitter<boolean>()
+  @Output() onVoted = new EventEmitter<boolean>();
   voted = false;
   constructor() { }
 

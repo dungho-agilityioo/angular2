@@ -1,0 +1,8 @@
+Select City:
+<select [(ngModel)]="selectValue">
+  <option *ngFor="let city of cities" [value]="city.id">{{ city.name }} </option>
+</select> Selected Id: {{ selectValue }}
+<br/> Select City:
+<select [(ngModel)]="selection2" (change)="cityChanged()">
+  <option *ngFor="let city of cities" [value]="city.id">{{ city.name }} </option>
+</select> {{ message }}

@@ -1,11 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  Enter to Change Name of Ms A <input type="text" (keyup)="changeName($event)">
-  <hr/>
-  <p>Counter Voted: Agree {{ agree }}, disgree {{ disgree }}</p>
-  <hr/>
-  <app-voted *ngFor="let author of authors" [author]="author" (onVoted)="counterVoted($event)"></app-voted>
+    <h1>
+        Welcome to {{title}}!
+    </h1>
+    <p>Data binding </p> {{ dataName }} Enter to Change Name of Ms A <input type="text" (keyup)="changeName($event)">
+    <hr/>
+    <p>Counter Voted: Agree {{ agree }}, disgree {{ disgree }}</p>
+    <hr/>
+    <app-voted *ngFor="let author of authors" [author]="author" (onVoted)="counterVoted($event)"></app-voted>
+    <app-city></app-city>
 </div>

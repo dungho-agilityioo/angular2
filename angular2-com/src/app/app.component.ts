@@ -7,14 +7,13 @@ import { VotedComponent } from './voted/voted.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild(VotedComponent)
-  private voteComponent: VotedComponent;
-  
   title = 'First App Angular2';
   agree = 0;
   disgree = 0;
-  authors = ["Ms A", "Ms B", "Ms C"];
-
+  authors = ['Ms A', 'Ms B', 'Ms C'];
+  dataName = '';
+  @ViewChild(VotedComponent)
+  private voteComponent: VotedComponent;
 
   counterVoted(agree) {
     if (agree) {
