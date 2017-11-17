@@ -7,6 +7,7 @@ import { VotedComponent } from './voted/voted.component';
 import { CityComponent } from './city/city.component';
 import { TransclusionComponent } from './transclusion/transclusion.component';
 import { CountryComponent } from './country/country.component';
+import { SpecialSelectorComponent } from './special-selector/special-selector.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CountryComponent } from './country/country.component';
     VotedComponent,
     CityComponent,
     TransclusionComponent,
-    CountryComponent
+    CountryComponent,
+    SpecialSelectorComponent
 ],
   imports: [
     BrowserModule,
