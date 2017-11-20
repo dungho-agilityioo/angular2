@@ -1,3 +1,4 @@
+import { IpService } from './ip.service';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -8,6 +9,8 @@ import { CityComponent } from './city/city.component';
 import { TransclusionComponent } from './transclusion/transclusion.component';
 import { CountryComponent } from './country/country.component';
 import { SpecialSelectorComponent } from './special-selector/special-selector.component';
+import { AlertComponent } from './alert/alert.component';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,15 @@ import { SpecialSelectorComponent } from './special-selector/special-selector.co
     CityComponent,
     TransclusionComponent,
     CountryComponent,
-    SpecialSelectorComponent
+    SpecialSelectorComponent,
+    AlertComponent
 ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [IpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
