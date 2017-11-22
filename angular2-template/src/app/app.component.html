@@ -1,9 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-    <h1>
-        Welcome to {{title}}!
-    </h1>
-    <app-form-login></app-form-login>
-    <hr>
-    <app-form-login-builder></app-form-login-builder>
-</div>
+<ul class="nav navbar-nav">
+    <div class="container">
+        <a routerLink="/forms">Form</a> ||
+        <a routerLink="/forms-builder">Form with Builder</a> ||
+        <a routerLink="/forms-nested">Form Nested</a>
+        <router-outlet></router-outlet>
+    </div>
+</ul>

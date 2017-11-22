@@ -1,0 +1,38 @@
+<div>
+    <h4>Add customer</h4>
+    <form [formGroup]="myForm" (ngSubmit)="save(myForm)" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="name">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="email" id="name" placeholder="Name" formControlName="name">
+                <!-- display error message if name is not valid -->
+                <div *ngIf="!myForm.controls.name.valid && myForm.controls.name.touched" class="text-danger">
+                    Name is required (minimum 5 characters)
+                </div>
+            </div>
+
+        </div>
+        <!-- list of addresses -->
+        <div formArrayName="addresses">
+            <div *ngFor="let address of myForm.controls.addresses.controls; let i=index" class="panel panel-default">
+                <!-- address header, show remove button -->
+                <div class="panel panel-heading">
+                    <span>Address {{ i + 1 }}</span>
+                    <span *ngIf="myForm.controls.addresses.controls.length > 1" (click)="removeAddress(i)" class="glyphicon glyphicon-remove pull-right"></span>
+                </div>
+                <div [formGroupName]="i" class="panel-body">
+                    <app-form-address [group]="myForm.controls.addresses.controls[i]"></app-form-address>
+                </div>
+            </div>
+        </div>
+        <div class="margin-20">
+            <a (click)="addAddress()" style="cursor: default">
+              Add another address +
+            </a>
+        </div>
+        <div class="margin-20">
+            <button type="submit" [disabled]="!myForm.valid" class="btn btn-default">Submit</button>
+        </div>
+    </form>
+    <pre>form value: <br>{{myForm.value | json}}</pre>
+</div>
