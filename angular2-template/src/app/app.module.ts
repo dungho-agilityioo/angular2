@@ -3,17 +3,20 @@ import { NgModule } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
-  NgForm
+  FormBuilder,
+  FormGroup
 } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { FormLoginComponent } from './form-login/form-login.component';
+import { FormLoginBuilderComponent } from './form-login-builder/form-login-builder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormLoginComponent
-  ],
+    FormLoginComponent,
+    FormLoginBuilderComponent
+],
   imports: [
     BrowserModule,
     FormsModule,
