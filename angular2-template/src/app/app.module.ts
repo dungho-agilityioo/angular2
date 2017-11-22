@@ -16,11 +16,13 @@ import { FormLoginComponent } from './form-login/form-login.component';
 import { FormLoginBuilderComponent } from './form-login-builder/form-login-builder.component';
 import { FormUserNestedComponent } from './form-user-nested/form-user-nested.component';
 import { FormAddressComponent } from './form-address/form-address.component';
+import { FormSignupComponent } from './form-signup/form-signup.component';
 
 const appRoutes: Routes = [
   { path: 'forms', component: FormLoginComponent },
   { path: 'forms-builder', component: FormLoginBuilderComponent },
-  { path: 'forms-nested', component: FormUserNestedComponent }
+  { path: 'forms-nested', component: FormUserNestedComponent },
+  { path: 'forms-group', component: FormSignupComponent }
 ];
 
 @NgModule({
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     FormLoginComponent,
     FormLoginBuilderComponent,
     FormUserNestedComponent,
-    FormAddressComponent
+    FormAddressComponent,
+    FormSignupComponent
 ],
   imports: [
     BrowserModule,

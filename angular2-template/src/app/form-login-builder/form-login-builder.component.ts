@@ -24,10 +24,7 @@ export class FormLoginBuilderComponent implements OnInit {
       'email': ['', Validators.compose([
         Validators.email, Validators.required
       ])],
-      'password': ['', Validators.compose([
-        Validators.required,
-        this.passwordValidator
-      ])],
+      'password': ['', [ Validators.required, this.passwordValidator] ],
     });
 
     this.email = this.myForm.controls['email'];

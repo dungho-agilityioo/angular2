@@ -6,7 +6,7 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="email" id="name" placeholder="Name" formControlName="name">
                 <!-- display error message if name is not valid -->
-                <div *ngIf="!myForm.controls.name.valid && myForm.controls.name.touched" class="text-danger">
+                <div *ngIf="!myForm.controls.name.valid && (myForm.controls.name.touched || myForm.controls.name.dirty)" class="text-danger">
                     Name is required (minimum 5 characters)
                 </div>
             </div>
