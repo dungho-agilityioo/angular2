@@ -14,9 +14,13 @@ import {
 })
 export class FormLoginBuilderComponent implements OnInit {
   myForm: FormGroup;
+  email: AbstractControl;
+  password: AbstractControl;
 
-  constructor(fb: FormBuilder) {
-    this.myForm = fb.group({
+  constructor(private _fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.myForm = this._fb.group({
       'email': ['', Validators.compose([
         Validators.email, Validators.required
       ])],
@@ -25,10 +29,17 @@ export class FormLoginBuilderComponent implements OnInit {
         this.passwordValidator
       ])],
     });
-  }
 
-  ngOnInit() {
+    this.email = this.myForm.controls['email'];
+    this.password = this.myForm.controls['password'];
 
+    this.email.valueChanges.subscribe(
+      (value: string) => console.log('email changed to: ', value)
+    );
+
+    this.myForm.valueChanges.subscribe(
+      (form: any) => console.log('form changed to: ', form)
+    );
   }
   onSubmit(form: any): void {
     console.log('You submitted value: ', form);
