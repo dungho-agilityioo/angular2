@@ -3,7 +3,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl
+  AbstractControl,
+  FormControl
 } from '@angular/forms';
 
 @Component({
@@ -16,8 +17,13 @@ export class FormLoginBuilderComponent implements OnInit {
 
   constructor(fb: FormBuilder) {
     this.myForm = fb.group({
-      'email': ['', Validators.required],
-      'password': ['', Validators.required],
+      'email': ['', Validators.compose([
+        Validators.email, Validators.required
+      ])],
+      'password': ['', Validators.compose([
+        Validators.required,
+        this.passwordValidator
+      ])],
     });
   }
 
@@ -26,5 +32,11 @@ export class FormLoginBuilderComponent implements OnInit {
   }
   onSubmit(form: any): void {
     console.log('You submitted value: ', form);
+  }
+
+  passwordValidator(control: FormControl): { [s: string]: boolean} {
+    if (!control.value.match(/^123/)) {
+      return { invalidPassword: true };
+    }
   }
 }
