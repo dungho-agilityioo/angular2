@@ -15,21 +15,50 @@ import {
 })
 export class FormSignupComponent implements OnInit {
   user: FormGroup;
+  languages = [];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.languages = [
+      { id: 1, name: 'VietNamese'},
+      { id: 2, name: 'English' }
+    ];
     this.user = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email] ],
       account: this.fb.group({
         password: ['', Validators.required],
         passwordConfirm: ['', Validators.required]
-      }, {validator: passwrodMatch})
+      }, {validator: passwrodMatch}),
+      language: ['', Validators.required]
+    });
+  }
+
+  reset() {
+    this.user.reset();
+  }
+
+  partialUpdate() {
+    this.user.patchValue({
+      name: 'Dung Ho',
+      email: 'dung.hoduy@asnet.com.vn',
+    });
+  }
+
+  fullUpdate() {
+    this.user.setValue({
+      name: 'Dung Ho',
+      email: 'dung.hoduy@asnet.com.vn',
+      account: {
+        password: '123456',
+        passwordConfirm: '123456'
+      },
+      language: 1
     });
   }
 
   save(form: any) {
-    console.log(form);
+    console.log(form.value);
   }
 
 }
