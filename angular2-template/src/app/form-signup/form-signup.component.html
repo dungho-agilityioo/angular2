@@ -3,13 +3,13 @@
     <form [formGroup]="user" (ngSubmit)="save(user)" class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
+            <div class="col-sm-10" [class.has-error]="!user.get('name').valid && user.get('name').touched">
                 <input type="text" class="form-control" formControlName="name" placeholder="Name">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="email">Email</label>
-            <div class="col-sm-10">
+            <div class="col-sm-10" [class.has-error]="!user.get('email').valid && user.get('email').touched">
                 <input type="email" class="form-control" formControlName="email" placeholder="Email">
             </div>
 
@@ -17,14 +17,14 @@
         <div formGroupName="account">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
+                <div class="col-sm-10" [class.has-error]="!user.get('account').get('password').valid && user.get('account').get('password').touched">
                     <input type="password" class="form-control" formControlName="password" placeholder="Password">
                 </div>
 
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Password Confirm</label>
-                <div class="col-sm-10">
+                <div class="col-sm-10" [class.has-error]="!user.get( 'account').get( 'passwordConfirm').valid && user.get( 'account').get( 'passwordConfirm').touched">
                     <input type="password" class="form-control" formControlName="passwordConfirm" placeholder="Password Confirm">
                     <div class="text-danger" *ngIf="user.get('account').touched && user.get('account').hasError('nomatch')">
                         Password must match
@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Language</label>
-            <div class="col-sm-10">
+            <div class="col-sm-10" [class.has-error]="!user.get( 'language').valid && user.get( 'language').touched">
                 <select class="form-control" formControlName="language">
                     <option value="">Please select a language</option>
                     <option *ngFor="let lang of languages" [value]="lang.id">{{ lang.name }}</option>
