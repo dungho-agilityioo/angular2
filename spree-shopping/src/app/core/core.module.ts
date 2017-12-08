@@ -1,11 +1,18 @@
+import { ProductService } from './../product/services/product.service';
+import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreComponent } from './core.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    HttpModule
   ],
-  declarations: [CoreComponent]
+  declarations: [
+    CoreComponent
+  ],
+  providers: [
+  ]
 })
 export class CoreModule { }
