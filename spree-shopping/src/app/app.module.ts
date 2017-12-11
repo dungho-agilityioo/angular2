@@ -18,16 +18,13 @@ import { HttpModule, Http } from '@angular/http';
   imports: [
     BrowserModule,
     ProductModule,
-    HttpModule,
     ProductRoutes,
     CoreModule,
     SharedModule,
     AppRoutes,
     RouterModule
   ],
-  providers: [
-    HttpService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

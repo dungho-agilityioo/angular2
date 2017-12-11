@@ -1,3 +1,4 @@
+import { HttpService } from './services/http.service';
 import { ProductService } from './../product/services/product.service';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,7 @@ import { CoreComponent } from './core.component';
     CoreComponent
   ],
   providers: [
+    HttpService
   ]
 })
 export class CoreModule { }
