@@ -7,14 +7,15 @@ import {
   RequestOptions,
   Headers,
   Http,
-  RequestMethod
+  RequestMethod,
+  URLSearchParams
 } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class HttpService {
 
-  constructor( private http: Http) {}
+  constructor(private http: Http) { }
 
   /**
    * Performs a request with `get` http method.
@@ -23,24 +24,24 @@ export class HttpService {
    */
   get(url, params?: any): Observable<any> {
     return this.http.get(
-        this.getFullUrl(url), this.requestOptions(params)
-      )
+      this.getFullUrl(url), this.requestOptions(params)
+    )
       .catch(this.handleError);
   }
 
-   /**
-   * Performs a request with `post` http method.
-   * @param url
-   * @param body
-   * @param params
-   * @returns {Observable<>}
-   */
+  /**
+  * Performs a request with `post` http method.
+  * @param url
+  * @param body
+  * @param params
+  * @returns {Observable<>}
+  */
   post(url: string, body: any, params: any): Observable<any> {
     return this.http.post(
-        this.getFullUrl(url),
-        body,
-        this.requestOptions(params)
-      )
+      this.getFullUrl(url),
+      body,
+      this.requestOptions(params)
+    )
       .catch(this.handleError);
   }
 
@@ -53,10 +54,10 @@ export class HttpService {
    */
   put(url: string, body: any, params: any): Observable<any> {
     return this.http.post(
-        this.getFullUrl(url),
-        body,
-        this.requestOptions(params)
-      )
+      this.getFullUrl(url),
+      body,
+      this.requestOptions(params)
+    )
       .catch(this.handleError);
   }
 
@@ -68,9 +69,9 @@ export class HttpService {
    */
   delete(url: string, params: any): Observable<any> {
     return this.http.delete(
-        this.getFullUrl(url),
-        this.requestOptions(params)
-      )
+      this.getFullUrl(url),
+      this.requestOptions(params)
+    )
       .catch(this.handleError);
   }
 
@@ -80,18 +81,18 @@ export class HttpService {
    * @return RequestOptionsArgs
    */
   private requestOptions(params: any): RequestOptionsArgs {
-
+    const options = new RequestOptions();
     const search: URLSearchParams = new URLSearchParams();
 
-    for ( const key in params ) {
-      if ( params.hasOwnProperty(key)) {
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
         const value = params[key];
-        search.append(key, value);
+        search.set(key, value);
       }
     }
-    const options = new RequestOptions();
+
     options.headers = this.defaultHeaders();
-    // options.search = search;
+    options.search = search;
 
     return options;
   }
