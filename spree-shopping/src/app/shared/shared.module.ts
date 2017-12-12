@@ -1,3 +1,5 @@
+import { PaginationService } from './services/pagination.service';
+import { PaginationComponent } from './components/pagination/pagination.component';
 import { FormatUrlImagePipe } from './pipes/format-url-image.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { MainFooterComponent } from './components/main-footer/main-footer.component';
@@ -10,7 +12,8 @@ import { CommonModule } from '@angular/common';
 export const SHARED_COMPONENTS: any[] = [
   PrimaryLayoutComponent,
   MainHeaderComponent,
-  MainFooterComponent
+  MainFooterComponent,
+  PaginationComponent
 ];
 
 export const SHARED_PIPES: any[] = [
@@ -26,11 +29,14 @@ export const SHARED_PIPES: any[] = [
   declarations: [
     ...SHARED_COMPONENTS,
     ...SHARED_PIPES
-],
+] ,
   exports: [
     CommonModule,
     ...SHARED_COMPONENTS,
     ...SHARED_PIPES
+  ],
+  providers: [
+    PaginationService
   ]
 })
 export class SharedModule { }
