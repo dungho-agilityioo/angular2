@@ -9,34 +9,41 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export const SHARED_COMPONENTS: any[] = [
+const MODULES = [
+  CommonModule,
+  RouterModule
+];
+const COMPONENTS: any[] = [
   PrimaryLayoutComponent,
   MainHeaderComponent,
   MainFooterComponent,
   PaginationComponent
 ];
 
-export const SHARED_PIPES: any[] = [
+const PIPES: any[] = [
   TruncatePipe,
   FormatUrlImagePipe
 ];
 
+const PROVIDERS = [
+  PaginationService
+];
+
 @NgModule({
   imports: [
-    CommonModule,
-    RouterModule
+    ...MODULES
   ],
   declarations: [
-    ...SHARED_COMPONENTS,
-    ...SHARED_PIPES
+    ...COMPONENTS,
+    ...PIPES
 ] ,
   exports: [
     CommonModule,
-    ...SHARED_COMPONENTS,
-    ...SHARED_PIPES
+    ...COMPONENTS,
+    ...PIPES
   ],
   providers: [
-    PaginationService
+    ...PROVIDERS
   ]
 })
 export class SharedModule { }

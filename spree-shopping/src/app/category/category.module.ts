@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CategoryComponent } from './category.component';
 
+const COMPONENTS = [
+  CategoryComponent
+];
+
 @NgModule({
   imports: [
   ],
-  declarations: [CategoryComponent],
+  declarations: [
+    ...COMPONENTS
+  ],
   exports: [
-    CategoryComponent
+    ...COMPONENTS
   ]
 })
 export class CategoryModule { }

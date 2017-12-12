@@ -7,18 +7,27 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpModule, Http } from '@angular/http';
 
+const MODULES = [
+  BrowserModule,
+  ProductModule,
+  CoreModule,
+  AppRoutingModule
+];
+
+const COMPONENTS = [
+  AppComponent
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    ...COMPONENTS
   ],
   imports: [
-    BrowserModule,
-    ProductModule,
-    CoreModule,
-    AppRoutingModule
+    ...MODULES
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    ...COMPONENTS
+  ]
 })
 export class AppModule { }
