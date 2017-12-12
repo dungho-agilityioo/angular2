@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  API_BASE_URL: 'http://localhost:3000/',
   API_ENDPOINT: 'http://localhost:3000/api/v1/',
   appName: 'Shopping Angular',
   API_KEY: 'ec1c7e8d0c6abb6d0651bf4e187bce1d6b1140a6747dc5fb'
