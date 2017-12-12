@@ -24,8 +24,8 @@ export class HttpService {
    */
   get(url, params?: any): Observable<any> {
     return this.http.get(
-      this.getFullUrl(url), this.requestOptions(params)
-    )
+        this.getFullUrl(url), this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
@@ -38,10 +38,10 @@ export class HttpService {
   */
   post(url: string, body: any, params: any): Observable<any> {
     return this.http.post(
-      this.getFullUrl(url),
-      body,
-      this.requestOptions(params)
-    )
+        this.getFullUrl(url),
+        body,
+        this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
@@ -54,10 +54,10 @@ export class HttpService {
    */
   put(url: string, body: any, params: any): Observable<any> {
     return this.http.post(
-      this.getFullUrl(url),
-      body,
-      this.requestOptions(params)
-    )
+        this.getFullUrl(url),
+        body,
+        this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
@@ -69,9 +69,9 @@ export class HttpService {
    */
   delete(url: string, params: any): Observable<any> {
     return this.http.delete(
-      this.getFullUrl(url),
-      this.requestOptions(params)
-    )
+        this.getFullUrl(url),
+        this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
