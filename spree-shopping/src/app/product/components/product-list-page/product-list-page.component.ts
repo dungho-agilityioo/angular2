@@ -10,12 +10,32 @@ import { FormatUrlImagePipe } from './../../../shared/pipes/format-url-image.pip
   styleUrls: ['./product-list-page.component.scss']
 })
 export class ProductListPageComponent implements OnInit {
-  products;
+  products: Array<Product> = [];
+  totalItems: number;
+  currentPage: number;
+
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.productService.getProducts()
-      .subscribe( products => this.products = products.products );
+    this.getProducts(1);
+  }
+
+  onPagerChange(page: number) {
+    console.log('page on product list ', page);
+    this.getProducts(page);
+  }
+
+  /**
+   * Get list product by page number
+   * @param page
+   */
+  private getProducts(page: number) {
+    this.productService.getProducts(page)
+      .subscribe( result => {
+        this.totalItems = result.total_count;
+        this.currentPage = result.current_page;
+        this.products = result.products;
+      });
   }
 
 }

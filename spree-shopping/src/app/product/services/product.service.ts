@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Product } from './../models/product.model';
 import { Observable } from 'rxjs/Observable';
 import { HttpService } from './../../core/services/http.service';
@@ -24,8 +25,10 @@ export class ProductService {
    * Get list product
    * @return Object<Product[]>
    */
-  getProducts(): Observable<any> {
-    return this.httpService.get('products')
+  getProducts(page?: number): Observable<any> {
+    const params = { per_page: environment.perPage, page: page || 1 };
+
+    return this.httpService.get('products', params)
       .map(products => products.json());
   }
 }
