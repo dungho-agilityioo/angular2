@@ -3,7 +3,6 @@ import { ProductService } from './../product/services/product.service';
 import { HttpModule } from '@angular/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreComponent } from './core.component';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
 @NgModule({
@@ -12,7 +11,6 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
     HttpModule
   ],
   declarations: [
-    CoreComponent
   ],
   providers: [
     HttpService
