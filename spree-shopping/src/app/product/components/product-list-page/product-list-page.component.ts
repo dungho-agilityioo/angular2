@@ -21,7 +21,6 @@ export class ProductListPageComponent implements OnInit {
   }
 
   onPagerChange(page: number) {
-    console.log('page on product list ', page);
     this.getProducts(page);
   }
 

@@ -4,7 +4,6 @@ import { LocalStorageService } from 'app/core/services/local-storage.service';
 import { HttpService } from 'app/core/services/http.service';
 import { Injectable } from '@angular/core';
 import { LineItem } from '../models/line-item.model';
-import 'rxjs/add/operator/take';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/switchMap';
@@ -64,7 +63,7 @@ export class OrderService {
   getOrCreateOrderNumber(): Observable<any> {
     let orderNumber = '';
     orderNumber = this.localStorageService.getOrderNumber();
-console.log('orderNumber ', orderNumber);
+
     if (orderNumber) {
       return new Observable(obs => {
         const order = {
