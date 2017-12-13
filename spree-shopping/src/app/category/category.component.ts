@@ -1,3 +1,5 @@
+import { Taxon } from './../product/models/taxon.model';
+import { CategoryService } from './services/category.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-
-  constructor() { }
+  categories: Array<Taxon> = [];
+  constructor(
+    private categoryService: CategoryService
+  ) { }
 
   ngOnInit() {
+    this.categoryService.getCategories()
+      .subscribe( res => this.categories = res );
   }
 
 }
