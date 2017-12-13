@@ -1,3 +1,5 @@
+import { OrderService } from 'app/order/services/order.service';
+import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
 import { PaginationService } from './services/pagination.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { FormatUrlImagePipe } from './pipes/format-url-image.pipe';
@@ -17,7 +19,8 @@ const COMPONENTS: any[] = [
   PrimaryLayoutComponent,
   MainHeaderComponent,
   MainFooterComponent,
-  PaginationComponent
+  PaginationComponent,
+  AddToCartComponent
 ];
 
 const PIPES: any[] = [
@@ -26,7 +29,8 @@ const PIPES: any[] = [
 ];
 
 const PROVIDERS = [
-  PaginationService
+  PaginationService,
+  OrderService
 ];
 
 @NgModule({
