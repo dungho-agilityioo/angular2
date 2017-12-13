@@ -1,11 +1,17 @@
+import { OrderService } from './services/order.service';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { OrderComponent } from './order.component';
+
+const PROVIDERS: any[] = [
+  OrderService
+];
 
 @NgModule({
   imports: [
-    CommonModule
   ],
-  declarations: [OrderComponent]
+  declarations: [
+  ],
+  providers: [
+    ...PROVIDERS
+  ]
 })
 export class OrderModule { }

@@ -3,23 +3,29 @@ import { ProductService } from './../product/services/product.service';
 import { HttpModule } from '@angular/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreComponent } from './core.component';
-import { throwIfAlreadyLoaded } from './module-import-guard';
+import { moduleImportGuard } from './module-import-guard';
+
+const MODULES: any[] = [
+  CommonModule,
+  HttpModule
+];
+
+const PROVIDERS: any[] = [
+  HttpService
+];
 
 @NgModule({
   imports: [
-    CommonModule,
-    HttpModule
+    ...MODULES
   ],
   declarations: [
-    CoreComponent
   ],
   providers: [
-    HttpService
+    ...PROVIDERS
   ]
 })
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
-    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    moduleImportGuard(parentModule, 'CoreModule');
   }
 }

@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment';
+import { environment } from 'env/environment';
 import {
   Injectable
 } from '@angular/core';
@@ -24,8 +24,8 @@ export class HttpService {
    */
   get(url, params?: any): Observable<any> {
     return this.http.get(
-      this.getFullUrl(url), this.requestOptions(params)
-    )
+        this.getFullUrl(url), this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
@@ -36,12 +36,12 @@ export class HttpService {
   * @param params
   * @returns {Observable<>}
   */
-  post(url: string, body: any, params: any): Observable<any> {
+  post(url: string, body: any, params?: any): Observable<any> {
     return this.http.post(
-      this.getFullUrl(url),
-      body,
-      this.requestOptions(params)
-    )
+        this.getFullUrl(url),
+        body,
+        this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
@@ -52,12 +52,12 @@ export class HttpService {
    * @param params
    * @returns {Observable<>}
    */
-  put(url: string, body: any, params: any): Observable<any> {
+  put(url: string, body: any, params?: any): Observable<any> {
     return this.http.post(
-      this.getFullUrl(url),
-      body,
-      this.requestOptions(params)
-    )
+        this.getFullUrl(url),
+        body,
+        this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
@@ -69,9 +69,9 @@ export class HttpService {
    */
   delete(url: string, params: any): Observable<any> {
     return this.http.delete(
-      this.getFullUrl(url),
-      this.requestOptions(params)
-    )
+        this.getFullUrl(url),
+        this.requestOptions(params)
+      )
       .catch(this.handleError);
   }
 
