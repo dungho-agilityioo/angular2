@@ -1,3 +1,4 @@
+import { LocalStorageService } from './services/local-storage.service';
 import { HttpService } from './services/http.service';
 import { ProductService } from './../product/services/product.service';
 import { HttpModule } from '@angular/http';
@@ -11,7 +12,8 @@ const MODULES: any[] = [
 ];
 
 const PROVIDERS: any[] = [
-  HttpService
+  HttpService,
+  LocalStorageService
 ];
 
 @NgModule({

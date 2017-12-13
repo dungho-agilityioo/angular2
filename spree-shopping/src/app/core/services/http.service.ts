@@ -36,11 +36,11 @@ export class HttpService {
   * @param params
   * @returns {Observable<>}
   */
-  post(url: string, body: any, params?: any): Observable<any> {
+  post(url: string, body: any, headers?: Headers): Observable<any> {
     return this.http.post(
         this.getFullUrl(url),
         body,
-        this.requestOptions(params)
+        this.requestOptions(null, headers)
       )
       .catch(this.handleError);
   }
@@ -80,7 +80,7 @@ export class HttpService {
    * @param options
    * @return RequestOptionsArgs
    */
-  private requestOptions(params: any): RequestOptionsArgs {
+  private requestOptions(params: any, headers?: Headers): RequestOptionsArgs {
     const options = new RequestOptions();
     const search: URLSearchParams = new URLSearchParams();
 
@@ -91,7 +91,7 @@ export class HttpService {
       }
     }
 
-    options.headers = this.defaultHeaders();
+    options.headers = !headers ? this.defaultHeaders() : headers;
     options.search = search;
 
     return options;
@@ -101,7 +101,7 @@ export class HttpService {
    * Set default header
    * @return Headers
    */
-  private defaultHeaders(): Headers {
+  defaultHeaders(): Headers {
     const headers: Headers = new Headers();
 
     headers.append('X-Spree-Token', environment.API_KEY);
