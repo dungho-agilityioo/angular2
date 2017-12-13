@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment';
+import { environment } from 'env/environment';
 import {
   Injectable
 } from '@angular/core';
@@ -36,7 +36,7 @@ export class HttpService {
   * @param params
   * @returns {Observable<>}
   */
-  post(url: string, body: any, params: any): Observable<any> {
+  post(url: string, body: any, params?: any): Observable<any> {
     return this.http.post(
         this.getFullUrl(url),
         body,
@@ -52,7 +52,7 @@ export class HttpService {
    * @param params
    * @returns {Observable<>}
    */
-  put(url: string, body: any, params: any): Observable<any> {
+  put(url: string, body: any, params?: any): Observable<any> {
     return this.http.post(
         this.getFullUrl(url),
         body,

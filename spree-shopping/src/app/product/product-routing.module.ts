@@ -1,5 +1,5 @@
 import { ProductListPageComponent } from './components/product-list-page/product-list-page.component';
-import { PrimaryLayoutComponent } from './../shared/components/main-layout/primary-layout.component';
+import { PrimaryLayoutComponent } from 'app/shared/components/main-layout/primary-layout.component';
 import { HttpModule } from '@angular/http';
 import {
   RouterModule,

@@ -1,7 +1,7 @@
-import { environment } from './../../../environments/environment';
+import { environment } from 'env/environment';
 import { Product } from './../models/product.model';
 import { Observable } from 'rxjs/Observable';
-import { HttpService } from './../../core/services/http.service';
+import { HttpService } from 'app/core/services/http.service';
 import { Injectable } from '@angular/core';
 
 @Injectable()

@@ -1,6 +1,6 @@
-import { environment } from './../../../../environments/environment';
-import { PagerOptions } from './../../models/pager-options.model';
-import { PaginationService } from './../../services/pagination.service';
+import { environment } from 'env/environment';
+import { PagerOptions } from 'app/shared/models/pager-options.model';
+import { PaginationService } from 'app/shared/services/pagination.service';
 import {
   Component,
   OnInit,

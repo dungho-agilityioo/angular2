@@ -1,8 +1,8 @@
-import { Product } from './../../models/product.model';
-import { ProductService } from './../../services/product.service';
+import { Product } from 'app/product/models/product.model';
+import { ProductService } from 'app/product/services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { TruncatePipe} from './../../../shared/pipes/truncate.pipe';
-import { FormatUrlImagePipe } from './../../../shared/pipes/format-url-image.pipe';
+import { TruncatePipe} from 'app/shared/pipes/truncate.pipe';
+import { FormatUrlImagePipe } from 'app/shared/pipes/format-url-image.pipe';
 
 @Component({
   selector: 'product-list-page',
