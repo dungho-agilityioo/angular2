@@ -1,12 +1,23 @@
-import { Observable } from 'rxjs/Observable';
-import { async } from '@angular/core/testing';
-import { LocalStorageService } from 'app/core/services/local-storage.service';
-import { HttpService } from 'app/core/services/http.service';
-import { Injectable } from '@angular/core';
-import { LineItem } from '../models/line-item.model';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  BehaviorSubject
+} from 'rxjs/BehaviorSubject';
+import {
+  Observable
+} from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+
+import {
+  LocalStorageService
+} from 'app/core/services/local-storage.service';
+import {
+  HttpService
+} from 'app/core/services/http.service';
+import {
+  LineItem
+} from '../models/line-item.model';
 
 @Injectable()
 export class OrderService {
@@ -21,7 +32,8 @@ export class OrderService {
    * @param variantId
    * @return Observable
    */
-  addToCart(variantId): Observable<any> {
+  addToCart(product): Observable<any> {
+    const variantId = product.master.id;
 
     return Observable.create(obs => {
       this.getOrCreateOrderNumber()
@@ -29,20 +41,20 @@ export class OrderService {
           if (typeof order !== 'object') {
             order = order.json();
           }
-          return this.createNewLineItem(variantId, order.number, order.token);
+          return this.updateLineItem(variantId, order.number, order.token, 1);
         })
-        .subscribe( res => obs.next(res) );
+        .subscribe(res => obs.next(res));
     });
   }
 
   /**
-   * Create line itme for order
+   * Create or remove line itme for order
    * @param variantId
    * @param orderNumber
    * @param orderToken
    * @return Observable
    */
-  createNewLineItem(variantId: number, orderNumber: string, orderToken: string): Observable<any> {
+  updateLineItem(variantId: number, orderNumber: string, orderToken: string, quantity: number): Observable<any> {
 
     // send request to create new line item
     return this.httpService.post(
@@ -50,7 +62,7 @@ export class OrderService {
       {
         line_item: {
           variant_id: variantId,
-          quantity: 1
+          quantity: quantity
         }
       }
     );
@@ -61,14 +73,13 @@ export class OrderService {
    * @return Observable
    */
   getOrCreateOrderNumber(): Observable<any> {
-    let orderNumber = '';
-    orderNumber = this.localStorageService.getOrderNumber();
+    const orderOnStorage = this.localStorageService.getOrder();
 
-    if (orderNumber) {
+    if (orderOnStorage && orderOnStorage.number ) {
       return new Observable(obs => {
         const order = {
-          number: orderNumber,
-          token: this.localStorageService.getOrderToken()
+          number: orderOnStorage.number,
+          token: orderOnStorage.token
         };
         obs.next(order);
       });
@@ -81,7 +92,7 @@ export class OrderService {
   /**
    * Create empty order
    */
-  createEmptyOrder(): Observable<any> {
+  createEmptyOrder() {
     const headers = this.httpService.defaultHeaders();
     headers.set('Content-Type', 'text/plain');
 
@@ -89,11 +100,15 @@ export class OrderService {
       this.httpService.post(
           'orders.json', {}, headers
         )
-        .subscribe(res => {
+        .map(res => {
           const order = res.json();
-          this.localStorageService.setOrderNumber(order.number);
-          this.localStorageService.setOrderToken(order.token);
-          obs.next(res);
+          this.localStorageService.setOrder({
+              number: order.number,
+              token: order.token
+            });
+          return order;
+        }).subscribe(res => {
+          return obs.next(res);
         });
     });
   }

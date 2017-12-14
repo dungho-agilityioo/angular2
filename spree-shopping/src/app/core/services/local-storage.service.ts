@@ -1,10 +1,10 @@
+import { Order } from "app/order/models/order.model";
+
 export class LocalStorageService {
-  private user = 'user';
-  private orderNumberKey = 'order.number';
-  private orderTokenKey  = 'order.token';
+  private orderKey: String = 'order';
 
   setItem(key, value) {
-    localStorage.setItem(`${key}`, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
   getItem(key) {
@@ -12,37 +12,20 @@ export class LocalStorageService {
   }
 
   /**
-   * Get order number from local storage
+   * Get token and number of order from local storage
    * @return string
    */
-  getOrderNumber() {
-    const orderNumber = this.getItem(this.orderNumberKey);
-    return orderNumber;
+  getOrder(): Order {
+    const order = this.getItem(this.orderKey);
+
+    return order;
   }
 
   /**
-   * Get order token from local storage
-   * @return string
-   */
-  getOrderToken(): string {
-    const orderToken = this.getItem(this.orderTokenKey);
-
-    return orderToken;
-  }
-
-  /**
-   * Set order token on local storage
+   * Set token and number of order on local storage
    * @param string
    */
-  setOrderToken(token: string): void {
-    this.setItem(this.orderTokenKey, token);
-  }
-
-  /**
-   * Set order number on local storage
-   * @param number
-   */
-  setOrderNumber(number: string): void {
-    this.setItem(this.orderNumberKey, number);
+  setOrder(order: Order): void {
+    this.setItem(this.orderKey, { token: order.token, number: order.number });
   }
 }
