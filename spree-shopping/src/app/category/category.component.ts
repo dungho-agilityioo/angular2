@@ -1,6 +1,8 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -13,18 +15,23 @@ import {
 
 @Component({
   selector: 'list-category',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
   categories: Array<Taxon> = [];
   constructor(
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.categoryService.getCategories()
-      .subscribe(res => this.categories = res);
+      .subscribe(res => {
+        this.categories = [...res];
+        this.cd.markForCheck();
+      });
   }
 
 }
