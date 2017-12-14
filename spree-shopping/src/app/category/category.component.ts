@@ -1,6 +1,15 @@
-import { Taxon } from './../product/models/taxon.model';
-import { CategoryService } from './services/category.service';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+
+import {
+  Taxon
+} from 'app/product/models/taxon.model';
+import {
+  CategoryService
+} from './services/category.service';
+
 
 @Component({
   selector: 'list-category',
@@ -15,7 +24,7 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.getCategories()
-      .subscribe( res => this.categories = res );
+      .subscribe(res => this.categories = res);
   }
 
 }

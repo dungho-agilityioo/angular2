@@ -1,7 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
   selector: 'main-footer',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './main-footer.component.html',
   styleUrls: ['./main-footer.component.css']
 })

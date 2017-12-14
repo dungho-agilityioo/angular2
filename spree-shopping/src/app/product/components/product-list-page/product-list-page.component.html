@@ -20,9 +20,11 @@
                             <p class="card-text">{{ product.description | truncate:40 }}</p>
                         </div>
                     </a>
-                    <div class="card-footer">
-                        <add-to-cart [product]="product"></add-to-cart>
-                    </div>
+                    <!-- <button *ngIf="0==0; else updateQuantity" (click)="addToCart()" class="btn btn-block">Add to Cart</button>
+                    <ng-template #updateQuantity> -->
+                    <add-to-cart [product]="product"></add-to-cart>
+                    <!-- </ng-template> -->
+
                 </div>
             </div>
 

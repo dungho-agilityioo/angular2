@@ -1,17 +1,28 @@
-import { environment } from 'env/environment';
-import { PagerOptions } from 'app/shared/models/pager-options.model';
-import { PaginationService } from 'app/shared/services/pagination.service';
 import {
   Component,
   OnInit,
   Input,
   Output,
-  EventEmitter} from '@angular/core';
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
+
 import * as _ from 'lodash';
+
+import {
+  environment
+} from 'env/environment';
+import {
+  PagerOptions
+} from 'app/shared/models/pager-options.model';
+import {
+  PaginationService
+} from 'app/shared/services/pagination.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'pagination',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })

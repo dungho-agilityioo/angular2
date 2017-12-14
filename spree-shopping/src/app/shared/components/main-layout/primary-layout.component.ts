@@ -1,5 +1,9 @@
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+
 import { environment } from 'env/environment';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'primary-layout',

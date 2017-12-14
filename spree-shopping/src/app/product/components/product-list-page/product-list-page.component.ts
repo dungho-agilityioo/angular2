@@ -1,8 +1,25 @@
-import { Product } from 'app/product/models/product.model';
-import { ProductService } from 'app/product/services/product.service';
-import { Component, OnInit } from '@angular/core';
-import { TruncatePipe} from 'app/shared/pipes/truncate.pipe';
-import { FormatUrlImagePipe } from 'app/shared/pipes/format-url-image.pipe';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+
+import {
+  TruncatePipe
+} from 'app/shared/pipes/truncate.pipe';
+import {
+  FormatUrlImagePipe
+} from 'app/shared/pipes/format-url-image.pipe';
+
+import {
+  OrderService
+} from 'app/order/services/order.service';
+import {
+  ProductService
+} from 'app/product/services/product.service';
+
+import {
+  Product
+} from 'app/product/models/product.model';
 
 @Component({
   selector: 'product-list-page',
@@ -14,12 +31,19 @@ export class ProductListPageComponent implements OnInit {
   totalItems: number;
   currentPage: number;
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private orderService: OrderService
+  ) { }
 
   ngOnInit() {
     this.getProducts(1);
   }
 
+  /**
+   * handle use click page number
+   * @param page
+   */
   onPagerChange(page: number) {
     this.getProducts(page);
   }
@@ -30,11 +54,20 @@ export class ProductListPageComponent implements OnInit {
    */
   private getProducts(page: number) {
     this.productService.getProducts(page)
-      .subscribe( result => {
+      .subscribe(result => {
         this.totalItems = result.total_count;
         this.currentPage = result.current_page;
         this.products = result.products;
       });
+  }
+
+  addToCart(product) {
+    this.orderService.addToCart(product)
+      .subscribe(
+      res => {
+        console.log(res);
+      }
+      );
   }
 
 }

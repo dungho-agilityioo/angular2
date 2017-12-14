@@ -1,11 +1,20 @@
-import { ProductListPageComponent } from './components/product-list-page/product-list-page.component';
-import { PrimaryLayoutComponent } from 'app/shared/components/main-layout/primary-layout.component';
-import { HttpModule } from '@angular/http';
+import {
+  NgModule, Component
+} from '@angular/core';
 import {
   RouterModule,
   Routes
 } from '@angular/router';
-import { NgModule, Component } from '@angular/core';
+import {
+  HttpModule
+} from '@angular/http';
+
+import {
+  ProductListPageComponent
+} from './components/product-list-page/product-list-page.component';
+import {
+  PrimaryLayoutComponent
+} from 'app/shared/components/main-layout/primary-layout.component';
 
 export const ROUTES: Routes = [
   {
@@ -28,6 +37,4 @@ export const ROUTES: Routes = [
     RouterModule
   ]
 })
-export class ProductRoutingModule {
-
-}
+export class ProductRoutingModule {}

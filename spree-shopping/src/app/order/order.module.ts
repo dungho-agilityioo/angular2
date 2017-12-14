@@ -1,5 +1,10 @@
-import { OrderService } from './services/order.service';
-import { NgModule } from '@angular/core';
+import {
+  NgModule
+} from '@angular/core';
+
+import {
+  OrderService
+} from './services/order.service';
 
 const PROVIDERS: any[] = [
   OrderService

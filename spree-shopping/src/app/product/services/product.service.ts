@@ -1,8 +1,19 @@
-import { environment } from 'env/environment';
-import { Product } from './../models/product.model';
-import { Observable } from 'rxjs/Observable';
-import { HttpService } from 'app/core/services/http.service';
-import { Injectable } from '@angular/core';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  Observable
+} from 'rxjs/Observable';
+
+import {
+  environment
+} from 'env/environment';
+import {
+  Product
+} from './../models/product.model';
+import {
+  HttpService
+} from 'app/core/services/http.service';
 
 @Injectable()
 export class ProductService {

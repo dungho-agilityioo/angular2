@@ -1,7 +1,15 @@
-import { Observable } from 'rxjs/Observable';
-import { HttpService } from 'app/core/services/http.service';
-import { Injectable } from '@angular/core';
+import {
+  Observable
+} from 'rxjs/Observable';
+
+import {
+  Injectable
+} from '@angular/core';
 import 'rxjs/add/operator/switchMap';
+
+import {
+  HttpService
+} from 'app/core/services/http.service';
 
 @Injectable()
 export class CategoryService {

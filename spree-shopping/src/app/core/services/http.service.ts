@@ -1,4 +1,3 @@
-import { environment } from 'env/environment';
 import {
   Injectable
 } from '@angular/core';
@@ -10,7 +9,13 @@ import {
   RequestMethod,
   URLSearchParams
 } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {
+  Observable
+} from 'rxjs/Observable';
+
+import {
+  environment
+} from 'env/environment';
 
 @Injectable()
 export class HttpService {
