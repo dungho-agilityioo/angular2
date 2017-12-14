@@ -1,4 +1,4 @@
-import { Order } from "app/order/models/order.model";
+import { Order } from 'app/order/models/order.model';
 
 export class LocalStorageService {
   private orderKey: String = 'order';

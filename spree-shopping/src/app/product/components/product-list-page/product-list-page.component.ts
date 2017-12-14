@@ -1,8 +1,11 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 
+import * as _ from 'lodash';
 import {
   TruncatePipe
 } from 'app/shared/pipes/truncate.pipe';
@@ -23,22 +26,26 @@ import {
 
 @Component({
   selector: 'product-list-page',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './product-list-page.component.html',
   styleUrls: ['./product-list-page.component.scss']
 })
 export class ProductListPageComponent implements OnInit {
-  products: Array<Product> = [];
+  products: Array<Product[]> = [];
   totalItems: number;
   currentPage: number;
 
   constructor(
     private productService: ProductService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+    this.productService.products$.subscribe();
     this.getProducts(1);
   }
+
 
   /**
    * handle use click page number
@@ -53,11 +60,16 @@ export class ProductListPageComponent implements OnInit {
    * @param page
    */
   private getProducts(page: number) {
+
     this.productService.getProducts(page)
       .subscribe(result => {
-        this.totalItems = result.total_count;
-        this.currentPage = result.current_page;
-        this.products = result.products;
+        if (!_.isEmpty(result)) {
+          result = result.json();
+          this.totalItems = result.total_count;
+          this.currentPage = result.current_page;
+          this.products = [...result.products];
+          this.cd.markForCheck();
+        }
       });
   }
 
