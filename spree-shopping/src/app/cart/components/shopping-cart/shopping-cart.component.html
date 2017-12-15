@@ -29,7 +29,7 @@
             </td>
             <td class="align-middle">{{ item.display_amount }}</td>
             <td class="align-middle">
-                <button (click)="removeFromCart(item.variant.id, item.id)">X</button>
+                <a href="javascription:void(0)" (click)="removeFromCart(item.variant.id, item.id)" class="btn btn-secondary active" role="button" aria-pressed="true">X</a>
             </td>
         </tr>
 
