@@ -24,10 +24,6 @@ import {
 } from './services/pagination.service';
 
 import {
-  AddToCartComponent
-} from './components/add-to-cart/add-to-cart.component';
-
-import {
   PaginationComponent
 } from './components/pagination/pagination.component';
 
@@ -50,8 +46,7 @@ const COMPONENTS: any[] = [
   PrimaryLayoutComponent,
   MainHeaderComponent,
   MainFooterComponent,
-  PaginationComponent,
-  AddToCartComponent
+  PaginationComponent
 ];
 
 const PIPES: any[] = [
@@ -73,7 +68,7 @@ const PROVIDERS = [
     ...PIPES
 ] ,
   exports: [
-    CommonModule,
+    ...MODULES,
     ...COMPONENTS,
     ...PIPES
   ],

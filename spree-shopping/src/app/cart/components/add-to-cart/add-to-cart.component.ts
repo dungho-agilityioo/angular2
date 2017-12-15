@@ -2,12 +2,11 @@ import {
   Component,
   OnInit,
   Input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
-
-import {
-  OrderService
-} from 'app/order/services/order.service';
 
 import {
   Product
@@ -20,25 +19,26 @@ import {
   styleUrls: ['./add-to-cart.component.scss']
 })
 export class AddToCartComponent implements OnInit {
-  @Input() product: Product;
-  constructor(
-    private orderService: OrderService
-  ) { }
+  @Input() variantId: number;
+  @Input() quantity: number;
+  @Output() btnCartClick = new EventEmitter();
+  constructor() { }
 
   ngOnInit() {
   }
 
   addToCart() {
-    this.orderService.addToCart(this.product)
-      .subscribe(
-      res => {
-        console.log(res);
-      }
-      );
+    this.btnCartClick.emit({
+      variantId: this.variantId,
+      quantity: 1
+    });
   }
 
   removeFromCart() {
-    console.log('removed');
+    this.btnCartClick.emit({
+      variantId: this.variantId,
+      quantity: -1
+    });
   }
 
 }
