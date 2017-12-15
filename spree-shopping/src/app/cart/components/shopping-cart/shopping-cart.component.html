@@ -1,0 +1,54 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="2">Item</th>
+            <th>Price</th>
+            <th class="text-center">Quantity</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of lineItems">
+            <td class="align-middle">
+                <a routerLink="cart">
+                    <img [src]="item.variant.images[0]?.small_url | formaturlimage" alt="{{ item.variant.name }}">
+                </a>
+            </td>
+            <td class="align-middle">
+                <p class="text-sm-left">
+                    <a [routerLink]="['products/', item.variant.slug]">{{ item.variant.name }}</a>
+                </p>
+                <span class="text-sm-left">
+                {{ item.variant.description | truncate:50}}
+              </span>
+            </td>
+            <td class="align-middle">{{ item.price | currency:'USD':'$'}}</td>
+            <td class="align-middle">
+                <add-to-cart [variantId]="item.variant.id" [quantity]="item.quantity" (btnCartClick)="onBtnCart($event)"></add-to-cart>
+            </td>
+            <td class="align-middle">{{ item.display_amount }}</td>
+            <td class="align-middle">
+                <button (click)="removeFromCart(item.variant.id, item.id)">X</button>
+            </td>
+        </tr>
+
+    </tbody>
+    <tfoot>
+        <tr class="thead-default">
+            <td colspan="4" class="text-right">Total Order:</td>
+            <td>
+                {{ order.display_total }}
+            </td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="row  mb-4">
+    <div class="col-md-6">
+        <a [routerLink]="['']">Continue Shopping</a>
+    </div>
+    <div class="col-md-6 d-flex justify-content-end">
+        <button class="btn btn-primary">Place Order</button>
+    </div>
+</div>
