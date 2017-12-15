@@ -20,9 +20,10 @@
                             <p class="card-text">{{ product.description | truncate:40 }}</p>
                         </div>
                     </a>
+                    <button (click)="addToCart(product)" class="btn btn-block btn-primary">Add to Cart</button>
                     <!-- <button *ngIf="0==0; else updateQuantity" (click)="addToCart()" class="btn btn-block">Add to Cart</button>
                     <ng-template #updateQuantity> -->
-                    <add-to-cart [product]="product"></add-to-cart>
+                    <!-- <add-to-cart [product]="product" (addToCartClick)="addToCart($event)"></add-to-cart> -->
                     <!-- </ng-template> -->
 
                 </div>
@@ -30,11 +31,11 @@
 
         </div>
         <!-- /.row -->
-        <!-- /.ng-container -->
+        <!-- /.pagination -->
         <div class="row justify-content-center" *ngIf="products.length">
             <pagination [totalItems]="totalItems" [currentPage]="currentPage" (pagerSelected)="onPagerChange($event)"></pagination>
         </div>
-        <!-- /.ng-container -->
+        <!-- /.pagination-->
     </div>
     <!-- /.col-lg-9 -->
 

@@ -6,7 +6,10 @@ import {
 } from '@angular/router';
 import {
   ROUTES as productRouting
-} from './product/product-routing.module';
+} from 'app/product/product-routing.module';
+import {
+  ROUTES as cartRouting
+} from 'app/cart/cart-routing.module';
 
 export const COMMON_MODULES: any[] = [
 ];
@@ -16,6 +19,12 @@ export const ROUTES: any[] = [
     path: '',
     children: [
       ...productRouting
+    ]
+  },
+  {
+    path: 'cart',
+    children: [
+      ...cartRouting
     ]
   }
 ];

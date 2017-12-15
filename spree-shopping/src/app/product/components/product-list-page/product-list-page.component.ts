@@ -74,7 +74,8 @@ export class ProductListPageComponent implements OnInit {
   }
 
   addToCart(product) {
-    this.orderService.addToCart(product)
+    const variantId = product.master.id;
+    this.orderService.addToCart(variantId)
       .subscribe(
       res => {
         console.log(res);
