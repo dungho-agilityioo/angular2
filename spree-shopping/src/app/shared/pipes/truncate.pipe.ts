@@ -1,5 +1,10 @@
-import { SlicePipe } from '@angular/common';
-import { Pipe, PipeTransform } from '@angular/core';
+import {
+  Pipe,
+  PipeTransform
+} from '@angular/core';
+import {
+  SlicePipe
+} from '@angular/common';
 
 @Pipe({
   name: 'truncate'

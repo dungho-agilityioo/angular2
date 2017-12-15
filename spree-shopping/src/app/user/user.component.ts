@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 
 @Component({
-  selector: 'app-user',
+  // tslint:disable-next-line:component-selector
+  selector: 'user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })

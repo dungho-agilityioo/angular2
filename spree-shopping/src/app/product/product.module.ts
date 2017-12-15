@@ -1,14 +1,36 @@
-import { ProductListPageComponent } from './components/product-list-page/product-list-page.component';
-import { SharedModule } from './../shared/shared.module';
-import { CategoryModule } from './../category/category.module';
-import { RouterModule } from '@angular/router';
-import { ProductService } from './services/product.service';
-import { NgModule } from '@angular/core';
+import {
+  NgModule
+} from '@angular/core';
+
+import {
+  SharedModule
+} from 'app/shared/shared.module';
+import {
+  CategoryModule
+} from 'app/category/category.module';
+import {
+  OrderModule
+} from 'app/order/order.module';
+import {
+  CartModule
+} from './../cart/cart.module';
+
+import {
+  OrderService
+} from './../order/services/order.service';
+import {
+  ProductService
+} from './services/product.service';
+
+import {
+  ProductListPageComponent
+} from './components/product-list-page/product-list-page.component';
 
 const MODULES: any[] = [
-  RouterModule,
   CategoryModule,
-  SharedModule
+  SharedModule,
+  OrderModule,
+  CartModule
 ];
 
 const COMPONENTS: any[] = [
@@ -16,7 +38,8 @@ const COMPONENTS: any[] = [
 ];
 
 const PROVIDERS: any[] = [
-  ProductService
+  ProductService,
+  OrderService
 ];
 
 @NgModule({

@@ -1,6 +1,10 @@
-import { PagerOptions } from 'app/shared/models/pager-options.model';
-import { Injectable } from '@angular/core';
+import {
+  Injectable
+} from '@angular/core';
 import * as _ from 'lodash';
+import {
+  PagerOptions
+} from 'app/shared/models/pager-options.model';
 
 @Injectable()
 export class PaginationService {

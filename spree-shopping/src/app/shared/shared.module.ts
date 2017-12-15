@@ -1,13 +1,42 @@
-import { PaginationService } from './services/pagination.service';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { FormatUrlImagePipe } from './pipes/format-url-image.pipe';
-import { TruncatePipe } from './pipes/truncate.pipe';
-import { MainFooterComponent } from './components/main-footer/main-footer.component';
-import { PrimaryLayoutComponent } from './components/main-layout/primary-layout.component';
-import { MainHeaderComponent } from './components/main-header/main-header.component';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  RouterModule
+} from '@angular/router';
+import {
+  NgModule
+} from '@angular/core';
+import {
+  CommonModule
+} from '@angular/common';
+
+
+import {
+  FormatUrlImagePipe
+} from './pipes/format-url-image.pipe';
+import {
+  TruncatePipe
+} from './pipes/truncate.pipe';
+
+import {
+  OrderService
+} from 'app/order/services/order.service';
+import {
+  PaginationService
+} from './services/pagination.service';
+
+import {
+  PaginationComponent
+} from './components/pagination/pagination.component';
+
+import {
+  MainFooterComponent
+} from './components/main-footer/main-footer.component';
+import {
+  PrimaryLayoutComponent
+} from './components/main-layout/primary-layout.component';
+import {
+  MainHeaderComponent
+} from './components/main-header/main-header.component';
+
 
 const MODULES = [
   CommonModule,
@@ -26,7 +55,8 @@ const PIPES: any[] = [
 ];
 
 const PROVIDERS = [
-  PaginationService
+  PaginationService,
+  OrderService
 ];
 
 @NgModule({
@@ -38,7 +68,7 @@ const PROVIDERS = [
     ...PIPES
 ] ,
   exports: [
-    CommonModule,
+    ...MODULES,
     ...COMPONENTS,
     ...PIPES
   ],

@@ -10,8 +10,9 @@ import {
 } from '@angular/http';
 
 import {
-  ProductListPageComponent
-} from './components/product-list-page/product-list-page.component';
+  ShoppingCartComponent
+} from './components/shopping-cart/shopping-cart.component';
+
 import {
   PrimaryLayoutComponent
 } from 'app/shared/components/main-layout/primary-layout.component';
@@ -23,7 +24,7 @@ export const ROUTES: Routes = [
     children: [
       {
         path: '',
-        component: ProductListPageComponent
+        component: ShoppingCartComponent
       }
     ]
   }
@@ -37,4 +38,4 @@ export const ROUTES: Routes = [
     RouterModule
   ]
 })
-export class ProductRoutingModule {}
+export class CartRoutingModule {}

@@ -1,9 +1,28 @@
-import { HttpService } from './services/http.service';
-import { ProductService } from './../product/services/product.service';
-import { HttpModule } from '@angular/http';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { moduleImportGuard } from './module-import-guard';
+import {
+  HttpModule
+} from '@angular/http';
+import {
+  NgModule,
+  Optional,
+  SkipSelf
+} from '@angular/core';
+import {
+  CommonModule
+} from '@angular/common';
+
+import {
+  LocalStorageService
+} from './services/local-storage.service';
+import {
+  HttpService
+} from './services/http.service';
+import {
+  ProductService
+} from './../product/services/product.service';
+
+import {
+  moduleImportGuard
+} from './module-import-guard';
 
 const MODULES: any[] = [
   CommonModule,
@@ -11,7 +30,8 @@ const MODULES: any[] = [
 ];
 
 const PROVIDERS: any[] = [
-  HttpService
+  HttpService,
+  LocalStorageService
 ];
 
 @NgModule({

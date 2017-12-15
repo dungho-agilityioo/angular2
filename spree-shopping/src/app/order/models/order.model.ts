@@ -1,0 +1,32 @@
+import { LineItem } from './line-item.model';
+export interface Order {
+    number: String;
+    item_total?: number;
+    total?: number;
+    ship_total?: number;
+    state?: String;
+    adjustment_total?: number;
+    user_id?: number;
+    payment_total?: number;
+    shipment_state?: String;
+    payment_state?: String;
+    email?: String;
+    special_instructions?: String;
+    included_tax_total?: number;
+    additional_tax_total?: number;
+    display_included_tax_total?: String;
+    display_additional_tax_total?: String;
+    tax_total?: number;
+    considered_risky?: false;
+    canceler_id?: number;
+    display_item_total?: String;
+    total_quantity?: number;
+    display_total?: String;
+    display_ship_total?: String;
+    display_tax_total?: String;
+    display_adjustment_total?: String;
+    token?: String;
+    bill_address?: null;
+    ship_address?: null;
+    line_items?: LineItem;
+  }
