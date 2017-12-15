@@ -1,10 +1,6 @@
 import {
   NgModule
 } from '@angular/core';
-import {
-  RouterModule
-} from '@angular/router';
-
 
 import {
   SharedModule
@@ -15,6 +11,9 @@ import {
 import {
   OrderModule
 } from 'app/order/order.module';
+import {
+  CartModule
+} from './../cart/cart.module';
 
 import {
   OrderService
@@ -28,10 +27,10 @@ import {
 } from './components/product-list-page/product-list-page.component';
 
 const MODULES: any[] = [
-  RouterModule,
   CategoryModule,
   SharedModule,
-  OrderModule
+  OrderModule,
+  CartModule
 ];
 
 const COMPONENTS: any[] = [

@@ -72,7 +72,7 @@ export class HttpService {
    * @param params
    * @returns {Observable<>}
    */
-  delete(url: string, params: any): Observable<any> {
+  delete(url: string, params?: any): Observable<any> {
     return this.http.delete(
         this.getFullUrl(url),
         this.requestOptions(params)
