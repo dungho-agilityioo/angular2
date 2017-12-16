@@ -1,15 +1,17 @@
-import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
-import { ProductModule } from './product/product.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule, Http } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { HttpModule, Http } from '@angular/http';
+import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './product/product.module';
+import { AppRoutingModule } from './app-routing.module';
 
 const MODULES = [
   BrowserModule,
   ProductModule,
+  AuthModule,
   CoreModule,
   AppRoutingModule
 ];
