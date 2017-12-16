@@ -53,10 +53,7 @@ export class ProductListPageComponent implements OnInit {
         this.cd.markForCheck();
       }
     });
-    this.orderService.getCurrentOrder()
-      .subscribe( res => {
-        this.orderService.order$.next(res);
-      });
+
     this.getProducts(1);
   }
 

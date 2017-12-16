@@ -73,7 +73,6 @@ export class OrderService {
           if (_.isUndefined(lineItemId)) {
             return this.updateLineItem(variantId, order.number, order.token, quantity);
           } else {
-            console.log('line2 ', lineItemId, ' number ', order.number);
             return this.deleteLineItem(lineItemId, order.number);
           }
         })
@@ -95,9 +94,13 @@ export class OrderService {
   getCurrentOrder(): Observable<any> {
     const orderOnStorage = this.localStorageService.getOrder();
 
+    if (_.isNull(orderOnStorage)) {
+      return new Observable(obs => obs.next({}) );
+    }
+
     return this.httpService.get(
-      `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
-    );
+        `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
+      );
   }
 
   /**
