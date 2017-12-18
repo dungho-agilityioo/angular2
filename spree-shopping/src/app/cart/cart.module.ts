@@ -1,4 +1,3 @@
-
 import {
   NgModule
 } from '@angular/core';
@@ -16,13 +15,29 @@ import {
 import {
   OrderService
 } from 'app/order/services/order.service';
+import {
+  AddressModule
+} from 'app/address/address.module';
+import {
+  CartAddressComponent
+} from 'app/cart/components/cart-address/cart-address.component';
+import {
+  CartSummaryComponent
+} from 'app/cart/components/cart-summary/cart-summary.component';
+import {
+  CartDeliveryComponent
+} from './components/cart-delivery/cart-delivery.component';
 
 const MODULES = [
-  SharedModule
+  SharedModule,
+  AddressModule
 ];
 const COMPONENTS: any[] = [
   AddToCartComponent,
-  ShoppingCartComponent
+  ShoppingCartComponent,
+  CartAddressComponent,
+  CartSummaryComponent,
+  CartDeliveryComponent
 ];
 
 const PROVIDERS = [

@@ -14,6 +14,9 @@ import {
 import {
   ROUTES as authRouting
 } from 'app/auth/auth-routing.module';
+import {
+  ROUTES as addressRouting
+} from 'app/address/address-routing.module';
 
 export const COMMON_MODULES: any[] = [
 ];
@@ -26,7 +29,7 @@ export const ROUTES: any[] = [
     ]
   },
   {
-    path: 'cart',
+    path: '',
     children: [
       ...cartRouting
     ]

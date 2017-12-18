@@ -7,13 +7,16 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AddressModule } from './address/address.module';
+
 
 const MODULES = [
   BrowserModule,
   ProductModule,
   AuthModule,
   CoreModule,
-  AppRoutingModule
+  AppRoutingModule,
+  AddressModule
 ];
 
 const COMPONENTS = [
