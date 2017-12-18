@@ -26,12 +26,14 @@ import {
 import {
   Order
 } from 'app/order/models/order.model';
+import { CartService } from 'app/shared/services/cart.service';
 
 @Injectable()
 export class OrderService {
   order$: Subject<any> = new BehaviorSubject<any>([]);
 
   constructor(
+    private cartService: CartService,
     private httpService: HttpService,
     private localStorageService: LocalStorageService
   ) {
@@ -82,6 +84,7 @@ export class OrderService {
         })
         .subscribe(res => {
           this.order$.next(res);
+          this.cartService.cart$.next(res);
           obs.next(lineItem);
         });
     });

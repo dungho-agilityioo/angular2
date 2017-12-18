@@ -38,7 +38,7 @@
         <tr class="thead-default">
             <td colspan="4" class="text-right">Total Order:</td>
             <td>
-                {{ order.display_total }}
+                {{ totalOrder | currency:'USD':'$' }}
             </td>
             <td></td>
         </tr>
@@ -49,6 +49,6 @@
         <a [routerLink]="['']">Continue Shopping</a>
     </div>
     <div class="col-md-6 d-flex justify-content-end">
-        <button class="btn btn-primary">Place Order</button>
+        <button class="btn btn-primary" (click)="placeOrder()">Place Order</button>
     </div>
 </div>
