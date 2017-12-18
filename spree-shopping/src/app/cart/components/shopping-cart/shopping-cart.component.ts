@@ -91,7 +91,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   placeOrder() {
-    this.router.navigate(['checkout/address']);
+
+    this.orderService.changeOrderState()
+      .subscribe( res => {
+        this.router.navigate(['checkout/address']);
+      });
   }
 
   ngOnDestroy() {

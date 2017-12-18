@@ -57,11 +57,11 @@ export class HttpService {
    * @param params
    * @returns {Observable<>}
    */
-  put(url: string, body: any, params?: any): Observable<any> {
-    return this.http.post(
+  put(url: string, body: any, headers?: Headers): Observable<any> {
+    return this.http.put(
         this.getFullUrl(url),
         body,
-        this.requestOptions(params)
+        this.requestOptions(null, headers)
       )
       .catch(this.handleError);
   }

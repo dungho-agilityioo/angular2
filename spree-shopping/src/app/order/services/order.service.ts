@@ -30,6 +30,7 @@ import { CartService } from 'app/shared/services/cart.service';
 
 @Injectable()
 export class OrderService {
+  orderNumber: String;
   order$: Subject<any> = new BehaviorSubject<any>([]);
 
   constructor(
@@ -37,7 +38,12 @@ export class OrderService {
     private httpService: HttpService,
     private localStorageService: LocalStorageService
   ) {
-    this.order$.share();
+    this.order$.subscribe( res => {
+      if (!_.isEmpty(res)) {
+        const order = res.json();
+        this.orderNumber = order.number;
+      }
+    });
   }
 
   /**
@@ -127,11 +133,40 @@ export class OrderService {
     );
   }
 
+  /**
+   * Delete line item from order
+   * @param lineItemId
+   * @param orderNumber
+   * @return Observable
+   */
   deleteLineItem(lineItemId: number, orderNumber: String): Observable<any> {
 
     return this.httpService.delete(
         `orders/${orderNumber}/line_items/${lineItemId}`
       );
+  }
+
+  /**
+   * Change order status as address to delivery
+   * @param params
+   * @return Observable
+   */
+  changeOrderState(params: any = {}): Observable<any> {
+    const headers = this.httpService.defaultHeaders();
+    headers.delete('Content-Type');
+    return this.httpService.put(
+      `checkouts/${this.orderNumber}/next.json`,
+      params,
+      headers
+    );
+  }
+
+  updateOrder(params: any): Observable<any> {
+    const orderToken = this.localStorageService.getOrder().token;
+    return this.httpService.put(
+      `checkouts/${this.orderNumber}.json?order_token=${orderToken}`,
+      params
+    );
   }
 
   /**
