@@ -1,7 +1,7 @@
 <h3>Order Summary</h3>
-<table class="table" data-hook="order_summary">
+<table class="table">
     <tbody>
-        <tr data-hook="item_total">
+        <tr>
             <td><strong>Item Total:</strong></td>
             <td><strong>{{ orderTotal.itemTotal | currency:'USD':'$'}}</strong></td>
         </tr>
@@ -9,9 +9,7 @@
             <td>Tax Total</td>
             <td>{{ orderTotal.taxTotal | currency:'USD':'$' }}</td>
         </tr>
-
-
-        <tr data-hook="order_total">
+        <tr>
             <td><strong>Order Total:</strong></td>
             <td><strong><span id="summary-order-total" class="lead text-primary">{{ orderTotal.total | currency:'USD':'$' }}</span></strong></td>
         </tr>

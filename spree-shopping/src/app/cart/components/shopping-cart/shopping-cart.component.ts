@@ -32,6 +32,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   lineItems: Array<LineItem>;
   totalOrder: number;
   subscription: Subscription;
+  orderState: String;
   constructor(
     private orderService: OrderService,
     private cd: ChangeDetectorRef,
@@ -45,6 +46,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         const order = res.json();
         this.lineItems = [...order.line_items];
         this.totalOrder = order.total;
+        this.orderState = order.state;
         this.cd.markForCheck();
       }
     });
@@ -90,12 +92,20 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Change order state to delivery
+   */
   placeOrder() {
 
-    this.orderService.changeOrderState()
-      .subscribe( res => {
-        this.router.navigate(['checkout/address']);
-      });
+    if ( this.orderState === 'address' ) {
+      this.orderService.changeOrderState()
+        .do( () => {
+          this.router.navigate(['checkout/address']);
+        })
+        .subscribe();
+    } else {
+      this.router.navigate(['checkout/address']);
+    }
   }
 
   ngOnDestroy() {
