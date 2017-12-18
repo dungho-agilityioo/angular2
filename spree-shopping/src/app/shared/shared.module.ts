@@ -1,3 +1,4 @@
+
 import {
   RouterModule
 } from '@angular/router';
@@ -8,25 +9,14 @@ import {
   CommonModule
 } from '@angular/common';
 
-
-import {
-  FormatUrlImagePipe
-} from './pipes/format-url-image.pipe';
-import {
-  TruncatePipe
-} from './pipes/truncate.pipe';
-
-import {
-  OrderService
-} from 'app/order/services/order.service';
-import {
-  PaginationService
-} from './services/pagination.service';
+import { FormatUrlImagePipe } from './pipes/format-url-image.pipe';
+import {TruncatePipe } from './pipes/truncate.pipe';
+import { CartService } from './services/cart.service';
+import { PaginationService } from './services/pagination.service';
 
 import {
   PaginationComponent
 } from './components/pagination/pagination.component';
-
 import {
   MainFooterComponent
 } from './components/main-footer/main-footer.component';
@@ -36,7 +26,6 @@ import {
 import {
   MainHeaderComponent
 } from './components/main-header/main-header.component';
-
 
 const MODULES = [
   CommonModule,
@@ -56,7 +45,7 @@ const PIPES: any[] = [
 
 const PROVIDERS = [
   PaginationService,
-  OrderService
+  CartService
 ];
 
 @NgModule({
