@@ -1,4 +1,7 @@
 <div class="card">
+    <div class="card-header">
+        Shipping/Billing Addres
+    </div>
     <div class="card-block">
         <form class="form-horizontal" [formGroup]="emailForm">
             <div class="row">
@@ -12,7 +15,6 @@
             </div>
         </form>
         <form [formGroup]="addressForm" (ngSubmit)="addressForm.valid && saveAddress(addressForm.value)" class="form-horizontal">
-
             <div class="row">
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('firstname').touched && !addressForm.get('firstname').valid }">
                     <label class="form-control-label">First Name <span class="required">*</span></label>
@@ -64,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class=" card-footer text-right">
                 <button [disabled]="!addressForm.valid" class="btn btn-primary">Save</button>
             </div>
         </form>

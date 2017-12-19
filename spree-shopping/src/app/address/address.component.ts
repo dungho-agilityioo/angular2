@@ -70,7 +70,7 @@ export class AddressComponent implements OnInit, OnDestroy {
       addressAttributes = this.addressService.createGuestAddressAttributes(address, email);
     }
 console.log('state in address ', this.orderState);
-    if (this.orderState === 'delivery') {
+    if (this.orderState === 'address') {
       this.subscription = this.orderService.updateOrder(addressAttributes)
         .subscribe(
           success => this.router.navigate(['checkout/delivery']),
