@@ -1,4 +1,3 @@
-
 import { Subject } from 'rxjs/Subject';
 import {
   Injectable
@@ -151,22 +150,32 @@ export class OrderService {
    * @param params
    * @return Observable
    */
-  changeOrderState(params: any = {}): Observable<any> {
+  changeOrderState(): Observable<any> {
     const headers = this.httpService.defaultHeaders();
     headers.delete('Content-Type');
-    return this.httpService.put(
-      `checkouts/${this.orderNumber}/next.json`,
-      params,
-      headers
-    );
+
+    return Observable.create( obs => {
+      this.httpService.put(
+        `checkouts/${this.orderNumber}/next.json`,
+        {},
+        headers
+      ).subscribe( res => {
+        this.order$.next(res);
+        obs.next(res);
+      });
+    });
   }
 
   updateOrder(params: any): Observable<any> {
-    const orderToken = this.localStorageService.getOrder().token;
-    return this.httpService.put(
-      `checkouts/${this.orderNumber}.json?order_token=${orderToken}`,
-      params
-    );
+    return Observable.create( obs => {
+      this.httpService.put(
+        `checkouts/${this.orderNumber}.json?order_token=${this.getOrderToken()}`,
+        params
+      ).subscribe( res => {
+        this.order$.next(res);
+        obs.next(res);
+      });
+    });
   }
 
   /**
@@ -191,9 +200,65 @@ export class OrderService {
   }
 
   /**
+   * Get all payment method
+   */
+  availablePaymentMethods() {
+    // return Observable.create( obs => {
+     return this.httpService.get(
+          `orders/${this.orderNumber}/payments/new?order_token=${this.getOrderToken()}`
+        ).map( res => {
+          const payments = res.json();
+          return payments;
+          // obs.next(payments);
+        });
+      // );
+  }
+  /**
+   * Create new payment of order
+   * @param paymentModeId
+   * @param paymentAmout
+   */
+  createNewPayment(paymentModeId: number, paymentAmout: number): Observable<any> {
+    console.log('paymentModeId', paymentModeId);
+    const headers = this.httpService.defaultHeaders();
+    headers.delete('Content-Type');
+
+    return this.httpService.post(
+        `orders/${this.orderNumber}/payments?order_token=${this.getOrderToken()}`,
+        {
+          payment: {
+            payment_method_id: paymentModeId,
+            amount: paymentAmout
+          }
+        },
+        headers
+      ).map( res => {
+        this.changeOrderState()
+          .subscribe();
+      });
+  }
+
+  getAndSetObservableOrder() {
+    return this.getCurrentOrder()
+      .do(res => {
+        this.order$.next(res);
+        this.cartService.cart$.next(res);
+      });
+  }
+
+  /**
+   * Get order token on local stogare
+   */
+  private getOrderToken(): String {
+    const orderOnStorage = this.localStorageService.getOrder();
+
+    return orderOnStorage.token;
+  }
+
+  /**
    * Create empty order
    */
-  createEmptyOrder() {
+  private createEmptyOrder() {
     const headers = this.httpService.defaultHeaders();
     headers.set('Content-Type', 'text/plain');
 
