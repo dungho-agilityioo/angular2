@@ -27,17 +27,23 @@ import {
 import {
   CartDeliveryComponent
 } from './components/cart-delivery/cart-delivery.component';
+import {
+  CartPaymentComponent
+} from './components/cart-payment/cart-payment.component';
+import { PaymentModule } from 'app/payment/payment.module';
 
 const MODULES = [
   SharedModule,
-  AddressModule
+  AddressModule,
+  PaymentModule
 ];
 const COMPONENTS: any[] = [
   AddToCartComponent,
   ShoppingCartComponent,
   CartAddressComponent,
   CartSummaryComponent,
-  CartDeliveryComponent
+  CartDeliveryComponent,
+  CartPaymentComponent
 ];
 
 const PROVIDERS = [

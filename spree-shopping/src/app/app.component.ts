@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'app/order/services/order.service';
-import { CartService } from 'app/shared/services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +8,10 @@ import { CartService } from 'app/shared/services/cart.service';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private cartService: CartService,
     private orderService: OrderService
   ) {}
   ngOnInit() {
-    this.orderService.getCurrentOrder()
-      .subscribe( res => {
-        this.orderService.order$.next(res);
-        this.cartService.cart$.next(res);
-      });
+    this.orderService.getAndSetObservableOrder()
+      .subscribe();
   }
 }

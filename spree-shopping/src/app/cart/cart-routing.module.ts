@@ -22,6 +22,9 @@ import {
 import {
   CartDeliveryComponent
 } from './components/cart-delivery/cart-delivery.component';
+import {
+  CartPaymentComponent
+} from './components/cart-payment/cart-payment.component';
 
 export const ROUTES: Routes = [
   {
@@ -51,6 +54,16 @@ export const ROUTES: Routes = [
       {
         path: 'checkout/delivery',
         component: CartDeliveryComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    component: PrimaryLayoutComponent,
+    children: [
+      {
+        path: 'checkout/payment',
+        component: CartPaymentComponent
       }
     ]
   }
