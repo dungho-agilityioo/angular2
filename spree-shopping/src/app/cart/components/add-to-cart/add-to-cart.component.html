@@ -1,11 +1,5 @@
-<div class="row no-gutters">
-    <div class="col-2">
-        <a href="javascription:void(0)" (click)="removeFromCart()" class="btn btn-secondary active" role="button" aria-pressed="true">-</a>
-    </div>
-    <div class="col text-center quantity">
-        {{ quantity }} in cart
-    </div>
-    <div class="col-2">
-        <a href="javascription:void(0)" (click)="addToCart()" class="btn btn-secondary active" role="button" aria-pressed="true">+</a>
-    </div>
+<div class="btn-group" role="group" aria-label="Default button group">
+    <a href="javascription:void(0)" (click)="removeFromCart()" class="btn btn-secondary" role="button" aria-pressed="true">-</a>
+    <span type="button" class="btn btn-secondary">{{ quantity }} in cart</span>
+    <a href="javascription:void(0)" (click)="addToCart()" class="btn btn-secondary" role="button" aria-pressed="true">+</a>
 </div>

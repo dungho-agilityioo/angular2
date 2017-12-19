@@ -23,6 +23,8 @@ import {
 import {
   Product
 } from 'app/product/models/product.model';
+import { LineItem } from 'app/order/models/line-item.model';
+import { Variant } from 'app/product/models/variant.model';
 
 @Component({
   selector: 'product-list-page',
@@ -34,6 +36,7 @@ export class ProductListPageComponent implements OnInit {
   products: Array<Product[]> = [];
   totalItems: number;
   currentPage: number;
+  lineItems: Array<LineItem>;
 
   constructor(
     private productService: ProductService,
@@ -43,9 +46,33 @@ export class ProductListPageComponent implements OnInit {
 
   ngOnInit() {
     this.productService.products$.subscribe();
+    this.orderService.order$.subscribe( res => {
+      if ( !_.isEmpty(res)) {
+        const order = res.json();
+        this.lineItems = order.line_items;
+        this.cd.markForCheck();
+      }
+    });
+
     this.getProducts(1);
   }
 
+  /**
+   * Get line item quantity in cart
+   * @param product
+   * @return number
+   */
+  getQuantity(product: Product): number {
+
+    // tslint:disable-next-line:curly
+    if (_.isUndefined(this.lineItems)) return 0;
+
+    const variantId = product.master.id;
+    const item =  this.lineItems.find(
+        li => li.variant_id === variantId
+      );
+    return _.isUndefined(item) ? 0 : item.quantity;
+  }
 
   /**
    * handle use click page number
@@ -72,6 +99,14 @@ export class ProductListPageComponent implements OnInit {
         }
       });
   }
+
+  onBtnCart(item): void {
+    this.orderService.addOrRemoveItem(
+      item.variantId,
+      item.quantity
+    ).subscribe();
+  }
+
 
   addToCart(product) {
     const variantId = product.master.id;

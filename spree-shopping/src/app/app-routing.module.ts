@@ -4,12 +4,19 @@ import {
 import {
   RouterModule
 } from '@angular/router';
+
 import {
   ROUTES as productRouting
 } from 'app/product/product-routing.module';
 import {
   ROUTES as cartRouting
 } from 'app/cart/cart-routing.module';
+import {
+  ROUTES as authRouting
+} from 'app/auth/auth-routing.module';
+import {
+  ROUTES as addressRouting
+} from 'app/address/address-routing.module';
 
 export const COMMON_MODULES: any[] = [
 ];
@@ -22,9 +29,15 @@ export const ROUTES: any[] = [
     ]
   },
   {
-    path: 'cart',
+    path: '',
     children: [
       ...cartRouting
+    ]
+  },
+  {
+    path: '',
+    children: [
+      ...authRouting
     ]
   }
 ];

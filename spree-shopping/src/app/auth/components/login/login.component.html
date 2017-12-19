@@ -1,0 +1,19 @@
+<div class="col-md-6 col-md-offset-3">
+    <h2>Login</h2>
+    <form name="form" (ngSubmit)="userForm.form.valid && login(userForm.value)" #userForm="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-danger': userForm.submitted && !email.valid }">
+            <label for="email">Email</label>
+            <input type="text" class="form-control form-control-danger" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+            <div *ngIf="userForm.submitted && !email.valid" class="form-control-feedback">Email is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-danger': userForm.submitted && !password.valid }">
+            <label for="password">Password</label>
+            <input type="password" class="form-control form-control-danger" name="password" [(ngModel)]="user.password" #password="ngModel" required />
+            <div *ngIf="userForm.submitted && !password.valid" class="form-control-feedback">Password is required</div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="!userForm.valid" class="btn btn-primary">Login</button>
+            <a [routerLink]="['/signup']" class="btn btn-link">Register</a>
+        </div>
+    </form>
+</div>

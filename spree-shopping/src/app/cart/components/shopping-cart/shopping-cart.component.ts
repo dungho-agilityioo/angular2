@@ -6,8 +6,10 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
+
 import {
   OrderService
 } from 'app/order/services/order.service';
@@ -28,31 +30,26 @@ import {
 export class ShoppingCartComponent implements OnInit, OnDestroy {
   order: Order;
   lineItems: Array<LineItem>;
+  totalOrder: number;
   subscription: Subscription;
+  orderState: String;
   constructor(
     private orderService: OrderService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.orderService.order$.subscribe( res => {
+    this.subscription = this.orderService.order$.subscribe( res => {
 
       if (!_.isEmpty(res)) {
         const order = res.json();
-        console.log('adafd log', order);
         this.lineItems = [...order.line_items];
+        this.totalOrder = order.total;
+        this.orderState = order.state;
         this.cd.markForCheck();
       }
     });
-
-    this.subscription = this.orderService.getCurrentOrder()
-      .subscribe( res => {
-          if (!_.isEmpty(res)) {
-            const order = res.json();
-            this.order = order;
-            this.lineItems = order.line_items;
-          }
-      });
   }
 
   onBtnCart(item): void {
@@ -93,6 +90,22 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
           }
         }
       });
+  }
+
+  /**
+   * Change order state to delivery
+   */
+  placeOrder() {
+
+    if ( this.orderState === 'address' ) {
+      this.orderService.changeOrderState()
+        .do( () => {
+          this.router.navigate(['checkout/address']);
+        })
+        .subscribe();
+    } else {
+      this.router.navigate(['checkout/address']);
+    }
   }
 
   ngOnDestroy() {

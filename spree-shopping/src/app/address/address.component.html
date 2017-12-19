@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-block">
+        <form class="form-horizontal" [formGroup]="emailForm">
+            <div class="row">
+                <div class=" form-group col-md-12" [ngClass]="{ 'has-danger': emailForm.get('email').touched && !emailForm.get('email').valid }">
+                    <label class="form-control-label">Email Customer <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="email">
+                    <div class="form-control-feedback" *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">
+                        Email is required
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="addressForm" (ngSubmit)="addressForm.valid && saveAddress(addressForm.value)" class="form-horizontal">
+
+            <div class="row">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('firstname').touched && !addressForm.get('firstname').valid }">
+                    <label class="form-control-label">First Name <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="firstname">
+                    <div class="form-control-feedback" *ngIf="addressForm.get('firstname').hasError('required') && addressForm.get('firstname').touched">
+                        First Name is required
+                    </div>
+                </div>
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('lastname').touched && !addressForm.get('lastname').valid }">
+                    <label class="form-control-label">Last Name <span class="required">*</span></label>
+                    <input type="text" class="form-control" [formControl]="addressForm.get('lastname')">
+                    <div class="form-control-feedback" *ngIf="addressForm.get('lastname').hasError('required') && addressForm.get('lastname').touched">
+                        Last Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12" [ngClass]="{ 'has-danger': addressForm.get('address1').touched && !addressForm.get('address1').valid }">
+                    <label class="form-control-label">Street Address <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="address1">
+                    <div class="form-control-feedback" *ngIf="addressForm.get('address1').hasError('required') && addressForm.get('address1').touched">
+                        Street Address is required
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('city').touched && !addressForm.get('city').valid }">
+                    <label class="form-control-label">City <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="city">
+                    <div class="form-control-feedback" *ngIf="addressForm.get('city').hasError('required') && addressForm.get('city').touched">
+                        City is required
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="form-control-label">State <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="state_id">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="form-control-label">Zipcode <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="zipcode">
+                </div>
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('phone').touched && !addressForm.get('phone').valid }">
+                    <label class="form-control-label">Phone <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="phone">
+                    <div class="form-control-feedback" *ngIf="addressForm.get('phone').hasError('required') && addressForm.get('phone').touched">
+                        Phone is required
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button [disabled]="!addressForm.valid" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

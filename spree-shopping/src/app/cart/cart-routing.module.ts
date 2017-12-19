@@ -16,6 +16,12 @@ import {
 import {
   PrimaryLayoutComponent
 } from 'app/shared/components/main-layout/primary-layout.component';
+import {
+  CartAddressComponent
+} from 'app/cart/components/cart-address/cart-address.component';
+import {
+  CartDeliveryComponent
+} from './components/cart-delivery/cart-delivery.component';
 
 export const ROUTES: Routes = [
   {
@@ -23,8 +29,28 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: '',
+        path: 'cart',
         component: ShoppingCartComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    component: PrimaryLayoutComponent,
+    children: [
+      {
+        path: 'checkout/address',
+        component: CartAddressComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    component: PrimaryLayoutComponent,
+    children: [
+      {
+        path: 'checkout/delivery',
+        component: CartDeliveryComponent
       }
     ]
   }

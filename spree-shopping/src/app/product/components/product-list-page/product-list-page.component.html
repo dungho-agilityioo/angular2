@@ -11,7 +11,7 @@
             <div class="col-lg-4 col-md-6 mb-4" *ngFor="let product of products">
                 <div class="card h-100 w-100 product-card">
                     <a [routerLink]="['product/', product.slug]">
-                        <img itemprop="image" class="card-img-top mx-auto d-block" alt="{{product.name}}" [src]="product.master.images[0]?.product_url | formaturlimage ">
+                        <img itemprop="image" class="card-img-top mx-auto d-block" alt="{{product.name}}" [attr.src]="product.master.images[0]?.product_url | formaturlimage ">
                         <div class="card-block">
                             <div class="card-subtitle mb-2 text-muted">
                                 {{ product.name }}
@@ -20,11 +20,10 @@
                             <p class="card-text">{{ product.description | truncate:40 }}</p>
                         </div>
                     </a>
-                    <button (click)="addToCart(product)" class="btn btn-block btn-primary">Add to Cart</button>
-                    <!-- <button *ngIf="0==0; else updateQuantity" (click)="addToCart()" class="btn btn-block">Add to Cart</button>
-                    <ng-template #updateQuantity> -->
-                    <!-- <add-to-cart [product]="product" (addToCartClick)="addToCart($event)"></add-to-cart> -->
-                    <!-- </ng-template> -->
+                    <button *ngIf="getQuantity(product) === 0; else updateQuantity" (click)="addToCart(product)" class="btn btn-block btn-primary">Add to Cart</button>
+                    <ng-template #updateQuantity>
+                        <add-to-cart [variantId]="product.master.id" [quantity]="getQuantity(product)" (btnCartClick)="onBtnCart($event)"></add-to-cart>
+                    </ng-template>
 
                 </div>
             </div>

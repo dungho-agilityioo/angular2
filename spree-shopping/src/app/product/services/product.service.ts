@@ -20,9 +20,6 @@ import {
 import {
   HttpService
 } from 'app/core/services/http.service';
-import {
-  ProductResponse
-} from 'app/product/models/product-response.model';
 
 @Injectable()
 export class ProductService {

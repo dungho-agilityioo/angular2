@@ -26,16 +26,24 @@ import {
 import {
   Order
 } from 'app/order/models/order.model';
+import { CartService } from 'app/shared/services/cart.service';
 
 @Injectable()
 export class OrderService {
+  orderNumber: String;
   order$: Subject<any> = new BehaviorSubject<any>([]);
 
   constructor(
+    private cartService: CartService,
     private httpService: HttpService,
     private localStorageService: LocalStorageService
   ) {
-    this.order$.share();
+    this.order$.subscribe( res => {
+      if (!_.isEmpty(res)) {
+        const order = res.json();
+        this.orderNumber = order.number;
+      }
+    });
   }
 
   /**
@@ -73,7 +81,6 @@ export class OrderService {
           if (_.isUndefined(lineItemId)) {
             return this.updateLineItem(variantId, order.number, order.token, quantity);
           } else {
-            console.log('line2 ', lineItemId, ' number ', order.number);
             return this.deleteLineItem(lineItemId, order.number);
           }
         })
@@ -83,6 +90,7 @@ export class OrderService {
         })
         .subscribe(res => {
           this.order$.next(res);
+          this.cartService.cart$.next(res);
           obs.next(lineItem);
         });
     });
@@ -95,9 +103,13 @@ export class OrderService {
   getCurrentOrder(): Observable<any> {
     const orderOnStorage = this.localStorageService.getOrder();
 
+    if (_.isNull(orderOnStorage)) {
+      return new Observable(obs => obs.next({}) );
+    }
+
     return this.httpService.get(
-      `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
-    );
+        `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
+      );
   }
 
   /**
@@ -121,11 +133,40 @@ export class OrderService {
     );
   }
 
+  /**
+   * Delete line item from order
+   * @param lineItemId
+   * @param orderNumber
+   * @return Observable
+   */
   deleteLineItem(lineItemId: number, orderNumber: String): Observable<any> {
 
     return this.httpService.delete(
         `orders/${orderNumber}/line_items/${lineItemId}`
       );
+  }
+
+  /**
+   * Change order status as address to delivery
+   * @param params
+   * @return Observable
+   */
+  changeOrderState(params: any = {}): Observable<any> {
+    const headers = this.httpService.defaultHeaders();
+    headers.delete('Content-Type');
+    return this.httpService.put(
+      `checkouts/${this.orderNumber}/next.json`,
+      params,
+      headers
+    );
+  }
+
+  updateOrder(params: any): Observable<any> {
+    const orderToken = this.localStorageService.getOrder().token;
+    return this.httpService.put(
+      `checkouts/${this.orderNumber}.json?order_token=${orderToken}`,
+      params
+    );
   }
 
   /**
