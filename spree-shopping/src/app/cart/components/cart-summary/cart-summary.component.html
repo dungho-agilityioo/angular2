@@ -3,15 +3,15 @@
     <tbody>
         <tr>
             <td><strong>Item Total:</strong></td>
-            <td><strong>{{ orderTotal.itemTotal | currency:'USD':'$'}}</strong></td>
+            <td><strong>{{ orderTotal?.itemTotal | currency:'USD':'$'}}</strong></td>
         </tr>
         <tr class="total">
             <td>Tax Total</td>
-            <td>{{ orderTotal.taxTotal | currency:'USD':'$' }}</td>
+            <td>{{ orderTotal?.taxTotal | currency:'USD':'$' }}</td>
         </tr>
         <tr>
             <td><strong>Order Total:</strong></td>
-            <td><strong><span id="summary-order-total" class="lead text-primary">{{ orderTotal.total | currency:'USD':'$' }}</span></strong></td>
+            <td><strong><span id="summary-order-total" class="lead text-primary">{{ orderTotal?.total | currency:'USD':'$' }}</span></strong></td>
         </tr>
     </tbody>
 </table>
