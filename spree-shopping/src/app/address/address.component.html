@@ -4,7 +4,7 @@
             <div class="row">
                 <div class=" form-group col-md-12" [ngClass]="{ 'has-danger': emailForm.get('email').touched && !emailForm.get('email').valid }">
                     <label class="form-control-label">Email Customer <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="email">
+                    <input type="text" class="form-control" formControlName="email" [(ngModel)]="email">
                     <div class="form-control-feedback" *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">
                         Email is required
                     </div>
@@ -16,14 +16,14 @@
             <div class="row">
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('firstname').touched && !addressForm.get('firstname').valid }">
                     <label class="form-control-label">First Name <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="firstname">
+                    <input type="text" class="form-control" formControlName="firstname" [(ngModel)]="address.firstname">
                     <div class="form-control-feedback" *ngIf="addressForm.get('firstname').hasError('required') && addressForm.get('firstname').touched">
                         First Name is required
                     </div>
                 </div>
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('lastname').touched && !addressForm.get('lastname').valid }">
                     <label class="form-control-label">Last Name <span class="required">*</span></label>
-                    <input type="text" class="form-control" [formControl]="addressForm.get('lastname')">
+                    <input type="text" class="form-control" [formControl]="addressForm.get('lastname')" [(ngModel)]="address.lastname">
                     <div class="form-control-feedback" *ngIf="addressForm.get('lastname').hasError('required') && addressForm.get('lastname').touched">
                         Last Name is required
                     </div>
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="form-group col-md-12" [ngClass]="{ 'has-danger': addressForm.get('address1').touched && !addressForm.get('address1').valid }">
                     <label class="form-control-label">Street Address <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="address1">
+                    <input type="text" class="form-control" formControlName="address1" [(ngModel)]="address.address1">
                     <div class="form-control-feedback" *ngIf="addressForm.get('address1').hasError('required') && addressForm.get('address1').touched">
                         Street Address is required
                     </div>
@@ -41,24 +41,24 @@
             <div class="row">
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('city').touched && !addressForm.get('city').valid }">
                     <label class="form-control-label">City <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="city">
+                    <input type="text" class="form-control" formControlName="city" [(ngModel)]="address.city">
                     <div class="form-control-feedback" *ngIf="addressForm.get('city').hasError('required') && addressForm.get('city').touched">
                         City is required
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-control-label">State <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="state_id">
+                    <input type="text" class="form-control" formControlName="state_id" [(ngModel)]="address.state_id">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label class="form-control-label">Zipcode <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="zipcode">
+                    <input type="text" class="form-control" formControlName="zipcode" [(ngModel)]="address.zipcode">
                 </div>
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('phone').touched && !addressForm.get('phone').valid }">
                     <label class="form-control-label">Phone <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="phone">
+                    <input type="text" class="form-control" formControlName="phone" [(ngModel)]="address.phone">
                     <div class="form-control-feedback" *ngIf="addressForm.get('phone').hasError('required') && addressForm.get('phone').touched">
                         Phone is required
                     </div>
