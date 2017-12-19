@@ -1,8 +1,10 @@
+import { Subscription } from 'rxjs/Subscription';
 import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  OnDestroy
 } from '@angular/core';
 
 import * as _ from 'lodash';
@@ -32,11 +34,12 @@ import { Variant } from 'app/product/models/variant.model';
   templateUrl: './product-list-page.component.html',
   styleUrls: ['./product-list-page.component.scss']
 })
-export class ProductListPageComponent implements OnInit {
+export class ProductListPageComponent implements OnInit, OnDestroy {
   products: Array<Product[]> = [];
   totalItems: number;
   currentPage: number;
   lineItems: Array<LineItem>;
+  subscription: Subscription;
 
   constructor(
     private productService: ProductService,
@@ -45,11 +48,12 @@ export class ProductListPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productService.products$.subscribe();
-    this.orderService.order$.subscribe( res => {
-      if ( !_.isEmpty(res)) {
+    this.subscription = this.orderService.order$.subscribe(res => {
+      if (!_.isEmpty(res)) {
         const order = res.json();
-        this.lineItems = order.line_items;
+        if (order.state !== 'complete') {
+          this.lineItems = [...order.line_items];
+        }
         this.cd.markForCheck();
       }
     });
@@ -68,9 +72,9 @@ export class ProductListPageComponent implements OnInit {
     if (_.isUndefined(this.lineItems)) return 0;
 
     const variantId = product.master.id;
-    const item =  this.lineItems.find(
-        li => li.variant_id === variantId
-      );
+    const item = this.lineItems.find(
+      li => li.variant_id === variantId
+    );
     return _.isUndefined(item) ? 0 : item.quantity;
   }
 
@@ -116,6 +120,10 @@ export class ProductListPageComponent implements OnInit {
         console.log(res);
       }
       );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

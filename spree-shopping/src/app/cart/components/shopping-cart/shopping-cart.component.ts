@@ -40,16 +40,16 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.orderService.order$.subscribe( res => {
-
-      if (!_.isEmpty(res)) {
-        const order = res.json();
-        this.lineItems = [...order.line_items];
-        this.totalOrder = order.total;
-        this.orderState = order.state;
-        this.cd.markForCheck();
-      }
-    });
+    this.subscription = this.orderService.order$
+      .subscribe( res => {
+        if (!_.isEmpty(res)) {
+          const order = res.json();
+          this.lineItems = [...order.line_items];
+          this.totalOrder = order.total;
+          this.orderState = order.state;
+          this.cd.markForCheck();
+        }
+      });
   }
 
   onBtnCart(item): void {
@@ -96,8 +96,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
    * Change order state to delivery
    */
   placeOrder() {
-
-    if ( this.orderState === 'address' ) {
+    if ( this.orderState === 'cart' ) {
       this.orderService.changeOrderState()
         .do( () => {
           this.router.navigate(['checkout/address']);

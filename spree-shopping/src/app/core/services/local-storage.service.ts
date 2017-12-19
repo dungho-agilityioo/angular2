@@ -1,7 +1,7 @@
 import { Order } from 'app/order/models/order.model';
 
 export class LocalStorageService {
-  private orderKey: String = 'order';
+  private orderKey: string = 'order';
 
   setItem(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
@@ -27,5 +27,12 @@ export class LocalStorageService {
    */
   setOrder(order: Order): void {
     this.setItem(this.orderKey, { token: order.token, number: order.number });
+  }
+
+  /**
+   * Remove order caching
+   */
+  removeOrder() {
+    localStorage.removeItem(this.orderKey);
   }
 }

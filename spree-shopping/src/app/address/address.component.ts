@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.orderService.order$.subscribe(res => {
+    this.subscription = this.orderService.order$.subscribe(res => {
       if (!_.isEmpty(res)) {
         const order = res.json();
         this.addressForm = this.addressService.initAddressForm();
@@ -69,15 +69,15 @@ export class AddressComponent implements OnInit, OnDestroy {
       const email = this.getEmailFromUser();
       addressAttributes = this.addressService.createGuestAddressAttributes(address, email);
     }
-console.log('state in address ', this.orderState);
+
     if (this.orderState === 'address') {
       this.subscription = this.orderService.updateOrder(addressAttributes)
         .subscribe(
-          success => this.router.navigate(['checkout/delivery']),
-          error => {
-            console.log('errr', error);
-            this.router.navigate(['checkout/address']);
-          }
+        success => this.router.navigate(['checkout/delivery']),
+        error => {
+          console.log('errr', error);
+          this.router.navigate(['checkout/address']);
+        }
         );
     } else {
       this.router.navigate(['checkout/delivery']);
@@ -92,8 +92,6 @@ console.log('state in address ', this.orderState);
   }
 
   ngOnDestroy() {
-    if (!_.isUndefined(this.subscription)) {
-      // this.subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 }

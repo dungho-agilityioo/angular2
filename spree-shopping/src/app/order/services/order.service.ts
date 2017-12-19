@@ -37,7 +37,7 @@ export class OrderService {
     private httpService: HttpService,
     private localStorageService: LocalStorageService
   ) {
-    this.order$.subscribe( res => {
+    this.order$.subscribe(res => {
       if (!_.isEmpty(res)) {
         const order = res.json();
         this.orderNumber = order.number;
@@ -60,7 +60,7 @@ export class OrderService {
    * @return Observable
    */
   removeFromCart(variantId: number, lineItemId?: number) {
-      return this.addOrRemoveItem(variantId, -1, lineItemId);
+    return this.addOrRemoveItem(variantId, -1, lineItemId);
   }
 
   /**
@@ -103,12 +103,12 @@ export class OrderService {
     const orderOnStorage = this.localStorageService.getOrder();
 
     if (_.isNull(orderOnStorage)) {
-      return new Observable(obs => obs.next({}) );
+      return new Observable(obs => obs.next({}));
     }
 
     return this.httpService.get(
-        `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
-      );
+      `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
+    );
   }
 
   /**
@@ -141,8 +141,8 @@ export class OrderService {
   deleteLineItem(lineItemId: number, orderNumber: String): Observable<any> {
 
     return this.httpService.delete(
-        `orders/${orderNumber}/line_items/${lineItemId}`
-      );
+      `orders/${orderNumber}/line_items/${lineItemId}`
+    );
   }
 
   /**
@@ -154,12 +154,12 @@ export class OrderService {
     const headers = this.httpService.defaultHeaders();
     headers.delete('Content-Type');
 
-    return Observable.create( obs => {
+    return Observable.create(obs => {
       this.httpService.put(
         `checkouts/${this.orderNumber}/next.json`,
         {},
         headers
-      ).subscribe( res => {
+      ).subscribe(res => {
         this.order$.next(res);
         obs.next(res);
       });
@@ -167,11 +167,11 @@ export class OrderService {
   }
 
   updateOrder(params: any): Observable<any> {
-    return Observable.create( obs => {
+    return Observable.create(obs => {
       this.httpService.put(
         `checkouts/${this.orderNumber}.json?order_token=${this.getOrderToken()}`,
         params
-      ).subscribe( res => {
+      ).subscribe(res => {
         this.order$.next(res);
         obs.next(res);
       });
@@ -203,15 +203,12 @@ export class OrderService {
    * Get all payment method
    */
   availablePaymentMethods() {
-    // return Observable.create( obs => {
-     return this.httpService.get(
-          `orders/${this.orderNumber}/payments/new?order_token=${this.getOrderToken()}`
-        ).map( res => {
-          const payments = res.json();
-          return payments;
-          // obs.next(payments);
-        });
-      // );
+    return this.httpService.get(
+        `orders/${this.orderNumber}/payments/new?order_token=${this.getOrderToken()}`
+      ).map(res => {
+        const payments = res.json();
+        return payments;
+      });
   }
   /**
    * Create new payment of order
@@ -219,23 +216,22 @@ export class OrderService {
    * @param paymentAmout
    */
   createNewPayment(paymentModeId: number, paymentAmout: number): Observable<any> {
-    console.log('paymentModeId', paymentModeId);
     const headers = this.httpService.defaultHeaders();
     headers.delete('Content-Type');
 
     return this.httpService.post(
-        `orders/${this.orderNumber}/payments?order_token=${this.getOrderToken()}`,
-        {
-          payment: {
-            payment_method_id: paymentModeId,
-            amount: paymentAmout
-          }
-        },
-        headers
-      ).map( res => {
-        this.changeOrderState()
-          .subscribe();
-      });
+      `orders/${this.orderNumber}/payments?order_token=${this.getOrderToken()}`,
+      {
+        payment: {
+          payment_method_id: paymentModeId,
+          amount: paymentAmout
+        }
+      },
+      headers
+    ).map(res => {
+      this.changeOrderState()
+        .subscribe();
+    });
   }
 
   getAndSetObservableOrder() {

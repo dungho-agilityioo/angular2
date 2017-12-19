@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs/Subscription';
 import {
   Component,
   OnInit,
+  OnDestroy,
   ChangeDetectorRef
 } from '@angular/core';
 
@@ -17,7 +18,7 @@ import { PaymentService } from 'app/payment/services/payment.service';
   styleUrls: ['./cart-payment.component.css'],
   providers: [PaymentService]
 })
-export class CartPaymentComponent implements OnInit {
+export class CartPaymentComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   orderTotal: OrderTotal;
   constructor(
@@ -41,6 +42,10 @@ export class CartPaymentComponent implements OnInit {
         this.cd.markForCheck();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
