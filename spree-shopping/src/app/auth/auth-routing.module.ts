@@ -9,16 +9,15 @@ import {
 import {
   HttpModule
 } from '@angular/http';
-
-import {
-  LoginComponent
-} from './components/login/login.component';
 import {
   PrimaryLayoutComponent
 } from 'app/shared/components/main-layout/primary-layout.component';
 import {
   SignUpComponent
 } from 'app/auth/components/sign-up/sign-up.component';
+import {
+  LoginFormComponent
+} from 'app/auth/components/login/login-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -27,7 +26,7 @@ export const ROUTES: Routes = [
     children: [
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginFormComponent
       },
       {
         path: 'signup',

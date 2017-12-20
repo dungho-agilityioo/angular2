@@ -23,7 +23,6 @@ import {
 
 @Injectable()
 export class ProductService {
-  products$: Subject<any> = new BehaviorSubject<any>([]);
 
   constructor(
     private httpService: HttpService
@@ -49,7 +48,6 @@ export class ProductService {
     return Observable.create(obs => {
       this.httpService.get('products', params)
         .subscribe(res => {
-          this.products$.next(res);
           obs.next(res);
         });
     });

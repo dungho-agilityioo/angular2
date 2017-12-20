@@ -1,7 +1,9 @@
 import {
   Component,
   OnInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnDestroy
 } from '@angular/core';
 import {
   FormBuilder,
@@ -11,9 +13,14 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+
+import * as _ from 'lodash';
 
 import { OrderService } from 'app/order/services/order.service';
 import { AddressService } from './services/address.service';
+import { Address } from 'app/address/models/address';
+import { AuthService } from 'app/auth/services/auth.service';
 
 @Component({
   selector: 'address-form',
@@ -21,37 +28,63 @@ import { AddressService } from './services/address.service';
   styleUrls: ['./address.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnDestroy {
   addressForm: FormGroup;
   emailForm: FormGroup;
   isAuthenticated: boolean;
+  subscription: Subscription;
+  orderState: String;
+  address: Address = new Address();
+  email: String;
 
   constructor(
     private formBuilder: FormBuilder,
     private orderService: OrderService,
     private addressService: AddressService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.addressForm = this.addressService.initAddressForm();
-    this.emailForm = this.addressService.initEmailForm();
-    // handle after
-    this.isAuthenticated = false;
+    this.subscription = this.orderService.order$.subscribe(res => {
+
+      this.addressForm = this.addressService.initAddressForm();
+      this.emailForm = this.addressService.initEmailForm();
+
+      if (!_.isEmpty(res)) {
+        const order = res.json();
+        this.orderState = order.state;
+        this.address = order.ship_address;
+        this.email = order.email;
+        this.cd.markForCheck();
+      }
+    });
+    // set user login or not
+    this.isAuthenticated = this.authService.isLoggedIn();
   }
 
   saveAddress(address) {
     let addressAttributes;
-    if ( this.isAuthenticated) {
+    if (this.isAuthenticated) {
       addressAttributes = this.addressService.createAddresAttributes(address);
     } else {
       const email = this.getEmailFromUser();
       addressAttributes = this.addressService.createGuestAddressAttributes(address, email);
     }
-    this.orderService.updateOrder(addressAttributes)
-      .subscribe();
 
-    this.router.navigate(['checkout/delivery']);
+    if (this.orderState === 'address') {
+      this.subscription = this.orderService.updateOrder(addressAttributes)
+        .subscribe(
+        success => this.router.navigate(['checkout/delivery']),
+        error => {
+          console.log('errr', error);
+          this.router.navigate(['checkout/address']);
+        }
+        );
+    } else {
+      this.router.navigate(['checkout/delivery']);
+    }
   }
 
   /**
@@ -61,4 +94,7 @@ export class AddressComponent implements OnInit {
     return this.emailForm.value.email;
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

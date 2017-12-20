@@ -19,6 +19,9 @@ import {
   AddressModule
 } from 'app/address/address.module';
 import {
+  PaymentModule
+} from 'app/payment/payment.module';
+import {
   CartAddressComponent
 } from 'app/cart/components/cart-address/cart-address.component';
 import {
@@ -27,17 +30,29 @@ import {
 import {
   CartDeliveryComponent
 } from './components/cart-delivery/cart-delivery.component';
+import {
+  CartPaymentComponent
+} from './components/cart-payment/cart-payment.component';
+import {
+  CartHeaderComponent
+} from 'app/cart/components/cart-header/cart-header.component';
+import { AuthModule } from 'app/auth/auth.module';
+
 
 const MODULES = [
   SharedModule,
-  AddressModule
+  AddressModule,
+  PaymentModule,
+  AuthModule
 ];
 const COMPONENTS: any[] = [
   AddToCartComponent,
   ShoppingCartComponent,
   CartAddressComponent,
   CartSummaryComponent,
-  CartDeliveryComponent
+  CartDeliveryComponent,
+  CartPaymentComponent,
+  CartHeaderComponent
 ];
 
 const PROVIDERS = [
