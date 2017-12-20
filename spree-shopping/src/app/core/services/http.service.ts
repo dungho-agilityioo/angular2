@@ -13,14 +13,25 @@ import {
   Observable
 } from 'rxjs/Observable';
 
+import * as _ from 'lodash';
+
 import {
   environment
 } from 'env/environment';
+import {
+  LocalStorageService
+} from 'app/core/services/local-storage.service';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class HttpService {
+  public loading$ = new Subject<{loading: boolean, hasError: boolean, hasMsg: string}>();
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private localStorageService: LocalStorageService
+  ) { }
 
   /**
    * Performs a request with `get` http method.
@@ -28,10 +39,17 @@ export class HttpService {
    * @param params
    */
   get(url, params?: any): Observable<any> {
+    this.requestInterceptor();
+
     return this.http.get(
         this.getFullUrl(url), this.requestOptions(params)
       )
-      .catch(this.handleError);
+      .catch(this.onCatch.bind(this))
+      .do((res: Response) => {
+        this.onSubscribeSuccess(res);
+      }, ( error: any) => {
+        this.onSubscribeError(error);
+      });
   }
 
   /**
@@ -42,12 +60,19 @@ export class HttpService {
   * @returns {Observable<>}
   */
   post(url: string, body: any, headers?: Headers): Observable<any> {
+    this.requestInterceptor();
+
     return this.http.post(
         this.getFullUrl(url),
         body,
         this.requestOptions(null, headers)
       )
-      .catch(this.handleError);
+      .catch(this.onCatch.bind(this))
+      .do((res: Response) => {
+        this.onSubscribeSuccess(res);
+      }, ( error: any) => {
+        this.onSubscribeError(error);
+      });
   }
 
   /**
@@ -63,7 +88,7 @@ export class HttpService {
         body,
         this.requestOptions(null, headers)
       )
-      .catch(this.handleError);
+      .catch(this.onCatch.bind(this));
   }
 
   /**
@@ -77,7 +102,7 @@ export class HttpService {
         this.getFullUrl(url),
         this.requestOptions(params)
       )
-      .catch(this.handleError);
+      .catch(this.onCatch.bind(this));
   }
 
   /**
@@ -109,7 +134,12 @@ export class HttpService {
   defaultHeaders(): Headers {
     const headers: Headers = new Headers();
 
+    const userApiKey = this.localStorageService.getUserApiKey();
     headers.append('X-Spree-Token', environment.API_KEY);
+    if (!_.isNull(userApiKey)) {
+      headers.set('X-Spree-Token', userApiKey);
+    }
+
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
 
@@ -124,15 +154,43 @@ export class HttpService {
     return environment.API_ENDPOINT + url;
   }
 
+   /**
+   * onSubscribeSuccess
+   * @param res
+   */
+  private onSubscribeSuccess(res: Response): void {
+    this.loading$.next({
+      loading: false, hasError: false, hasMsg: ''
+    });
+  }
+
   /**
-   * Handle error when call a request
+   * onSubscribeError
    * @param error
    */
-  private handleError(error: any) {
-    const errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg);
+  private onSubscribeError(error: any): void {
+    console.log('Something Went wrong while subscribing', error);
 
-    return Observable.throw(errMsg);
+    this.loading$.next({
+      loading: false, hasError: true, hasMsg: 'Something went wrong'
+    });
+  }
+
+  /**
+   *  Handle error when call a request
+   * @param error
+   * @param caught
+   */
+  private onCatch(error: any, caught: Observable<any>): Observable<any> {
+    return Observable.of(error);
+  }
+
+  /**
+   * Request interceptor.
+   */
+  private requestInterceptor(): void {
+    this.loading$.next({
+      loading: true, hasError: false, hasMsg: ''
+    });
   }
 }

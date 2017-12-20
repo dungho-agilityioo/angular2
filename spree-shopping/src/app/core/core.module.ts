@@ -23,10 +23,21 @@ import {
 import {
   moduleImportGuard
 } from './module-import-guard';
+import {
+  LoadingIndicatorComponent
+} from 'app/core/components/loading-indicator/loading-indicator.component';
+import {
+  NotificationComponent
+} from 'app/core/components/notification/notification.component';
 
 const MODULES: any[] = [
   CommonModule,
   HttpModule
+];
+
+const COMPONENTS = [
+  LoadingIndicatorComponent,
+  NotificationComponent
 ];
 
 const PROVIDERS: any[] = [
@@ -39,9 +50,13 @@ const PROVIDERS: any[] = [
     ...MODULES
   ],
   declarations: [
+    ...COMPONENTS
   ],
   providers: [
     ...PROVIDERS
+  ],
+  exports: [
+    ...COMPONENTS
   ]
 })
 export class CoreModule {
