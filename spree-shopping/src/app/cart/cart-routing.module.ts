@@ -25,6 +25,9 @@ import {
 import {
   CartPaymentComponent
 } from './components/cart-payment/cart-payment.component';
+import {
+  AuthGuardService
+} from 'app/auth/services/auth-guard.service';
 
 export const ROUTES: Routes = [
   {
@@ -40,6 +43,7 @@ export const ROUTES: Routes = [
   {
     path: '',
     component: PrimaryLayoutComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'checkout/address',
