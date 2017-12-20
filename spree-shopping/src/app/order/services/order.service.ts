@@ -107,7 +107,7 @@ export class OrderService {
     }
 
     return this.httpService.get(
-      `orders/${orderOnStorage.number}?order_token=${orderOnStorage.number}`
+      `orders/${orderOnStorage.number}?order_token=${orderOnStorage.token}`
     );
   }
 
