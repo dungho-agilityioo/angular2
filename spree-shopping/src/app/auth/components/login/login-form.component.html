@@ -1,0 +1,27 @@
+<div class="col-md-6 mt-4 mb-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            Login
+        </div>
+        <form name="form" (ngSubmit)="userForm.form.valid && login(userForm.value)" #userForm="ngForm" novalidate>
+            <div class="card-block">
+                <div class="form-group" [ngClass]="{ 'has-danger': userForm.submitted && !email.valid }">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control form-control-danger" name="email" [(ngModel)]="user.email" #email="ngModel" required />
+                    <div *ngIf="userForm.submitted && !email.valid" class="form-control-feedback">Email is required</div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-danger': userForm.submitted && !password.valid }">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control form-control-danger" name="password" [(ngModel)]="user.password" #password="ngModel" required />
+                    <div *ngIf="userForm.submitted && !password.valid" class="form-control-feedback">Password is required</div>
+                </div>
+            </div>
+            <div class="card-header">
+                <div class="form-group text-right">
+                    <button [disabled]="!userForm.valid" class="btn btn-primary">Login</button>
+                    <a [routerLink]="['/signup']" [queryParams]="{returnUrl: returnUrl}" class="btn btn-link">Register</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
