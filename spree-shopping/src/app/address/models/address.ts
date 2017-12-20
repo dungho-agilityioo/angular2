@@ -1,4 +1,4 @@
-export interface Address {
+export class Address {
   firstname?: String;
   lastname?: String;
   address1?: String;

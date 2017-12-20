@@ -1,4 +1,3 @@
-
 import {
   Component,
   OnInit,
@@ -21,6 +20,7 @@ import * as _ from 'lodash';
 import { OrderService } from 'app/order/services/order.service';
 import { AddressService } from './services/address.service';
 import { Address } from 'app/address/models/address';
+import { AuthService } from 'app/auth/services/auth.service';
 
 @Component({
   selector: 'address-form',
@@ -34,7 +34,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   subscription: Subscription;
   orderState: String;
-  address: Address;
+  address: Address = new Address();
   email: String;
 
   constructor(
@@ -42,23 +42,26 @@ export class AddressComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private addressService: AddressService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.subscription = this.orderService.order$.subscribe(res => {
+
+      this.addressForm = this.addressService.initAddressForm();
+      this.emailForm = this.addressService.initEmailForm();
+
       if (!_.isEmpty(res)) {
         const order = res.json();
-        this.addressForm = this.addressService.initAddressForm();
-        this.emailForm = this.addressService.initEmailForm();
         this.orderState = order.state;
         this.address = order.ship_address;
         this.email = order.email;
         this.cd.markForCheck();
       }
     });
-    // handle after
-    this.isAuthenticated = false;
+    // set user login or not
+    this.isAuthenticated = this.authService.isLoggedIn();
   }
 
   saveAddress(address) {
