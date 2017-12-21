@@ -31,9 +31,9 @@ export class PaginationService {
       // more than 10 total pages so calculate start and end pages
       if (currentPage <= 6) {
         startPage = 1;
-        endPage = 10;
+        endPage = totalPages < 10 ? totalPages : 10;
       } else if (currentPage + 4 >= totalPages) {
-        startPage = totalPages - 9;
+        startPage = totalPages > 9 ? totalPages - 9 : 1;
         endPage = totalPages;
       } else {
         startPage = currentPage - 5;
