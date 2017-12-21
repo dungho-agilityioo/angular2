@@ -1,0 +1,20 @@
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Shipment State</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orders">
+            <th>{{ order.number }}</th>
+            <td>{{ order.created_at | date }}</td>
+            <td>{{ order.state }}</td>
+            <td>{{ order.shipment_state }}</td>
+            <td>{{ order.display_total }}</td>
+        </tr>
+    </tbody>
+</table>
