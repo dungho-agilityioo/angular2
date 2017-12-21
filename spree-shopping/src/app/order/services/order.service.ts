@@ -152,11 +152,12 @@ export class OrderService {
    */
   changeOrderState(): Observable<any> {
     const headers = this.httpService.defaultHeaders();
+    const orderToken = this.localStorageService.getOrder().token;
     headers.delete('Content-Type');
 
     return Observable.create(obs => {
       this.httpService.put(
-        `checkouts/${this.orderNumber}/next.json`,
+        `checkouts/${this.orderNumber}/next.json?order_token=${orderToken}`,
         {},
         headers
       ).subscribe(res => {

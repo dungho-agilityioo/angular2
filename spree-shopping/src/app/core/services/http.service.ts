@@ -135,9 +135,9 @@ export class HttpService {
     const headers: Headers = new Headers();
 
     const userApiKey = this.localStorageService.getUserApiKey();
-    headers.append('X-Spree-Token', environment.API_KEY);
+
     if (!_.isNull(userApiKey)) {
-      headers.set('X-Spree-Token', userApiKey);
+      headers.append('X-Spree-Token', userApiKey);
     }
 
     headers.append('Content-Type', 'application/json');

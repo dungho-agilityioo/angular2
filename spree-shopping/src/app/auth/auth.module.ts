@@ -1,19 +1,19 @@
-
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'app/shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { LoginFormComponent } from 'app/auth/components/login/login-form.component';
+import { SignInComponent } from 'app/auth/components/sign-in/sign-in.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { SignUpComponent } from 'app/auth/components/sign-up/sign-up.component';
 
 const MODULES = [
   FormsModule,
-  SharedModule
+  SharedModule,
+  ReactiveFormsModule
 ];
 const COMPONENTS: any[] = [
-  LoginFormComponent,
+  SignInComponent,
   SignUpComponent
 ];
 

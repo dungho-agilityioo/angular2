@@ -19,11 +19,11 @@ import { HttpService } from 'app/core/services/http.service';
 
 
 @Component({
-  selector: 'login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  selector: 'sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class SignInComponent implements OnInit {
   returnUrl: string;
   user: any = {};
   constructor(
@@ -36,6 +36,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.redirectIfUserLoggedIn();
   }
 
   login(userForm: any) {
@@ -58,6 +59,15 @@ export class LoginFormComponent implements OnInit {
           }
         }
       );
+  }
+
+  /**
+   * Redirect to return url if user logged in
+   */
+  redirectIfUserLoggedIn() {
+    if ( this.authService.isLoggedIn() ) {
+      this.router.navigateByUrl(this.returnUrl);
+    }
   }
 
 }

@@ -55,6 +55,12 @@ export class LocalStorageService {
     return user ? user.spree_api_key : null;
   }
 
+  getUser() {
+    const user: User = this.getItem(this.userKey);
+
+    return user || { id: null, email: null};
+  }
+
   /**
    * Remove user caching
    */

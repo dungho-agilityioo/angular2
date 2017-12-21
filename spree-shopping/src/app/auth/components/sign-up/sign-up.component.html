@@ -1,29 +1,37 @@
-<div class="col-md-6 col-md-offset-3">
-    <h2>Register</h2>
-    <form name="form" (ngSubmit)="userForm.form.valid && register()" #userForm="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': userForm.submitted && !username.valid }">
-            <label for="firstName">First Name</label>
-            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
-            <div *ngIf="userForm.submitted && !firstName.valid" class="help-block">First Name is required</div>
+<div class="col-md-6 mt-4 mb-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h2>Register</h2>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': userForm.submitted && !username.valid }">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
-            <div *ngIf="userForm.submitted && !lastName.valid" class="help-block">Last Name is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': userForm.submitted && !username.valid }">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required />
-            <div *ngIf="userForm.submitted && !username.valid" class="help-block">Username is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': userForm.submitted && !password.valid }">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-            <div *ngIf="userForm.submitted && !password.valid" class="help-block">Password is required</div>
-        </div>
-        <div class="form-group">
-            <button [disabled]="!userForm.valid" class="btn btn-primary">Register</button>
-            <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
-        </div>
-    </form>
+
+        <form (ngSubmit)="signUp()" [formGroup]="signUpForm" novalidate>
+            <div class="card-block">
+                <div class="form-group" [ngClass]="{ 'has-danger': signUpForm.get('email').errors && signUpForm.get('email').touched }">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control form-control-danger" name="email" formControlName="email" />
+                    <div *ngIf="signUpForm.get('email').errors && signUpForm.get('email').touched">
+                        <p class="form-control-feedback">{{signUpForm.get('email').errors?.msg || 'Please enter a valid email'}}</p>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-danger': signUpForm.get('password').errors && signUpForm.get('password').touched }">
+                    <label>Password</label>
+                    <input type="password" class="form-control form-control-danger" name="password" formControlName="password" />
+                    <div *ngIf="signUpForm.get('password').errors && signUpForm.get('password').touched">
+                        <p class="form-control-feedback">{{signUpForm.get('password').errors?.msg || 'Password must be at least 6 characters'}}</p>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{ 'has-danger': (signUpForm.get('passwordConfirmation').errors || signUpForm.hasError('nomatch')) && signUpForm.get('passwordConfirmation').touched }">
+                    <label>Password Confirmation</label>
+                    <input type="password" name="passwordConfirmation" class="form-control form-control-danger" formControlName="passwordConfirmation" />
+                    <div *ngIf="(signUpForm.get('passwordConfirmation').errors || signUpForm.hasError('nomatch')) && signUpForm.get('passwordConfirmation').touched">
+                        <p class="form-control-feedback">{{ 'Password must match'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header text-right">
+                <button class="btn btn-primary">Register</button>
+                <a [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>

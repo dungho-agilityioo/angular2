@@ -8,11 +8,15 @@ import {
 
 import { HttpService } from 'app/core/services/http.service';
 import { Address } from 'app/address/models/address';
+import { LocalStorageService } from 'app/core/services/local-storage.service';
 
 @Injectable()
 export class AddressService {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private localStorageService: LocalStorageService
+  ) { }
 
   /**
    * Init address form
@@ -41,10 +45,14 @@ export class AddressService {
    * @param address
    */
   createAddresAttributes(address: Address) {
+    const user = this.localStorageService.getUser();
+
     return {
-      'order': {
-        'bill_address_attributes': address,
-        'ship_address_attributes': address
+      order: {
+        user_id: user.id,
+        email: user.email,
+        bill_address_attributes: address,
+        ship_address_attributes: address
       }
     };
   }
@@ -56,10 +64,10 @@ export class AddressService {
    */
   createGuestAddressAttributes(address: Address, email: String) {
     return {
-      'order': {
-        'email': email,
-        'bill_address_attributes': address,
-        'ship_address_attributes': address
+      order: {
+        email: email,
+        bill_address_attributes: address,
+        ship_address_attributes: address
       }
     };
   }
