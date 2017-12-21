@@ -16,8 +16,8 @@ import {
   SignUpComponent
 } from 'app/auth/components/sign-up/sign-up.component';
 import {
-  LoginFormComponent
-} from 'app/auth/components/login/login-form.component';
+  SignInComponent
+} from 'app/auth/components/sign-in/sign-in.component';
 
 export const ROUTES: Routes = [
   {
@@ -26,7 +26,7 @@ export const ROUTES: Routes = [
     children: [
       {
         path: 'login',
-        component: LoginFormComponent
+        component: SignInComponent
       },
       {
         path: 'signup',
