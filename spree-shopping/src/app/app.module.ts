@@ -1,4 +1,4 @@
-import { CoreModule } from './core/core.module';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http } from '@angular/http';
@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AddressModule } from './address/address.module';
+import { UserModule } from './user/user.module';
+import { CoreModule } from './core/core.module';
 
 
 const MODULES = [
@@ -16,7 +18,8 @@ const MODULES = [
   AuthModule,
   CoreModule,
   AppRoutingModule,
-  AddressModule
+  AddressModule,
+  UserModule
 ];
 
 const COMPONENTS = [

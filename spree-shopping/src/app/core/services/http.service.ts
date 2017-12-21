@@ -38,11 +38,11 @@ export class HttpService {
    * @param url
    * @param params
    */
-  get(url, params?: any): Observable<any> {
+  get(url, params?: any, headers?: Headers): Observable<any> {
     this.requestInterceptor();
 
     return this.http.get(
-        this.getFullUrl(url), this.requestOptions(params)
+        this.getFullUrl(url), this.requestOptions(params, headers)
       )
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
