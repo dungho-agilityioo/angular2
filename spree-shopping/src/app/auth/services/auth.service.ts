@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
@@ -11,6 +13,7 @@ import { LocalStorageService } from 'app/core/services/local-storage.service';
 
 @Injectable()
 export class AuthService {
+  authStatus$: Subject<any> = new BehaviorSubject<any>([]);
 
   constructor(
     private httpService: HttpService,
@@ -26,11 +29,17 @@ export class AuthService {
     const headers = this.httpService.defaultHeaders();
     headers.delete('Content-Type');
 
-    return this.httpService.post(
-      'users/sign_in',
-      this.buildUserParams(email, password),
-      headers
-    );
+    return Observable.create(obs => {
+      this.httpService.post(
+        'users/sign_in',
+        this.buildUserParams(email, password),
+        headers
+      ).subscribe( res => {
+        this.authStatus$.next(res);
+        this.isLoggedIn();
+        obs.next(res);
+      });
+    });
   }
 
   /**

@@ -36,6 +36,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.redirectIfUserLoggedIn();
   }
 
   login(userForm: any) {
@@ -58,6 +59,15 @@ export class SignInComponent implements OnInit {
           }
         }
       );
+  }
+
+  /**
+   * Redirect to return url if user logged in
+   */
+  redirectIfUserLoggedIn() {
+    if ( this.authService.isLoggedIn() ) {
+      this.router.navigateByUrl(this.returnUrl);
+    }
   }
 
 }

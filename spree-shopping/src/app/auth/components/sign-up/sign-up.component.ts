@@ -31,6 +31,7 @@ export class SignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.redirectIfUserLoggedIn();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.initUserForm();
   }
@@ -92,6 +93,15 @@ export class SignUpComponent implements OnInit {
       'password': [ '', [ Validators.required, Validators.minLength(6) ] ],
       'passwordConfirmation': [ '', [ Validators.required, Validators.minLength(6) ] ]
     }, { validator: passwrodMatch});
+  }
+
+  /**
+   * Redirect to home page if user logged in
+   */
+  redirectIfUserLoggedIn() {
+    if ( this.authService.isLoggedIn() ) {
+      this.router.navigateByUrl('/');
+    }
   }
 
 }
