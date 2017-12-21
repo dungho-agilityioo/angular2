@@ -19,11 +19,11 @@ import { HttpService } from 'app/core/services/http.service';
 
 
 @Component({
-  selector: 'login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  selector: 'sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class SignInComponent implements OnInit {
   returnUrl: string;
   user: any = {};
   constructor(
