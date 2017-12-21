@@ -30,7 +30,6 @@ import { AuthService } from 'app/auth/services/auth.service';
 })
 export class AddressComponent implements OnInit, OnDestroy {
   addressForm: FormGroup;
-  emailForm: FormGroup;
   isAuthenticated: boolean;
   subscription: Subscription;
   orderState: String;
@@ -50,13 +49,13 @@ export class AddressComponent implements OnInit, OnDestroy {
     this.subscription = this.orderService.order$.subscribe(res => {
 
       this.addressForm = this.addressService.initAddressForm();
-      this.emailForm = this.addressService.initEmailForm();
 
       if (!_.isEmpty(res)) {
         const order = res.json();
         this.orderState = order.state;
-        this.address = order.ship_address;
-        this.email = order.email;
+        if (!_.isNull(order.ship_address)) {
+          this.address = order.ship_address;
+        }
         this.cd.markForCheck();
       }
     });
@@ -66,12 +65,7 @@ export class AddressComponent implements OnInit, OnDestroy {
 
   saveAddress(address) {
     let addressAttributes;
-    if (this.isAuthenticated) {
-      addressAttributes = this.addressService.createAddresAttributes(address);
-    } else {
-      const email = this.getEmailFromUser();
-      addressAttributes = this.addressService.createGuestAddressAttributes(address, email);
-    }
+    addressAttributes = this.addressService.createAddresAttributes(address);
 
     if (this.orderState === 'address') {
       this.subscription = this.orderService.updateOrder(addressAttributes)
@@ -85,13 +79,6 @@ export class AddressComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['checkout/delivery']);
     }
-  }
-
-  /**
-   * Get value of email from Email form
-   */
-  private getEmailFromUser() {
-    return this.emailForm.value.email;
   }
 
   ngOnDestroy() {
