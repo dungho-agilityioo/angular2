@@ -28,9 +28,9 @@ export class AddressService {
       'address1': ['', Validators.required],
       'city': ['', Validators.required],
       'phone': ['', Validators.required],
-      'zipcode': [10001, Validators.required],
-      'state_id': [3561, Validators.required],
-      'country_id': [232, Validators.required]
+      'zipcode': ['', Validators.required],
+      'state_id': ['', Validators.required],
+      'country_id': ['', Validators.required]
     });
   }
 
