@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-block">
+        <div class="row">
+            <div class="col-md-2">SHIPMENT</div>
+            <div class="col-md-2">STATUS</div>
+            <div class="col-md-2">ITEMS</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">{{ order?.display_total }}</div>
+            <div class="col-md-2">{{ order?.shipment_state }}</div>
+            <div class="col-md-2">{{ order?.total_quantity }}</div>
+        </div>
+        <hr/>
+        <div class="row" *ngFor="let item of order?.line_items">
+            <div class="col-md-3">
+                <img itemprop="image" class="card-img-top mx-auto d-block" alt="{{item.variant.name}}" [attr.src]="item.variant.images[0]?.small_url | formaturlimage ">
+            </div>
+            <div class="col-md-3">
+                <a [routerLink]="['/product/', item.variant.slug]">{{ item.variant.name }}</a>
+            </div>
+            <div class="col-md-3">
+                <div>{{ item.total }}</div>
+                <div>{{ item.display_amount }}</div>
+            </div>
+            <div class="col-md-3">{{ item.variant.desscription }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">SHIPPING DETAILS</div>
+    <div class="card-block">
+        <div class="row col-md-12">
+            Order No: {{ order?.number }}
+        </div>
+        <div class="row col-md-12">
+            Name: {{ order?.ship_address.firstname + ' ' + order?.ship_address.lastname }}
+        </div>
+        <div class="row col-md-12">
+            Address: {{ order?.ship_address.address1 }}
+        </div>
+        <div class="row col-md-12">
+            City: {{ order?.ship_address.city }}
+        </div>
+
+        <div class="row col-md-12">
+            Phone: {{ order?.ship_address.phone }}
+        </div>
+
+        <div class="row mt-4 col-md-12">
+            Total Amount: {{ order?.display_total }}
+        </div>
+        <div class="row col-md-12">
+            MRP: {{ order?.display_item_total }}
+        </div>
+        <div class="row col-md-12">
+            Shipping: {{ order?.display_ship_total }}
+        </div>
+        <div class="row col-md-12">
+            Tax Amount: {{ order?.display_additional_tax_total }}
+        </div>
+
+        <div class="row mt-4 col-md-12">
+            Payment: {{ order?.payment_state }}
+        </div>
+    </div>
+</div>
