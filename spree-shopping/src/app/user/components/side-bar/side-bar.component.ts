@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+
+import {
+  UserConfigService
+} from 'app/user/services/user-config.service';
 
 @Component({
   selector: 'side-bar',
@@ -6,10 +13,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-bar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  userOrderUrl: string;
 
-  constructor() { }
+  constructor(
+    private userConfig: UserConfigService
+  ) { }
 
   ngOnInit() {
+    this.userOrderUrl = this.userConfig.PATH_NAME.USER_ORDER;
+    console.log('rul ', this.userOrderUrl);
   }
 
 }

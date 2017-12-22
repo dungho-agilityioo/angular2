@@ -12,7 +12,7 @@
     <tbody>
         <tr *ngFor="let order of orders">
             <th>
-                <a href="javascription:void()" [routerLink]="[orderUrl, order.number]">{{ order.number }}</a>
+                <a href="javascription:void()" [routerLink]="[orderUrl, order.number, order.token]">{{ order.number }}</a>
             </th>
             <td>{{ order.created_at | date }}</td>
             <td>{{ order.state }}</td>

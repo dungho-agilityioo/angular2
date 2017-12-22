@@ -30,11 +30,6 @@ import {
 import {
   AuthGuardService
 } from 'app/auth/services/auth-guard.service';
-import {
-  CartConfigService
-} from './services/cart-config.service';
-
-const cartConfig: CartConfigService = new CartConfigService();
 
 export const ROUTES: Routes = [
   {
@@ -42,7 +37,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: cartConfig.PATH_NAME.CHECKOUT_CART,
+        path: 'cart',
         component: ShoppingCartComponent
       }
     ]
@@ -53,7 +48,7 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuardService],
     children: [
       {
-        path: cartConfig.PATH_NAME.CHECKOUT_ADDRESS,
+        path: 'checkout/address',
         component: CartAddressComponent
       }
     ]
@@ -63,7 +58,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: cartConfig.PATH_NAME.CHECKOUT_DELIVERY,
+        path: 'checkout/delivery',
         component: CartDeliveryComponent
       }
     ]
@@ -73,7 +68,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: cartConfig.PATH_NAME.CHECKOUT_PAYMENT,
+        path: 'checkout/payment',
         component: CartPaymentComponent
       }
     ]
