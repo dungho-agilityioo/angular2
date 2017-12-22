@@ -21,7 +21,11 @@ import {
 import {
   MyOrderDetailsComponent
 } from './components/my-order-details/my-order-details.component';
+import {
+  UserConfigService
+} from 'app/user/services/user-config.service';
 
+const userConfig: UserConfigService = new UserConfigService();
 export const ROUTES: Routes = [
   {
     path: '',
@@ -29,11 +33,11 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'user/order',
+        path: userConfig.PATH_NAME.USER_ORDER,
         component: MyOrdersComponent
       },
       {
-        path: 'user/order/:number',
+        path: 'user/order/:number/:token',
         component: MyOrderDetailsComponent
       }
     ]
