@@ -1,10 +1,6 @@
-
 import {
   NgModule
 } from '@angular/core';
-import {
-  CommonModule
-} from '@angular/common';
 
 import {
   OrderService
@@ -12,15 +8,22 @@ import {
 import {
   OrderListComponent
 } from './components/order-list/order-list.component';
+import {
+  OrderDetailsComponent
+} from 'app/order/components/order-details/order-details.component';
+import {
+  SharedModule
+} from 'app/shared/shared.module';
 
 const MODULES = [
-  CommonModule
+  SharedModule
 ];
 const PROVIDERS: any[] = [
   OrderService
 ];
 const COMPONENTS = [
-  OrderListComponent
+  OrderListComponent,
+  OrderDetailsComponent
 ];
 
 @NgModule({
