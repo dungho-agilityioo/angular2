@@ -10,13 +10,15 @@ import { Order } from 'app/order/models/order.model';
 import { LocalStorageService } from 'app/core/services/local-storage.service';
 
 @Component({
-  selector: 'app-my-orders',
+  selector: 'my-orders',
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyOrdersComponent implements OnInit {
   orders: any;
+  orderUrl: string;
+
   constructor(
     private userService: UserService,
     private localStorageService: LocalStorageService,
@@ -25,6 +27,8 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit() {
     const email = this.localStorageService.getUser().email;
+    this.orderUrl = '/user/order';
+
     this.userService.getOrders(email)
       .subscribe( res => {
         // const data = res.json();

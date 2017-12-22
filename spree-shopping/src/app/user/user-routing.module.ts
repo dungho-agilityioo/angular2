@@ -18,6 +18,9 @@ import {
 import {
   MyOrdersComponent
 } from './components/my-orders/my-orders.component';
+import {
+  MyOrderDetailsComponent
+} from './components/my-order-details/my-order-details.component';
 
 export const ROUTES: Routes = [
   {
@@ -28,6 +31,10 @@ export const ROUTES: Routes = [
       {
         path: 'user/order',
         component: MyOrdersComponent
+      },
+      {
+        path: 'user/order/:number',
+        component: MyOrderDetailsComponent
       }
     ]
   }
