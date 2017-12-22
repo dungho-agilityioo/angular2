@@ -12,6 +12,9 @@ import {
 import {
   CategoryComponent
 } from './category.component';
+import {
+  CategoryConfigService
+} from 'app/category/services/category-config.service';
 
 const MODULES = [
   BrowserModule
@@ -20,7 +23,8 @@ const COMPONENTS = [
   CategoryComponent
 ];
 const PROVIDERS = [
-  CategoryService
+  CategoryService,
+  CategoryConfigService
 ];
 
 @NgModule({
