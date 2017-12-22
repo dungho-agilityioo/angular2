@@ -12,30 +12,16 @@ import {
   FormControl,
   AbstractControl
 } from '@angular/forms';
-import {
-  Router
-} from '@angular/router';
-import {
-  Subscription
-} from 'rxjs/Subscription';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
-import {
-  OrderService
-} from 'app/order/services/order.service';
-import {
-  AddressService
-} from './services/address.service';
-import {
-  Address
-} from 'app/address/models/address';
-import {
-  AuthService
-} from 'app/auth/services/auth.service';
-import {
-  CartConfigService
-} from 'app/cart/services/cart-config.service';
+import { OrderService } from 'app/order/services/order.service';
+import { AddressService } from './services/address.service';
+import { Address } from 'app/address/models/address';
+import { AuthService } from 'app/auth/services/auth.service';
+import * as cartConfig from 'app/cart/cart-config';
 
 @Component({
   selector: 'address-form',
@@ -57,8 +43,7 @@ export class AddressComponent implements OnInit, OnDestroy {
     private addressService: AddressService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private authService: AuthService,
-    private cartConfig: CartConfigService
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -91,14 +76,14 @@ export class AddressComponent implements OnInit, OnDestroy {
             const data = res.json();
 
             if ( !data.error ) {
-              this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
+              this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
             } else {
-              this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
+              this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
             }
           }
         );
     } else {
-      this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
+      this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
     }
   }
 

@@ -5,28 +5,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef
 } from '@angular/core';
-import {
-  Subscription
-} from 'rxjs/Subscription';
-import {
-  Router
-} from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
 
-import {
-  OrderService
-} from 'app/order/services/order.service';
-import {
-  LineItem
-} from 'app/order/models/line-item.model';
-import {
-  Order
-} from 'app/order/models/order.model';
-import {
-  CartConfigService
-} from 'app/cart/services/cart-config.service';
-
+import { OrderService } from 'app/order/services/order.service';
+import { LineItem } from 'app/order/models/line-item.model';
+import { Order } from 'app/order/models/order.model';
+import * as cartConfig from 'app/cart/cart-config';
 
 @Component({
   selector: 'shopping-cart',
@@ -43,8 +30,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderService,
     private cd: ChangeDetectorRef,
-    private router: Router,
-    private cartConfig: CartConfigService
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -105,11 +91,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     if ( this.orderState === 'cart' ) {
       this.orderService.changeOrderState()
         .do( () => {
-          this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
+          this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
         })
         .subscribe();
     } else {
-      this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
+      this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
     }
   }
 

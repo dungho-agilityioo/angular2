@@ -6,30 +6,16 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
-import {
-  HttpModule
-} from '@angular/http';
+import { HttpModule } from '@angular/http';
 
-import {
-  ShoppingCartComponent
-} from './components/shopping-cart/shopping-cart.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
-import {
-  PrimaryLayoutComponent
-} from 'app/shared/components/main-layout/primary-layout.component';
-import {
-  CartAddressComponent
-} from 'app/cart/components/cart-address/cart-address.component';
-import {
-  CartDeliveryComponent
-} from './components/cart-delivery/cart-delivery.component';
-import {
-  CartPaymentComponent
-} from './components/cart-payment/cart-payment.component';
-
-import {
-  AuthGuardService
-} from 'app/auth/services/auth-guard.service';
+import { PrimaryLayoutComponent } from 'app/shared/components/main-layout/primary-layout.component';
+import { CartAddressComponent } from 'app/cart/components/cart-address/cart-address.component';
+import { CartDeliveryComponent } from './components/cart-delivery/cart-delivery.component';
+import { CartPaymentComponent } from './components/cart-payment/cart-payment.component';
+import { AuthGuardService} from 'app/auth/services/auth-guard.service';
+import * as cartConfig from './cart-config';
 
 export const ROUTES: Routes = [
   {
@@ -37,7 +23,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'cart',
+        path: cartConfig.PATH_NAME.CHECKOUT_CART,
         component: ShoppingCartComponent
       }
     ]
@@ -48,7 +34,7 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'checkout/address',
+        path: cartConfig.PATH_NAME.CHECKOUT_ADDRESS,
         component: CartAddressComponent
       }
     ]
@@ -58,7 +44,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'checkout/delivery',
+        path: cartConfig.PATH_NAME.CHECKOUT_DELIVERY,
         component: CartDeliveryComponent
       }
     ]
@@ -68,7 +54,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'checkout/payment',
+        path: cartConfig.PATH_NAME.CHECKOUT_PAYMENT,
         component: CartPaymentComponent
       }
     ]
