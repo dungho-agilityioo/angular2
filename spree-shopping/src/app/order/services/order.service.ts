@@ -20,12 +20,20 @@ import {
   HttpService
 } from 'app/core/services/http.service';
 import {
+  CartService
+} from 'app/shared/services/cart.service';
+import {
+  OrderConfigService
+} from './order-config.service';
+
+import {
   LineItem
 } from '../models/line-item.model';
 import {
   Order
 } from 'app/order/models/order.model';
-import { CartService } from 'app/shared/services/cart.service';
+
+import { environment } from 'env/environment';
 
 @Injectable()
 export class OrderService {
@@ -35,7 +43,8 @@ export class OrderService {
   constructor(
     private cartService: CartService,
     private httpService: HttpService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private orderConfig: OrderConfigService
   ) {
     this.order$.subscribe(res => {
       if (!_.isEmpty(res)) {
@@ -211,6 +220,7 @@ export class OrderService {
         return payments;
       });
   }
+
   /**
    * Create new payment of order
    * @param paymentModeId
@@ -241,6 +251,31 @@ export class OrderService {
         this.order$.next(res);
         this.cartService.cart$.next(res);
       });
+  }
+
+  /**
+   * Get order by email
+   * @param email
+   */
+  getOrders(email?: string): Observable<any>  {
+    const headers = this.httpService.defaultHeaders();
+
+    headers.set('X-Spree-Token', environment.API_KEY);
+
+    return this.httpService.get(
+        `orders?q[email_cont]=${email}`,
+        null, headers
+      ).map( res => res.json() );
+  }
+
+  /**
+   * Get order by numbr
+   * @param number
+   */
+  getOrder(number: string, token: string) {
+    return this.httpService.get(
+        `orders/${number}?order_token=${token}`
+      );
   }
 
   /**

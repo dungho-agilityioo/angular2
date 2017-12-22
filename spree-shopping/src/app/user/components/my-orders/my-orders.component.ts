@@ -5,9 +5,19 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { UserService } from 'app/user/services/user.service';
-import { Order } from 'app/order/models/order.model';
-import { LocalStorageService } from 'app/core/services/local-storage.service';
+
+import {
+  Order
+} from 'app/order/models/order.model';
+import {
+  LocalStorageService
+} from 'app/core/services/local-storage.service';
+import {
+  UserConfigService
+} from 'app/user/services/user-config.service';
+import {
+  OrderService
+} from 'app/order/services/order.service';
 
 @Component({
   selector: 'my-orders',
@@ -20,21 +30,21 @@ export class MyOrdersComponent implements OnInit {
   orderUrl: string;
 
   constructor(
-    private userService: UserService,
+    private orderService: OrderService,
     private localStorageService: LocalStorageService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private userConfig: UserConfigService
   ) { }
 
   ngOnInit() {
     const email = this.localStorageService.getUser().email;
-    this.orderUrl = '/user/order';
+    this.orderUrl = `/${this.userConfig.PATH_NAME.USER_ORDER}`;
 
-    this.userService.getOrders(email)
+    this.orderService.getOrders(email)
       .subscribe( res => {
         // const data = res.json();
         this.orders = [...res.orders];
         this.cd.markForCheck();
-        console.log('orders 11', this.orders);
       });
 
   }
