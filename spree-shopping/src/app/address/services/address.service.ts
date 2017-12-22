@@ -1,21 +1,39 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  Observable
+} from 'rxjs/Observable';
 import {
   Validators,
   FormBuilder,
   FormGroup
 } from '@angular/forms';
 
-import { HttpService } from 'app/core/services/http.service';
-import { Address } from 'app/address/models/address';
-import { LocalStorageService } from 'app/core/services/local-storage.service';
+
+import * as _ from 'lodash';
+
+import {
+  HttpService
+} from 'app/core/services/http.service';
+import {
+  Address
+} from 'app/address/models/address';
+import {
+  LocalStorageService
+} from 'app/core/services/local-storage.service';
+import {
+  AddressConfigService
+} from './address-config.service';
+
 
 @Injectable()
 export class AddressService {
 
   constructor(
     private fb: FormBuilder,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private addressConfig: AddressConfigService
   ) { }
 
   /**
@@ -28,9 +46,8 @@ export class AddressService {
       'address1': ['', Validators.required],
       'city': ['', Validators.required],
       'phone': ['', Validators.required],
-      'zipcode': [10001, Validators.required],
-      'state_id': [3561, Validators.required],
-      'country_id': [232, Validators.required]
+      'zipcode': ['', Validators.required],
+      'state_id': ['', Validators.required]
     });
   }
 
@@ -46,6 +63,8 @@ export class AddressService {
    */
   createAddresAttributes(address: Address) {
     const user = this.localStorageService.getUser();
+    const countryId = this.addressConfig.VALUES.COUNTRY_ID;
+    address = _.assign({ country_id: countryId}, address);
 
     return {
       order: {

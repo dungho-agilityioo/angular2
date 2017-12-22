@@ -17,6 +17,9 @@ import {
 import {
   ROUTES as addressRouting
 } from 'app/address/address-routing.module';
+import {
+  ROUTES as userRouting
+} from 'app/user/user-routing.module';
 
 export const COMMON_MODULES: any[] = [
 ];
@@ -38,6 +41,12 @@ export const ROUTES: any[] = [
     path: '',
     children: [
       ...authRouting
+    ]
+  },
+  {
+    path: '',
+    children: [
+      ...userRouting
     ]
   }
 ];

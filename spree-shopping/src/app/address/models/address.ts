@@ -5,6 +5,6 @@ export class Address {
   city?: String;
   phone?: String;
   zipcode?: String;
-  state_id?: 3534;
-  country_id?: 232;
+  state_id?: number;
+  country_id?: number;
 }

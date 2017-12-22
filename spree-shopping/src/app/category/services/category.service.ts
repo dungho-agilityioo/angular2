@@ -10,12 +10,16 @@ import 'rxjs/add/operator/switchMap';
 import {
   HttpService
 } from 'app/core/services/http.service';
+import {
+  CategoryConfigService
+} from './category-config.service';
 
 @Injectable()
 export class CategoryService {
 
   constructor(
-    private httpService: HttpService
+    private httpService: HttpService,
+    private categoryConfig: CategoryConfigService
   ) { }
 
   /**
@@ -24,7 +28,7 @@ export class CategoryService {
    */
   getCategories(): Observable<any> {
     return this.httpService.get(
-        'taxonomies/1/taxons'
+        this.categoryConfig.API_PATH_NAME.TAXONOMY
       )
       .map( res => res.json().taxons);
   }

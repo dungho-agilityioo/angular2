@@ -12,15 +12,30 @@ import {
   FormControl,
   AbstractControl
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import {
+  Router
+} from '@angular/router';
+import {
+  Subscription
+} from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
-import { OrderService } from 'app/order/services/order.service';
-import { AddressService } from './services/address.service';
-import { Address } from 'app/address/models/address';
-import { AuthService } from 'app/auth/services/auth.service';
+import {
+  OrderService
+} from 'app/order/services/order.service';
+import {
+  AddressService
+} from './services/address.service';
+import {
+  Address
+} from 'app/address/models/address';
+import {
+  AuthService
+} from 'app/auth/services/auth.service';
+import {
+  CartConfigService
+} from 'app/cart/services/cart-config.service';
 
 @Component({
   selector: 'address-form',
@@ -42,7 +57,8 @@ export class AddressComponent implements OnInit, OnDestroy {
     private addressService: AddressService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private cartConfig: CartConfigService
   ) { }
 
   ngOnInit() {
@@ -65,19 +81,24 @@ export class AddressComponent implements OnInit, OnDestroy {
 
   saveAddress(address) {
     let addressAttributes;
+
     addressAttributes = this.addressService.createAddresAttributes(address);
 
     if (this.orderState === 'address') {
       this.subscription = this.orderService.updateOrder(addressAttributes)
         .subscribe(
-        success => this.router.navigate(['checkout/delivery']),
-        error => {
-          console.log('errr', error);
-          this.router.navigate(['checkout/address']);
-        }
+          res => {
+            const data = res.json();
+
+            if ( !data.error ) {
+              this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
+            } else {
+              this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
+            }
+          }
         );
     } else {
-      this.router.navigate(['checkout/delivery']);
+      this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
     }
   }
 

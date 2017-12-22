@@ -15,12 +15,13 @@ import { PaymentService } from 'app/payment/services/payment.service';
 @Component({
   selector: 'app-cart-payment',
   templateUrl: './cart-payment.component.html',
-  styleUrls: ['./cart-payment.component.css'],
+  styleUrls: ['./cart-payment.component.scss'],
   providers: [PaymentService]
 })
 export class CartPaymentComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   orderTotal: OrderTotal;
+
   constructor(
     private orderService: OrderService,
     private cd: ChangeDetectorRef
