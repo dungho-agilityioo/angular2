@@ -39,9 +39,6 @@ import {
 } from 'app/cart/components/cart-header/cart-header.component';
 
 import {
-  CartConfigService
-} from './services/cart-config.service';
-import {
   OrderService
 } from 'app/order/services/order.service';
 
@@ -62,8 +59,7 @@ const COMPONENTS: any[] = [
 ];
 
 const PROVIDERS = [
-  OrderService,
-  CartConfigService
+  OrderService
 ];
 
 @NgModule({

@@ -4,28 +4,16 @@ import {
   ChangeDetectorRef,
   OnDestroy
 } from '@angular/core';
-import {
-  Router
-} from '@angular/router';
+import {  Router } from '@angular/router';
 import 'rxjs/add/operator/do';
-import {
-  Subscription
-} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
-import {
-  OrderService
-} from 'app/order/services/order.service';
-import {
-  Address
-} from 'app/address/models/address';
-import {
-  OrderTotal
-} from 'app/order/models/order-total.model';
-import {
-  CartConfigService
-} from 'app/cart/services/cart-config.service';
+import { OrderService } from 'app/order/services/order.service';
+import { Address } from 'app/address/models/address';
+import { OrderTotal } from 'app/order/models/order-total.model';
+import * as cartConfig from 'app/cart/cart-config';
 
 @Component({
   selector: 'cart-delivery',
@@ -41,8 +29,7 @@ export class CartDeliveryComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderService,
     private cd: ChangeDetectorRef,
-    private router: Router,
-    private cartConfig: CartConfigService
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -71,11 +58,11 @@ export class CartDeliveryComponent implements OnInit, OnDestroy {
     if (this.orderState === 'delivery' || this.orderState === 'address') {
       this.orderService.changeOrderState()
         .do(() => {
-          this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_PAYMENT]);
+          this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_PAYMENT]);
         })
         .subscribe();
     } else {
-      this.router.navigate([this.cartConfig.PATH_NAME.CHECKOUT_PAYMENT]);
+      this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_PAYMENT]);
     }
   }
 
