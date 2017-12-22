@@ -2,25 +2,26 @@ import {
   NgModule
 } from '@angular/core';
 
+
 import {
   SharedModule
 } from 'app/shared/shared.module';
-import {
-  AddToCartComponent
-} from './components/add-to-cart/add-to-cart.component';
-import {
-  ShoppingCartComponent
-} from './components/shopping-cart/shopping-cart.component';
-
-import {
-  OrderService
-} from 'app/order/services/order.service';
 import {
   AddressModule
 } from 'app/address/address.module';
 import {
   PaymentModule
 } from 'app/payment/payment.module';
+import {
+  AuthModule
+} from 'app/auth/auth.module';
+
+import {
+  AddToCartComponent
+} from './components/add-to-cart/add-to-cart.component';
+import {
+  ShoppingCartComponent
+} from './components/shopping-cart/shopping-cart.component';
 import {
   CartAddressComponent
 } from 'app/cart/components/cart-address/cart-address.component';
@@ -36,8 +37,13 @@ import {
 import {
   CartHeaderComponent
 } from 'app/cart/components/cart-header/cart-header.component';
-import { AuthModule } from 'app/auth/auth.module';
 
+import {
+  CartConfigService
+} from './services/cart-config.service';
+import {
+  OrderService
+} from 'app/order/services/order.service';
 
 const MODULES = [
   SharedModule,
@@ -56,7 +62,8 @@ const COMPONENTS: any[] = [
 ];
 
 const PROVIDERS = [
-  OrderService
+  OrderService,
+  CartConfigService
 ];
 
 @NgModule({

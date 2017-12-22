@@ -9,12 +9,15 @@ import {
 
 import * as _ from 'lodash';
 
-import { OrderService } from 'app/order/services/order.service';
-import { OrderTotal } from 'app/order/models/order-total.model';
-import { LocalStorageService } from 'app/core/services/local-storage.service';
+import {
+  OrderService
+} from 'app/order/services/order.service';
+import {
+  OrderTotal
+} from 'app/order/models/order-total.model';
 
 @Component({
-  selector: 'app-cart-address',
+  selector: 'cart-address',
   templateUrl: './cart-address.component.html',
   styleUrls: ['./cart-address.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,19 +25,14 @@ import { LocalStorageService } from 'app/core/services/local-storage.service';
 export class CartAddressComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   orderTotal: OrderTotal;
-  userApiKey: string;
-  returnUrl: String;
 
   constructor(
     private orderService: OrderService,
-    private cd: ChangeDetectorRef,
-    private lsService: LocalStorageService
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.returnUrl = 'checkout/address';
-    this.userApiKey = this.lsService.getUserApiKey();
-    console.log('api key', this.userApiKey);
+
     this.subscription = this.orderService.order$.subscribe(res => {
       if (!_.isEmpty(res)) {
         const order = res.json();

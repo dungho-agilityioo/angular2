@@ -1,5 +1,6 @@
 import {
-  NgModule, Component
+  NgModule,
+  Component
 } from '@angular/core';
 import {
   RouterModule,
@@ -25,9 +26,15 @@ import {
 import {
   CartPaymentComponent
 } from './components/cart-payment/cart-payment.component';
+
 import {
   AuthGuardService
 } from 'app/auth/services/auth-guard.service';
+import {
+  CartConfigService
+} from './services/cart-config.service';
+
+const cartConfig: CartConfigService = new CartConfigService();
 
 export const ROUTES: Routes = [
   {
@@ -35,7 +42,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'cart',
+        path: cartConfig.PATH_NAME.CHECKOUT_CART,
         component: ShoppingCartComponent
       }
     ]
@@ -46,7 +53,7 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuardService],
     children: [
       {
-        path: 'checkout/address',
+        path: cartConfig.PATH_NAME.CHECKOUT_ADDRESS,
         component: CartAddressComponent
       }
     ]
@@ -56,7 +63,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'checkout/delivery',
+        path: cartConfig.PATH_NAME.CHECKOUT_DELIVERY,
         component: CartDeliveryComponent
       }
     ]
@@ -66,7 +73,7 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'checkout/payment',
+        path: cartConfig.PATH_NAME.CHECKOUT_PAYMENT,
         component: CartPaymentComponent
       }
     ]
