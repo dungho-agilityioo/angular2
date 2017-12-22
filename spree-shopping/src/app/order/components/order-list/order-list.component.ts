@@ -13,7 +13,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrderListComponent implements OnInit {
-  @Input() orders: Order;
+  @Input() orders: Order[];
+  @Input() orderUrl: string;
 
   constructor() { }
 

@@ -5,15 +5,19 @@
             <th>Date</th>
             <th>Status</th>
             <th>Shipment State</th>
+            <th>Item</th>
             <th>Total</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let order of orders">
-            <th>{{ order.number }}</th>
+            <th>
+                <a href="javascription:void()" [routerLink]="[orderUrl, order.number]">{{ order.number }}</a>
+            </th>
             <td>{{ order.created_at | date }}</td>
             <td>{{ order.state }}</td>
             <td>{{ order.shipment_state }}</td>
+            <td>{{ order.total_quantity }}</td>
             <td>{{ order.display_total }}</td>
         </tr>
     </tbody>
