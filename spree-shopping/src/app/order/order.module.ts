@@ -14,16 +14,12 @@ import {
 import {
   SharedModule
 } from 'app/shared/shared.module';
-import {
-  OrderConfigService
-} from './services/order-config.service';
 
 const MODULES = [
   SharedModule
 ];
 const PROVIDERS: any[] = [
-  OrderService,
-  OrderConfigService
+  OrderService
 ];
 const COMPONENTS = [
   OrderListComponent,

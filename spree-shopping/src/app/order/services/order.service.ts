@@ -13,26 +13,13 @@ import 'rxjs/add/operator/share';
 
 import * as _ from 'lodash';
 
-import {
-  LocalStorageService
-} from 'app/core/services/local-storage.service';
-import {
-  HttpService
-} from 'app/core/services/http.service';
-import {
-  CartService
-} from 'app/shared/services/cart.service';
-import {
-  OrderConfigService
-} from './order-config.service';
+import { LocalStorageService } from 'app/core/services/local-storage.service';
+import { HttpService } from 'app/core/services/http.service';
+import { CartService } from 'app/shared/services/cart.service';
+import * as orderConfig from 'app/order/order-config';
 
-import {
-  LineItem
-} from '../models/line-item.model';
-import {
-  Order
-} from 'app/order/models/order.model';
-
+import { LineItem } from 'app/order/models/line-item.model';
+import { Order } from 'app/order/models/order.model';
 import { environment } from 'env/environment';
 
 @Injectable()
@@ -43,8 +30,7 @@ export class OrderService {
   constructor(
     private cartService: CartService,
     private httpService: HttpService,
-    private localStorageService: LocalStorageService,
-    private orderConfig: OrderConfigService
+    private localStorageService: LocalStorageService
   ) {
     this.order$.subscribe(res => {
       if (!_.isEmpty(res)) {
@@ -87,9 +73,9 @@ export class OrderService {
             order = order.json();
           }
           if (_.isUndefined(lineItemId)) {
-            return this.updateLineItem(variantId, order.number, order.token, quantity);
+            return this.updateLineItem(variantId, quantity);
           } else {
-            return this.deleteLineItem(lineItemId, order.number);
+            return this.deleteLineItem(lineItemId);
           }
         })
         .switchMap((res) => {
@@ -115,23 +101,26 @@ export class OrderService {
       return new Observable(obs => obs.next({}));
     }
 
-    return this.httpService.get(
-      `orders/${orderOnStorage.number}?order_token=${orderOnStorage.token}`
+    const orderCurrentUrl = this.buildUrlByParam(
+      orderConfig.API_PATH_NAME.ORDER_CURRENT
     );
+
+    return this.httpService.get(orderCurrentUrl);
   }
 
   /**
    * Create or remove line itme for order
    * @param variantId
-   * @param orderNumber
-   * @param orderToken
    * @return Observable
    */
-  updateLineItem(variantId: number, orderNumber: string, orderToken: string, quantity: number): Observable<any> {
+  updateLineItem(variantId: number, quantity: number): Observable<any> {
+    const orderLineItemUrl = this.buildUrlByParam(
+        orderConfig.API_PATH_NAME.ORDER_LINE_ITEM
+      );
 
     // send request to create new line item
     return this.httpService.post(
-      `orders/${orderNumber}/line_items?order_token=${orderToken}`,
+      orderLineItemUrl,
       {
         line_item: {
           variant_id: variantId,
@@ -147,11 +136,14 @@ export class OrderService {
    * @param orderNumber
    * @return Observable
    */
-  deleteLineItem(lineItemId: number, orderNumber: String): Observable<any> {
+  deleteLineItem(lineItemId: number): Observable<any> {
+    const complied = _.template(orderConfig.API_PATH_NAME.ORDER_LINE_ITEM_ONE);
+    const orderLineItemUrl = complied({
+      number: this.getOrderNumber(),
+      id: lineItemId
+    });
 
-    return this.httpService.delete(
-      `orders/${orderNumber}/line_items/${lineItemId}`
-    );
+    return this.httpService.delete(orderLineItemUrl);
   }
 
   /**
@@ -161,12 +153,15 @@ export class OrderService {
    */
   changeOrderState(): Observable<any> {
     const headers = this.httpService.defaultHeaders();
-    const orderToken = this.localStorageService.getOrder().token;
+    const orderChangeStateUrl = this.buildUrlByParam(
+        orderConfig.API_PATH_NAME.ORDER_CHANGE_STATE
+      );
+
     headers.delete('Content-Type');
 
     return Observable.create(obs => {
       this.httpService.put(
-        `checkouts/${this.orderNumber}/next.json?order_token=${orderToken}`,
+        orderChangeStateUrl,
         {},
         headers
       ).subscribe(res => {
@@ -177,9 +172,13 @@ export class OrderService {
   }
 
   updateOrder(params: any): Observable<any> {
+    const orderUrl = this.buildUrlByParam(
+        orderConfig.API_PATH_NAME.ORDER_UPDATE
+      );
+
     return Observable.create(obs => {
       this.httpService.put(
-        `checkouts/${this.orderNumber}.json?order_token=${this.getOrderToken()}`,
+        orderUrl,
         params
       ).subscribe(res => {
         this.order$.next(res);
@@ -213,8 +212,12 @@ export class OrderService {
    * Get all payment method
    */
   availablePaymentMethods() {
+    const paymentMethodUrl = this.buildUrlByParam(
+        orderConfig.API_PATH_NAME.ORDER_PAYMENT_METHOD
+      );
+
     return this.httpService.get(
-        `orders/${this.orderNumber}/payments/new?order_token=${this.getOrderToken()}`
+        paymentMethodUrl
       ).map(res => {
         const payments = res.json();
         return payments;
@@ -228,10 +231,14 @@ export class OrderService {
    */
   createNewPayment(paymentModeId: number, paymentAmout: number): Observable<any> {
     const headers = this.httpService.defaultHeaders();
+    const paymentUrl = this.buildUrlByParam(
+        orderConfig.API_PATH_NAME.ORDER_PAYMENT
+      );
+
     headers.delete('Content-Type');
 
     return this.httpService.post(
-      `orders/${this.orderNumber}/payments?order_token=${this.getOrderToken()}`,
+      paymentUrl,
       {
         payment: {
           payment_method_id: paymentModeId,
@@ -259,11 +266,14 @@ export class OrderService {
    */
   getOrders(email?: string): Observable<any>  {
     const headers = this.httpService.defaultHeaders();
+    const complied = _.template(orderConfig.API_PATH_NAME.ORDER_SEARCH);
+    const orderSearchUrl = complied({ email: email });
 
+    // set role to admin
     headers.set('X-Spree-Token', environment.API_KEY);
 
     return this.httpService.get(
-        `orders?q[email_cont]=${email}`,
+        orderSearchUrl,
         null, headers
       ).map( res => res.json() );
   }
@@ -273,18 +283,31 @@ export class OrderService {
    * @param number
    */
   getOrder(number: string, token: string) {
-    return this.httpService.get(
-        `orders/${number}?order_token=${token}`
+    const orderUrl = this.buildUrlByParam(
+        orderConfig.API_PATH_NAME.ORDER_ONE,
+        number,
+        token
       );
+
+    return this.httpService.get(orderUrl);
   }
 
   /**
    * Get order token on local stogare
    */
-  private getOrderToken(): String {
+  private getOrderToken(): string {
     const orderOnStorage = this.localStorageService.getOrder();
 
     return orderOnStorage.token;
+  }
+
+  /**
+   * Get order number on local stogare
+   */
+  private getOrderNumber(): string {
+    const orderOnStorage = this.localStorageService.getOrder();
+
+    return orderOnStorage.number;
   }
 
   /**
@@ -309,6 +332,20 @@ export class OrderService {
           return obs.next(res);
         });
     });
+  }
+
+  /**
+   * Build url use lodash template
+   * @param paramUrl
+   */
+  private buildUrlByParam(paramUrl: string, orderNumber?: string, orderToken?: string) {
+    const compiled = _.template(paramUrl);
+    const  url = compiled({
+      number: (_.isUndefined(orderNumber)) ? this.getOrderNumber() : orderNumber,
+      token: (_.isUndefined(orderToken)) ? this.getOrderToken() : orderToken
+    });
+
+    return url;
   }
 
 }
