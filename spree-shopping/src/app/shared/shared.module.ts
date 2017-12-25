@@ -1,31 +1,18 @@
 
-import {
-  RouterModule
-} from '@angular/router';
-import {
-  NgModule
-} from '@angular/core';
-import {
-  CommonModule
-} from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { FormatUrlImagePipe } from './pipes/format-url-image.pipe';
 import {TruncatePipe } from './pipes/truncate.pipe';
 import { CartService } from './services/cart.service';
 import { PaginationService } from './services/pagination.service';
 
-import {
-  PaginationComponent
-} from './components/pagination/pagination.component';
-import {
-  MainFooterComponent
-} from './components/main-footer/main-footer.component';
-import {
-  PrimaryLayoutComponent
-} from './components/main-layout/primary-layout.component';
-import {
-  MainHeaderComponent
-} from './components/main-header/main-header.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { MainFooterComponent } from './components/main-footer/main-footer.component';
+import { PrimaryLayoutComponent } from './components/main-layout/primary-layout.component';
+import { MainHeaderComponent } from './components/main-header/main-header.component';
+import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 
 const MODULES = [
   CommonModule,
@@ -35,7 +22,8 @@ const COMPONENTS: any[] = [
   PrimaryLayoutComponent,
   MainHeaderComponent,
   MainFooterComponent,
-  PaginationComponent
+  PaginationComponent,
+  ControlMessagesComponent
 ];
 
 const PIPES: any[] = [
