@@ -1,30 +1,18 @@
-import {
-  Injectable
-} from '@angular/core';
-import {
-  Observable
-} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import {
   Validators,
   FormBuilder,
   FormGroup
 } from '@angular/forms';
 
-
 import * as _ from 'lodash';
 
-import {
-  HttpService
-} from 'app/core/services/http.service';
-import {
-  Address
-} from 'app/address/models/address';
-import {
-  LocalStorageService
-} from 'app/core/services/local-storage.service';
-import {
-  AddressConfigService
-} from './address-config.service';
+import { HttpService } from 'app/core/services/http.service';
+import { Address } from 'app/address/models/address';
+import { LocalStorageService } from 'app/core/services/local-storage.service';
+import { AddressConfigService } from './address-config.service';
+import { ValidationService } from 'app/core/services/validation.service';
 
 
 @Injectable()
@@ -45,7 +33,11 @@ export class AddressService {
       'lastname': ['', Validators.required],
       'address1': ['', Validators.required],
       'city': ['', Validators.required],
-      'phone': ['', Validators.required],
+      'phone': ['', [
+                      Validators.required,
+                      ValidationService.phoneValidator()
+                    ]
+                  ],
       'zipcode': ['', Validators.required],
       'state_id': ['', Validators.required]
     });

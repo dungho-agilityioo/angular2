@@ -1,34 +1,20 @@
 import {
-  HttpModule
-} from '@angular/http';
-import {
   NgModule,
   Optional,
   SkipSelf
 } from '@angular/core';
-import {
-  CommonModule
-} from '@angular/common';
+import { HttpModule } from '@angular/http';
 
-import {
-  LocalStorageService
-} from './services/local-storage.service';
-import {
-  HttpService
-} from './services/http.service';
-import {
-  ProductService
-} from './../product/services/product.service';
+import { CommonModule } from '@angular/common';
 
-import {
-  moduleImportGuard
-} from './module-import-guard';
-import {
-  LoadingIndicatorComponent
-} from 'app/core/components/loading-indicator/loading-indicator.component';
-import {
-  NotificationComponent
-} from 'app/core/components/notification/notification.component';
+import { LocalStorageService } from './services/local-storage.service';
+import { HttpService } from './services/http.service';
+import { ValidationService } from './services/validation.service';
+
+import { moduleImportGuard } from './module-import-guard';
+import { LoadingIndicatorComponent } from 'app/core/components/loading-indicator/loading-indicator.component';
+import { NotificationComponent } from 'app/core/components/notification/notification.component';
+
 
 const MODULES: any[] = [
   CommonModule,
@@ -42,7 +28,8 @@ const COMPONENTS = [
 
 const PROVIDERS: any[] = [
   HttpService,
-  LocalStorageService
+  LocalStorageService,
+  ValidationService
 ];
 
 @NgModule({
