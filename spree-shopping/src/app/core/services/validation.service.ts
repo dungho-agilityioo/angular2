@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 import * as _ from 'lodash';
 
@@ -44,13 +44,13 @@ export class ValidationService {
     return (control: AbstractControl): { [key: string]: any } => {
       const value = control.value;
 
-      if ( _.isUndefined(value) || value === '' ) {
+      if ( _.isUndefined(value) || value === '' || _.isNull(value) ) {
         return null;
       }
 
       const phone = value.match(/\d/g);
 
-      if ( !_.isNull(phone) && (_.isNull(phone) || phone.length === 10 || phone.length === 11)) {
+      if ( phone.length === 10 || phone.length === 11 ) {
         return null;
       } else {
         return { 'invalidPhone': true };
@@ -58,7 +58,7 @@ export class ValidationService {
     };
   }
 
-  static passwrodMatch(control: AbstractControl): { [key: string]: boolean } {
+  passwordMatch = (control: AbstractControl): { [key: string]: boolean } => {
     const password = control.get('password');
     const passwordConfirm = control.get('passwordConfirmation');
 
@@ -66,4 +66,13 @@ export class ValidationService {
     return password.value === passwordConfirm.value ? null : { nomatch: true };
   }
 
+   /**
+   * Push error to every control to show on form
+   * @param form
+   * @param ctrlName
+   * @param message
+   */
+  pushErrorToForm(form: FormGroup, ctrlName: string, message: string): void {
+    form.controls[ctrlName].setErrors({'message': message});
+  }
 }

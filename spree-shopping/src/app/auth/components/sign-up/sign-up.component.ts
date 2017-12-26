@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router } from '@angular/router';
 import {
   FormGroup,
   FormControl,
@@ -7,15 +14,17 @@ import {
   Validators
 } from '@angular/forms';
 
+import * as _ from 'lodash';
+
 import { AuthService } from 'app/auth/services/auth.service';
 import { LocalStorageService } from 'app/core/services/local-storage.service';
-import { HttpService } from 'app/core/services/http.service';
-import { passwrodMatch } from './password-match';
+import { ValidationService } from 'app/core/services/validation.service';
 
 @Component({
   selector: 'sign-up-form',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent implements OnInit {
   returnUrl: string;
@@ -26,8 +35,9 @@ export class SignUpComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private localStorageService: LocalStorageService,
-    private httpService: HttpService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private validationService: ValidationService
   ) { }
 
   ngOnInit() {
@@ -57,9 +67,10 @@ export class SignUpComponent implements OnInit {
               // display error message
               keys.forEach(val => {
                 if (errors[val]) {
-                  this.pushErrorToForm(val, errors[val][0]);
+                  this.validationService.pushErrorToForm(this.signUpForm, val, errors[val][0]);
                 }
               });
+              this.cd.markForCheck();
             }
           }
         );
@@ -68,7 +79,6 @@ export class SignUpComponent implements OnInit {
       keys.forEach(val => {
         const ctrl = this.signUpForm.controls[val];
         if (!ctrl.valid) {
-          this.pushErrorToForm(val, null);
           ctrl.markAsTouched();
         }
       });
@@ -76,23 +86,14 @@ export class SignUpComponent implements OnInit {
   }
 
   /**
-   * Push error to every control to show on form
-   * @param ctrl_name
-   * @param msg
-   */
-  private pushErrorToForm(ctrl_name: string, msg: string): void {
-    this.signUpForm.controls[ctrl_name].setErrors({'msg': msg});
-  }
-
-  /**
    * Init Sign up form
    */
   private initUserForm() {
     this.signUpForm = this.fb.group({
-      'email': [ '', [ Validators.required, Validators.email] ],
+      'email': [ '', [ Validators.required, ValidationService.emailValidator] ],
       'password': [ '', [ Validators.required, Validators.minLength(6) ] ],
       'passwordConfirmation': [ '', [ Validators.required, Validators.minLength(6) ] ]
-    }, { validator: passwrodMatch});
+    }, { validator: this.validationService.passwordMatch});
   }
 
   /**
