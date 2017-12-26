@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { Order } from 'app/order/models/order.model';
 import { LineItem } from 'app/order/models/line-item.model';
 import { CartService } from 'app/shared/services/cart.service';
+import { OrderTotal } from 'app/order/models/order-total.model';
 
 @Component({
   selector: 'main-header',
@@ -19,7 +20,7 @@ import { CartService } from 'app/shared/services/cart.service';
 export class MainHeaderComponent implements OnInit {
   @Input() appName: string;
 
-  totalLineItem = 0;
+  orderTotal: OrderTotal = new OrderTotal();
 
   constructor(
     private cartService: CartService
@@ -29,7 +30,10 @@ export class MainHeaderComponent implements OnInit {
     this.cartService.cart$.subscribe( res => {
       if (!_.isEmpty(res)) {
         const order: Order = res.json();
-        this.totalLineItem = order.total_quantity;
+        this.orderTotal = {
+          total: order.total,
+          itemCount: order.total_quantity
+        };
       }
     });
   }

@@ -1,0 +1,5 @@
+<a routerLink="/cart" class="align-middle">
+    <span class="badge badge-pill badge-default">
+      Cart: ( {{ orderTotal.itemCount || 'Empty' }} ) {{ orderTotal.total | currency:'USD':'$'}}
+  </span>
+</a>
