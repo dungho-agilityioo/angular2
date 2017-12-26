@@ -68,14 +68,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
    */
   getQuantity(product: Product): number {
 
-    // tslint:disable-next-line:curly
-    if (_.isUndefined(this.lineItems)) return 0;
-
-    const variantId = product.master.id;
-    const item = this.lineItems.find(
-      li => li.variant_id === variantId
-    );
-    return _.isUndefined(item) ? 0 : item.quantity;
+    return this.productService.getQuantity(product, this.lineItems);
   }
 
   /**
@@ -115,11 +108,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   addToCart(product) {
     const variantId = product.master.id;
     this.orderService.addToCart(variantId)
-      .subscribe(
-      res => {
-        console.log(res);
-      }
-      );
+      .subscribe();
   }
 
   ngOnDestroy() {

@@ -1,20 +1,17 @@
 import {
-  NgModule, Component
+  NgModule,
+  Component
 } from '@angular/core';
 import {
   RouterModule,
   Routes
 } from '@angular/router';
-import {
-  HttpModule
-} from '@angular/http';
+import { HttpModule } from '@angular/http';
 
-import {
-  ProductListPageComponent
-} from './components/product-list-page/product-list-page.component';
-import {
-  PrimaryLayoutComponent
-} from 'app/shared/components/main-layout/primary-layout.component';
+import { ProductListPageComponent } from './components/product-list-page/product-list-page.component';
+import { PrimaryLayoutComponent } from 'app/shared/components/main-layout/primary-layout.component';
+import { ProductDetailsPageComponent } from './components/product-details-page/product-details-page.component';
+
 
 export const ROUTES: Routes = [
   {
@@ -24,6 +21,10 @@ export const ROUTES: Routes = [
       {
         path: '',
         component: ProductListPageComponent
+      },
+      {
+        path: 'product/:slug',
+        component: ProductDetailsPageComponent
       }
     ]
   }

@@ -1,0 +1,28 @@
+<div class="row mt-4 mb-4">
+    <div class="col-md-4 col-sm-5">
+        <div class="row col-md-12">
+            <product-images [images]="product.master?.images"></product-images>
+        </div>
+        <div class="row col-md-12">
+            <product-property [productProperties]="product.product_properties"></product-property>
+        </div>
+    </div>
+    <div class="col-md-8 col-sm-7">
+        <h1 class="row">{{ product.name }}</h1>
+        <div class="row card" *ngIf="product.description">
+            <div class="card-block">{{ product.description }}</div>
+        </div>
+
+        <div class="row col-md-3 mt-4 mt-4">
+            <p class="col-md-12">Price</p>
+            <h3 class="col-md-12">
+                <p>{{ product.display_price }}</p>
+            </h3>
+
+            <button *ngIf="getQuantity() === 0; else updateQuantity" (click)="addToCart(product)" class="btn btn-block btn-primary">Add to Cart</button>
+            <ng-template #updateQuantity>
+                <add-to-cart [variantId]="product.master?.id" [quantity]="getQuantity()" (btnCartClick)="onBtnCart($event)"></add-to-cart>
+            </ng-template>
+        </div>
+    </div>
+</div>

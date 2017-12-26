@@ -1,25 +1,14 @@
-import {
-  BehaviorSubject
-} from 'rxjs/BehaviorSubject';
-import {
-  Subject
-} from 'rxjs/Subject';
-import {
-  Injectable
-} from '@angular/core';
-import {
-  Observable
-} from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import {
-  environment
-} from 'env/environment';
-import {
-  Product
-} from './../models/product.model';
-import {
-  HttpService
-} from 'app/core/services/http.service';
+import * as _ from 'lodash';
+
+import { environment } from 'env/environment';
+import { Product } from 'app/product/models/product.model';
+import { HttpService } from 'app/core/services/http.service';
+import { LineItem } from 'app/order/models/line-item.model';
 
 @Injectable()
 export class ProductService {
@@ -51,5 +40,22 @@ export class ProductService {
           obs.next(res);
         });
     });
+  }
+
+  /**
+   * Get product quantity in current order
+   * @param product
+   * @param lineItems
+   * @return number
+   */
+  getQuantity(product: Product, lineItems: any): number {
+    // tslint:disable-next-line:curly
+    if (_.isUndefined(lineItems) || _.isUndefined(product)) return 0;
+
+    const variantId = product.master.id;
+    const item = lineItems.find(
+      li => li.variant_id === variantId
+    );
+    return _.isUndefined(item) ? 0 : item.quantity;
   }
 }
