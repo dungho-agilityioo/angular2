@@ -23,9 +23,6 @@ import {
   MyOrderDetailsComponent
 } from './components/my-order-details/my-order-details.component';
 import {
-  UserConfigService
-} from 'app/user/services/user-config.service';
-import {
   OrderService
 } from 'app/order/services/order.service';
 
@@ -42,7 +39,6 @@ const COMPONENTS = [
 ];
 
 const PROVIDERS = [
-  UserConfigService,
   OrderService
 ];
 

@@ -11,6 +11,7 @@ import { PaymentMode } from 'app/payment/models/payment-mode';
 import { PaymentService } from 'app/payment/services/payment.service';
 import { OrderTotal } from 'app/order/models/order-total.model';
 import { LocalStorageService } from 'app/core/services/local-storage.service';
+import * as userConfig from 'app/user/user-config';
 
 @Component({
   selector: 'payment-mode',
@@ -21,7 +22,7 @@ export class PaymentModeComponent implements OnInit {
   @Input() orderTotal: OrderTotal;
 
   selectdMode: PaymentMode = new PaymentMode();
-  isAuthenticated: Boolean = false;
+
   constructor(
     private orderService: OrderService,
     private paymentService: PaymentService,
@@ -57,11 +58,7 @@ export class PaymentModeComponent implements OnInit {
 
   private redirectToNewPage() {
     // if user login will redirect to owner order
-    if (this.isAuthenticated) {
-      this.router.navigate(['/user', 'orders', 'detail', this.orderTotal.number]);
-    } else {
-      this.router.navigate(['/']);
-    }
+    this.router.navigate([userConfig.PATH_NAME.USER_ORDER]);
   }
 
 }

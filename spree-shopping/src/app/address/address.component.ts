@@ -65,11 +65,10 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   saveAddress(address) {
-    let addressAttributes;
-
-    addressAttributes = this.addressService.createAddresAttributes(address);
-
     if (this.orderState === 'address') {
+      let addressAttributes;
+
+      addressAttributes = this.addressService.createAddresAttributes(address);
       this.subscription = this.orderService.updateOrder(addressAttributes)
         .subscribe(
           res => {
@@ -88,6 +87,8 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if ( !_.isUndefined(this.subscription)) {
+      this.subscription.unsubscribe();
+    }
   }
 }

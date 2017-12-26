@@ -6,18 +6,10 @@ import {
 } from '@angular/core';
 
 
-import {
-  Order
-} from 'app/order/models/order.model';
-import {
-  LocalStorageService
-} from 'app/core/services/local-storage.service';
-import {
-  UserConfigService
-} from 'app/user/services/user-config.service';
-import {
-  OrderService
-} from 'app/order/services/order.service';
+import { Order } from 'app/order/models/order.model';
+import { LocalStorageService } from 'app/core/services/local-storage.service';
+import { OrderService } from 'app/order/services/order.service';
+import * as userConfig from 'app/user/user-config';
 
 @Component({
   selector: 'my-orders',
@@ -32,13 +24,12 @@ export class MyOrdersComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private localStorageService: LocalStorageService,
-    private cd: ChangeDetectorRef,
-    private userConfig: UserConfigService
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     const email = this.localStorageService.getUser().email;
-    this.orderUrl = `/${this.userConfig.PATH_NAME.USER_ORDER}`;
+    this.orderUrl = `/${userConfig.PATH_NAME.USER_ORDER}`;
 
     this.orderService.getOrders(email)
       .subscribe( res => {

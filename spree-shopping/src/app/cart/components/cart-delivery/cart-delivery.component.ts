@@ -12,7 +12,6 @@ import * as _ from 'lodash';
 
 import { OrderService } from 'app/order/services/order.service';
 import { Address } from 'app/address/models/address';
-import { OrderTotal } from 'app/order/models/order-total.model';
 import * as cartConfig from 'app/cart/cart-config';
 
 @Component({
@@ -24,7 +23,6 @@ export class CartDeliveryComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   shippingAddress: Address;
   orderState: String;
-  orderTotal: OrderTotal;
 
   constructor(
     private orderService: OrderService,
@@ -38,13 +36,6 @@ export class CartDeliveryComponent implements OnInit, OnDestroy {
         const order = res.json();
         this.shippingAddress = order.ship_address;
         this.orderState = order.state;
-
-        this.orderTotal = {
-          itemTotal: order.item_total,
-          total: order.total,
-          itemCount: order.total_quantity,
-          taxTotal: order.tax_total
-        };
 
         this.cd.markForCheck();
       }
