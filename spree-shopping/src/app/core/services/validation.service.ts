@@ -58,7 +58,7 @@ export class ValidationService {
     };
   }
 
-  static passwrodMatch(control: AbstractControl): { [key: string]: boolean } {
+  passwordMatch = (control: AbstractControl): { [key: string]: boolean } => {
     const password = control.get('password');
     const passwordConfirm = control.get('passwordConfirmation');
 

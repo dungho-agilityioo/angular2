@@ -9,23 +9,20 @@
                 <div class="form-group" [ngClass]="{ 'has-danger': signUpForm.get('email').errors && signUpForm.get('email').touched }">
                     <label for="email">Email</label>
                     <input type="text" class="form-control form-control-danger" name="email" formControlName="email" />
-                    <div *ngIf="signUpForm.get('email').errors && signUpForm.get('email').touched">
-                        <p class="form-control-feedback">{{signUpForm.get('email').errors?.msg || 'Please enter a valid email'}}</p>
-                    </div>
+                    <control-messages [control]="signUpForm.controls.email" controlName="Email"></control-messages>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-danger': signUpForm.get('password').errors && signUpForm.get('password').touched }">
                     <label>Password</label>
                     <input type="password" class="form-control form-control-danger" name="password" formControlName="password" />
-                    <div *ngIf="signUpForm.get('password').errors && signUpForm.get('password').touched">
-                        <p class="form-control-feedback">{{signUpForm.get('password').errors?.msg || 'Password must be at least 6 characters'}}</p>
-                    </div>
+                    <control-messages [control]="signUpForm.controls.password" controlName="Password"></control-messages>
                 </div>
                 <div class="form-group" [ngClass]="{ 'has-danger': (signUpForm.get('passwordConfirmation').errors || signUpForm.hasError('nomatch')) && signUpForm.get('passwordConfirmation').touched }">
                     <label>Password Confirmation</label>
                     <input type="password" name="passwordConfirmation" class="form-control form-control-danger" formControlName="passwordConfirmation" />
                     <div *ngIf="(signUpForm.get('passwordConfirmation').errors || signUpForm.hasError('nomatch')) && signUpForm.get('passwordConfirmation').touched">
-                        <p class="form-control-feedback">{{ 'Password must match'}}</p>
+                        <p class="form-control-feedback">Password must match</p>
                     </div>
+
                 </div>
             </div>
             <div class="card-header text-right">
