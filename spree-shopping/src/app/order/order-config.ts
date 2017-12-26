@@ -6,7 +6,7 @@ export const  API_PATH_NAME = {
     ORDER_PAYMENT_METHOD: 'orders/<%= number %>/payments/new?order_token=<%= token %>',
     ORDER_PAYMENT: 'orders/<%= number %>/payments?order_token=<%= token %>',
     ORDER_SEARCH: 'orders?q[email_cont]=<%= email %>',
-    ORDER_ONE: '`orders/<%= number %>?order_token=<%= token %>',
+    ORDER_ONE: 'orders/<%= number %>?order_token=<%= token %>',
     ORDER_EMPTY_CREATE: 'orders.json',
     ORDER_LINE_ITEM_ONE: 'orders/<%= number %>/line_items/<%= id %>'
   };
