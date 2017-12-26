@@ -27,19 +27,19 @@ export class AddressService {
   /**
    * Init address form
    */
-  initAddressForm(): FormGroup {
+  initAddressForm(address: Address): FormGroup {
     return this.fb.group({
-      'firstname': ['', Validators.required],
-      'lastname': ['', Validators.required],
-      'address1': ['', Validators.required],
-      'city': ['', Validators.required],
-      'phone': ['', [
+      'firstname': [address.firstname, Validators.required],
+      'lastname': [address.lastname, Validators.required],
+      'address1': [address.address1, Validators.required],
+      'city': [address.city, Validators.required],
+      'phone': [address.phone, [
                       Validators.required,
                       ValidationService.phoneValidator()
                     ]
                   ],
-      'zipcode': ['', Validators.required],
-      'state_id': ['', Validators.required]
+      'zipcode': [address.zipcode, Validators.required],
+      'state_id': [address.state_id, Validators.required]
     });
   }
 

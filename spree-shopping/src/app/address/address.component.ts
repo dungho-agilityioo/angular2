@@ -20,8 +20,8 @@ import * as _ from 'lodash';
 import { OrderService } from 'app/order/services/order.service';
 import { AddressService } from './services/address.service';
 import { Address } from 'app/address/models/address';
-import { AuthService } from 'app/auth/services/auth.service';
 import * as cartConfig from 'app/cart/cart-config';
+import { ValidationService } from 'app/core/services/validation.service';
 
 @Component({
   selector: 'address-form',
@@ -43,44 +43,70 @@ export class AddressComponent implements OnInit, OnDestroy {
     private addressService: AddressService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private authService: AuthService
+    private validatonService: ValidationService
   ) { }
 
   ngOnInit() {
     this.subscription = this.orderService.order$.subscribe(res => {
 
-      this.addressForm = this.addressService.initAddressForm();
-
       if (!_.isEmpty(res)) {
         const order = res.json();
-        this.orderState = order.state;
-        if (!_.isNull(order.ship_address)) {
-          this.address = order.ship_address;
+        if ( !order.errors ) {
+          this.orderState = order.state;
+
+          if (_.isObject(order.ship_address)) {
+            // this.addressForm = this.addressService.initAddressForm(order.ship_address);
+            const addressValue = _.pick(order.ship_address, ['firstname', 'lastname', 'address1', 'city', 'state_id', 'zipcode', 'phone']);
+            this.addressForm.setValue(addressValue);
+          }
         }
-        this.cd.markForCheck();
       }
     });
-    // set user login or not
-    this.isAuthenticated = this.authService.isLoggedIn();
+
+    this.addressForm = this.addressService.initAddressForm(this.address);
   }
 
   saveAddress(address) {
     if (this.orderState === 'address') {
+      const values = this.addressForm.value;
+      const keys = Object.keys(values);
       let addressAttributes;
 
-      addressAttributes = this.addressService.createAddresAttributes(address);
-      this.subscription = this.orderService.updateOrder(addressAttributes)
-        .subscribe(
-          res => {
-            const data = res.json();
+      // if form valid
+      if ( this.addressForm.valid) {
+        addressAttributes = this.addressService.createAddresAttributes(address);
+        this.subscription = this.orderService.updateOrder(addressAttributes)
+          .subscribe(
+            res => {
+              const data = res.json();
+              const errors = data.errors;
 
-            if ( !data.error ) {
-              this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
-            } else {
-              this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_ADDRESS]);
+              if ( !errors ) {
+                this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
+              } else {
+                // display error message
+                keys.forEach( val => {
+
+                  const shipVal = `ship_address.${val}`;
+
+                  if (errors[shipVal]) {
+                    this.validatonService.pushErrorToForm(this.addressForm, val, `${val} ${errors[shipVal][0]}`);
+                  }
+                });
+                this.cd.markForCheck();
+              }
             }
+          );
+      } else {
+        // else form invalid, reset message error to show default error on view
+        keys.forEach(val => {
+          const ctrl = this.addressForm.controls[val];
+          if (!ctrl.valid) {
+            // this.validatonService.pushErrorToForm(this.addressForm, val, null);
+            ctrl.markAsTouched();
           }
-        );
+        });
+      }
     } else {
       this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
     }
@@ -91,4 +117,5 @@ export class AddressComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
 }

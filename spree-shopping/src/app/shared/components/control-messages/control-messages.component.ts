@@ -12,9 +12,7 @@ export class ControlMessagesComponent {
   @Input() control: FormControl;
   @Input() controlName: string;
 
-  constructor() {
-    console.log('ssss', this.controlName);
-   }
+  constructor() {}
 
   get errorMessage() {
 
@@ -22,11 +20,13 @@ export class ControlMessagesComponent {
 
       if ( this.control.errors.hasOwnProperty(propertyName)
         && this.control.touched) {
-          return ValidationService.getValidatorErrorMessage(
+          const defaultMessage =  ValidationService.getValidatorErrorMessage(
               propertyName,
               this.control.errors[propertyName],
               this.controlName
             );
+
+          return defaultMessage || this.control.errors.message;
         }
     }
 

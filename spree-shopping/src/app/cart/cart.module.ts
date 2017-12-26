@@ -11,7 +11,6 @@ import { CartAddressComponent } from 'app/cart/components/cart-address/cart-addr
 import { CartSummaryComponent } from 'app/cart/components/cart-summary/cart-summary.component';
 import { CartDeliveryComponent } from './components/cart-delivery/cart-delivery.component';
 import { CartPaymentComponent } from './components/cart-payment/cart-payment.component';
-import { CartHeaderComponent } from 'app/cart/components/cart-header/cart-header.component';
 import { MainCartComponent } from './main-cart.component';
 
 import { OrderService } from 'app/order/services/order.service';
@@ -29,7 +28,6 @@ const COMPONENTS: any[] = [
   CartSummaryComponent,
   CartDeliveryComponent,
   CartPaymentComponent,
-  CartHeaderComponent,
   MainCartComponent
 ];
 
