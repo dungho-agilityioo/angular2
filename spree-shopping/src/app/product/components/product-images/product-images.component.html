@@ -1,17 +1,14 @@
+<div class="card mb-4 mb-4">
+    <div class="card-block text-center">
+        <img class="card-img-top mx-auto d-block" alt="" [attr.src]="(currentImage?.product_url || images[0].product_url) | formaturlimage ">
+    </div>
+</div>
 <div>
-    <div class="panel panel-default">
-        <div class="panel-body text-center">
-            <img class="card-img-top mx-auto d-block" alt="" [attr.src]="currentImage?.product_url | formaturlimage ">
-        </div>
-    </div>
-    <div>
-        <ul id="product-thumbnails" class="thumbnails list-inline">
-            <li class="thumbnails list-inline" *ngFor="let image of images; let i = index">
-                <a class="d-flex pr-3" href="javascription:void()">
-                    <img (click)="selectedImage(image)" class="card-img-top mx-auto d-block" alt="" [attr.src]="image.mini_url | formaturlimage ">
-                </a>
-            </li>
-        </ul>
-
-    </div>
+    <ul class="thumbnails list-inline">
+        <li *ngFor="let image of images; let i = index">
+            <a href="javascription:void()">
+                <img (click)="selectedImage(image)" class="thumbnail" alt="" [attr.src]="image.mini_url | formaturlimage ">
+            </a>
+        </li>
+    </ul>
 </div>

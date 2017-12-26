@@ -23,9 +23,6 @@ export class ProductImagesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!_.isNull(this.images)) {
-      this.currentImage = this.images[0];
-    }
   }
 
   selectedImage(image: Image): void {
