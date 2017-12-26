@@ -1,4 +1,3 @@
-
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +12,7 @@ import { MainFooterComponent } from './components/main-footer/main-footer.compon
 import { PrimaryLayoutComponent } from './components/main-layout/primary-layout.component';
 import { MainHeaderComponent } from './components/main-header/main-header.component';
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
+import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
 
 const MODULES = [
   CommonModule,
@@ -23,7 +23,8 @@ const COMPONENTS: any[] = [
   MainHeaderComponent,
   MainFooterComponent,
   PaginationComponent,
-  ControlMessagesComponent
+  ControlMessagesComponent,
+  ProfileDropdownComponent
 ];
 
 const PIPES: any[] = [

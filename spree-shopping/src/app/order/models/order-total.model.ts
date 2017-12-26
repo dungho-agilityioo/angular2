@@ -1,7 +1,7 @@
-export interface OrderTotal {
-  itemTotal: number;
+export class OrderTotal {
+  itemTotal?: number;
   total: number;
   itemCount: number;
-  taxTotal: number;
+  taxTotal?: number;
   number?: String;
 }

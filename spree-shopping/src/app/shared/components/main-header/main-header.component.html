@@ -15,11 +15,7 @@
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <a routerLink="/cart">
-                <span class="badge badge-pill badge-default">
-                    {{ totalLineItem }}
-                </span>
-            </a>
+            <profile-dropdown [orderTotal]="orderTotal"></profile-dropdown>
         </div>
     </div>
 </nav>
