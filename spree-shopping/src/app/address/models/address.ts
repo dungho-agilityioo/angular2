@@ -1,10 +1,10 @@
 export class Address {
-  firstname?: string;
-  lastname?: string;
-  address1?: string;
+  firstName?: string;
+  lastName?: string;
+  address?: string;
   city?: string;
   phone?: string;
   zipcode?: string;
-  state_id?: number;
-  country_id?: number;
+  stateId?: number;
+  countryId?: number;
 }

@@ -1,6 +1,6 @@
 export class User {
   id: Number;
-  spree_api_key: string;
+  spreeApiKey: string;
   email: string;
   password?: string;
   passwordConfirmation?: string;
