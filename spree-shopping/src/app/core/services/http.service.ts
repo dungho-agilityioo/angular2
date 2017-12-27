@@ -12,6 +12,7 @@ import {
 import {
   Observable
 } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 import * as _ from 'lodash';
 
@@ -22,7 +23,7 @@ import {
   LocalStorageService
 } from 'app/core/services/local-storage.service';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/observable/of';
+import { Serializer } from 'app/core/services/serializer';
 
 @Injectable()
 export class HttpService {
@@ -44,6 +45,10 @@ export class HttpService {
     return this.http.get(
         this.getFullUrl(url), this.requestOptions(params, headers)
       )
+      .map( res => {
+        const rs = Serializer.deserialize(res.json());
+        return rs;
+      })
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
         this.onSubscribeSuccess(res);

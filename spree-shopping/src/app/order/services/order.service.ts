@@ -32,9 +32,9 @@ export class OrderService {
     private httpService: HttpService,
     private localStorageService: LocalStorageService
   ) {
-    this.order$.subscribe(res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
+    this.order$.subscribe(order => {
+      if (!_.isEmpty(order)) {
+        // const order = res.json();
         this.orderNumber = order.number;
       }
     });

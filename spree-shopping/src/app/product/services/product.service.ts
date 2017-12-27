@@ -54,8 +54,9 @@ export class ProductService {
 
     const variantId = product.master.id;
     const item = lineItems.find(
-      li => li.variant_id === variantId
+      li => li.variantId === variantId
     );
+
     return _.isUndefined(item) ? 0 : item.quantity;
   }
 }

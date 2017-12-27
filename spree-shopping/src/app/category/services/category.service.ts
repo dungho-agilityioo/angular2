@@ -30,6 +30,6 @@ export class CategoryService {
     return this.httpService.get(
         this.categoryConfig.API_PATH_NAME.TAXONOMY
       )
-      .map( res => res.json().taxons);
+      .map( res => res.taxons);
   }
 }
