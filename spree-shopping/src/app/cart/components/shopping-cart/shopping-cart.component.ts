@@ -35,10 +35,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.orderService.order$
-      .subscribe( res => {
-        if (!_.isEmpty(res)) {
-          const order = res.json();
-          this.lineItems = [...order.line_items];
+      .subscribe( order => {
+        if (!_.isEmpty(order)) {
+          this.lineItems = [...order.lineItems];
           this.totalOrder = order.total;
           this.orderState = order.state;
           this.cd.markForCheck();
@@ -69,18 +68,15 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     this.orderService
       .removeFromCart(variantId, lineItemId)
-      .subscribe( res => {
-        const lineItem = res.json();
-
-        // if remove a line item object - default just +/- quantity
-        if (!_.isUndefined(lineItemId)) {
-          // find index of line item response in array line items
-          const index = this.lineItems.findIndex( li => li.id === lineItemId );
-          if (index > -1 ) {
-            this.lineItems.splice(index, 1);
-            this.cd.markForCheck();
+      .subscribe( lineItem => {
+          if (!_.isUndefined(lineItemId) && !lineItem.error ) {
+            // find index of line item response in array line items
+            const index = this.lineItems.findIndex( li => li.id === lineItemId );
+            if (index > -1 ) {
+              this.lineItems.splice(index, 1);
+              this.cd.markForCheck();
+            }
           }
-        }
       });
   }
 
