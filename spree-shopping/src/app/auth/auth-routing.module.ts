@@ -6,18 +6,11 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
-import {
-  HttpModule
-} from '@angular/http';
-import {
-  PrimaryLayoutComponent
-} from 'app/shared/components/main-layout/primary-layout.component';
-import {
-  SignUpComponent
-} from 'app/auth/components/sign-up/sign-up.component';
-import {
-  SignInComponent
-} from 'app/auth/components/sign-in/sign-in.component';
+import { HttpModule } from '@angular/http';
+import { PrimaryLayoutComponent } from 'app/shared/components/main-layout/primary-layout.component';
+import { SignUpComponent } from 'app/auth/components/sign-up/sign-up.component';
+import { SignInComponent } from 'app/auth/components/sign-in/sign-in.component';
+import * as authConfig from 'app/auth/auth-config';
 
 export const ROUTES: Routes = [
   {
@@ -25,11 +18,11 @@ export const ROUTES: Routes = [
     component: PrimaryLayoutComponent,
     children: [
       {
-        path: 'login',
+        path: authConfig.PATH_NAME.SIGN_IN,
         component: SignInComponent
       },
       {
-        path: 'signup',
+        path: authConfig.PATH_NAME.SIGN_UP,
         component: SignUpComponent
       }
     ]

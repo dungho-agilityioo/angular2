@@ -43,9 +43,7 @@ export class SignInComponent implements OnInit {
 
     this.authService.login(userForm.email, userForm.password)
       .subscribe(
-        res => {
-          const user = res.json();
-
+        user => {
           if ( ! user.error ) {
             this.localStorageService.setUser(user);
             this.router.navigateByUrl(this.returnUrl);

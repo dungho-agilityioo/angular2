@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +10,7 @@ import * as _ from 'lodash';
 import { User } from 'app/user/models/user.model';
 import { HttpService } from 'app/core/services/http.service';
 import { LocalStorageService } from 'app/core/services/local-storage.service';
+import * as authConfig from 'app/auth/auth-config';
 
 
 @Injectable()
@@ -17,7 +19,8 @@ export class AuthService {
 
   constructor(
     private httpService: HttpService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private router: Router
   ) { }
 
   /**
@@ -25,13 +28,13 @@ export class AuthService {
    * @param email
    * @param password
    */
-  login(email: String, password: String): Observable<any> {
+  login(email: string, password: string): Observable<any> {
     const headers = this.httpService.defaultHeaders();
     headers.delete('Content-Type');
 
     return Observable.create(obs => {
       this.httpService.post(
-        'users/sign_in',
+        authConfig.API_PATH_NAME.SIGN_IN,
         this.buildUserParams(email, password),
         headers
       ).subscribe( res => {
@@ -47,9 +50,9 @@ export class AuthService {
    * @param email
    * @param password
    */
-  registry(email: String, password: String): Observable<any> {
+  registry(email: string, password: string): Observable<any> {
     return this.httpService.post(
-      'users/sign_up',
+      authConfig.API_PATH_NAME.SIGN_UP,
       this.buildUserParams(email, password)
     );
   }
@@ -59,13 +62,21 @@ export class AuthService {
    * @param email
    * @param password
    */
-  private buildUserParams(email: String, password: String): any {
+  private buildUserParams(email: string, password: string): any {
     return {
       user: {
         email: email,
         password: password
       }
     };
+  }
+
+  /**
+   * Log out
+   */
+  logout() {
+    this.localStorageService.removeUser();
+    this.router.navigate(['/']);
   }
 
   /**
