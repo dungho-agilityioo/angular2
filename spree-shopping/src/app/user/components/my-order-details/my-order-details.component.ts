@@ -36,10 +36,9 @@ export class MyOrderDetailsComponent implements OnInit {
       this.orderToken = params['token'];
     });
     this.orderService.getOrder(this.orderNumber, this.orderToken)
-      .subscribe( res => {
-        if (!_.isEmpty(res)) {
-          const data = res.json();
-          this.order = data;
+      .subscribe( order => {
+        if (!_.isEmpty(order) && !order.error) {
+          this.order = order;
         }
       });
   }

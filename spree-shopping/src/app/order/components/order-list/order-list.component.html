@@ -14,11 +14,11 @@
             <th>
                 <a href="javascription:void()" [routerLink]="[orderUrl, order.number, order.token]">{{ order.number }}</a>
             </th>
-            <td>{{ order.created_at | date }}</td>
+            <td>{{ order.createdAt | date }}</td>
             <td>{{ order.state }}</td>
-            <td>{{ order.shipment_state }}</td>
-            <td>{{ order.total_quantity }}</td>
-            <td>{{ order.display_total }}</td>
+            <td>{{ order.shipmentState }}</td>
+            <td>{{ order.totalQuantity }}</td>
+            <td>{{ order.displayTotal }}</td>
         </tr>
     </tbody>
 </table>
