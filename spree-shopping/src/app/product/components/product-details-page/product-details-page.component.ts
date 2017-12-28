@@ -47,11 +47,10 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
       this.product = product;
     });
 
-    this.orderSub = this.orderService.order$.subscribe(res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
+    this.orderSub = this.orderService.order$.subscribe(order => {
+      if (!_.isEmpty(order)) {
         if (order.state !== 'complete') {
-          this.lineItems = [...order.line_items];
+          this.lineItems = [...order.lineItems];
         }
         this.cd.markForCheck();
       }

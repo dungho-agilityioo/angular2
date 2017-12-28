@@ -4,7 +4,7 @@
             <product-images [images]="product.master?.images"></product-images>
         </div>
         <div class="row col-md-12">
-            <product-property [productProperties]="product.product_properties"></product-property>
+            <product-property [productProperties]="product.productProperties"></product-property>
         </div>
     </div>
     <div class="col-md-8 col-sm-7">
@@ -16,7 +16,7 @@
         <div class="row col-md-3 mt-4 mt-4">
             <p class="col-md-12">Price</p>
             <h3 class="col-md-12">
-                <p>{{ product.display_price }}</p>
+                <p>{{ product.displayPrice }}</p>
             </h3>
 
             <button *ngIf="getQuantity() === 0; else updateQuantity" (click)="addToCart(product)" class="btn btn-block btn-primary">Add to Cart</button>

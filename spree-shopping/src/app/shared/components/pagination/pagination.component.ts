@@ -27,8 +27,7 @@ import {
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
-  @Input() totalItems: number;
-  @Input() currentPage: number;
+  @Input() pageOptions: PagerOptions;
   @Output() pagerSelected = new EventEmitter();
 
   // array of all items to be paged
@@ -45,8 +44,9 @@ export class PaginationComponent implements OnInit {
   constructor(private paginationService: PaginationService) { }
 
   ngOnInit() {
+    console.log('on pagination ', this.pageOptions);
     // initialize to page currentPage
-    this.setPage(this.currentPage);
+    this.setPage(this.pageOptions.currentPage);
   }
 
   /**
@@ -61,7 +61,7 @@ export class PaginationComponent implements OnInit {
     }
 
     // get pager object from service
-    this.pager = this.paginationService.getPager(this.totalItems, page, perPage);
+    this.pager = this.paginationService.getPager(this.pageOptions.totalItems, page, perPage);
 
     // Emit a event to parent component
     this.pagerSelected.emit(page);

@@ -9,6 +9,7 @@ import { environment } from 'env/environment';
 import { Product } from 'app/product/models/product.model';
 import { HttpService } from 'app/core/services/http.service';
 import { LineItem } from 'app/order/models/line-item.model';
+import * as productConfig from 'app/product/product-config';
 
 @Injectable()
 export class ProductService {
@@ -23,24 +24,36 @@ export class ProductService {
    * @return Object<Product>
    */
   getProduct(slug: string): Observable<Product> {
-    return this.httpService.get(`products/${slug}`)
-      .map(product => product.json());
+    const compiled = _.template(productConfig.API_PATH_NAME.PRODUCT_ONE_URL);
+    const productUrl = compiled({ slug: slug });
+
+    return this.httpService.get(productUrl);
   }
 
   /**
    * Get list product
    * @return Object<Product[]>
    */
-  getProducts(page?: number): Observable<any> {
+  getProducts(page?: number, taxonId?: number): Observable<any> {
     const params = { per_page: environment.perPage, page: page || 1 };
+    let productUrl = productConfig.API_PATH_NAME.PRODUCT_URL;
+
+    if ( !_.isUndefined(taxonId) && taxonId > 0 ) {
+      productUrl =  productConfig.API_PATH_NAME.PRODUCT_TAXON_URL;
+      params['id'] = taxonId;
+    }
 
     return Observable.create(obs => {
-      this.httpService.get('products', params)
+      this.httpService.get(
+        productUrl,
+          params
+        )
         .subscribe(res => {
           obs.next(res);
         });
     });
   }
+
 
   /**
    * Get product quantity in current order

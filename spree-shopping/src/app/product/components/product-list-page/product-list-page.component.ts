@@ -8,25 +8,18 @@ import {
 } from '@angular/core';
 
 import * as _ from 'lodash';
-import {
-  TruncatePipe
-} from 'app/shared/pipes/truncate.pipe';
-import {
-  FormatUrlImagePipe
-} from 'app/shared/pipes/format-url-image.pipe';
 
-import {
-  OrderService
-} from 'app/order/services/order.service';
-import {
-  ProductService
-} from 'app/product/services/product.service';
+import { TruncatePipe } from 'app/shared/pipes/truncate.pipe';
+import { FormatUrlImagePipe } from 'app/shared/pipes/format-url-image.pipe';
 
-import {
-  Product
-} from 'app/product/models/product.model';
+import { OrderService } from 'app/order/services/order.service';
+import { ProductService } from 'app/product/services/product.service';
+
+import { Product } from 'app/product/models/product.model';
 import { LineItem } from 'app/order/models/line-item.model';
 import { Variant } from 'app/product/models/variant.model';
+import { Taxon } from 'app/category/models/taxon.model';
+import { PagerOptions } from 'app/shared/models/pager-options.model';
 
 @Component({
   selector: 'product-list-page',
@@ -36,10 +29,10 @@ import { Variant } from 'app/product/models/variant.model';
 })
 export class ProductListPageComponent implements OnInit, OnDestroy {
   products: Array<Product[]> = [];
-  totalItems: number;
-  currentPage: number;
+  pageOptions: PagerOptions = new PagerOptions();
   lineItems: Array<LineItem>;
   subscription: Subscription;
+  categoryId: number | 0;
 
   constructor(
     private productService: ProductService,
@@ -72,21 +65,30 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
    * handle use click page number
    * @param page
    */
-  onPagerChange(page: number) {
-    this.getProducts(page);
+  onPagerChange(page: number): void {
+    this.getProducts(page, this.categoryId);
+  }
+
+  filterByCategory(category: Taxon): void {
+    this.categoryId = category.id;
+    this.getProducts(1, this.categoryId);
+    this.cd.markForCheck();
   }
 
   /**
    * Get list product by page number
    * @param page
    */
-  private getProducts(page: number) {
+  private getProducts(page: number, taxonId?: number) {
 
-    this.productService.getProducts(page)
+    this.productService.getProducts(page, taxonId)
       .subscribe(result => {
+        this.products = [];
         if (!_.isEmpty(result) && !result.errors ) {
-          this.totalItems = result.totalCount;
-          this.currentPage = result.currentPage;
+          this.pageOptions = _.assignIn({}, {
+            totalItems: result.totalCount,
+            currentPage: result.currentPage
+          });
           this.products = [...result.products];
           this.cd.markForCheck();
         }
@@ -99,7 +101,6 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
       item.quantity
     ).subscribe();
   }
-
 
   addToCart(product) {
     const variantId = product.master.id;

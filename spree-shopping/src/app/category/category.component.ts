@@ -2,16 +2,13 @@ import {
   Component,
   OnInit,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output
 } from '@angular/core';
 
-import {
-  Taxon
-} from 'app/product/models/taxon.model';
-import {
-  CategoryService
-} from './services/category.service';
-
+import { Taxon } from 'app/product/models/taxon.model';
+import { CategoryService } from './services/category.service';
 
 @Component({
   selector: 'list-category',
@@ -21,6 +18,7 @@ import {
 })
 export class CategoryComponent implements OnInit {
   categories: Array<Taxon> = [];
+  @Output() filterByCategory = new EventEmitter();
   constructor(
     private categoryService: CategoryService,
     private cd: ChangeDetectorRef
@@ -32,6 +30,10 @@ export class CategoryComponent implements OnInit {
         this.categories = [...res];
         this.cd.markForCheck();
       });
+  }
+
+  filterProduct(category: Taxon) {
+    this.filterByCategory.emit(category);
   }
 
 }

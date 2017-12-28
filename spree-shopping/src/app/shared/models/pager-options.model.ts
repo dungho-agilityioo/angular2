@@ -1,4 +1,4 @@
-export interface PagerOptions {
+export class PagerOptions {
   totalItems?: number;
   currentPage?: number;
   pageSize?: number;
