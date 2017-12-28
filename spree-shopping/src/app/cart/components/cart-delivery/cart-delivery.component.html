@@ -7,7 +7,7 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td>Address: {{ shippingAddress?.address1 }}</td>
+                        <td>Address: {{ shippingAddress?.address }}</td>
                     </tr>
                     <tr>
                         <td>City: {{ shippingAddress?.city }}</td>
@@ -16,7 +16,7 @@
                         <td>Zipcode: {{ shippingAddress?.city }} - {{ shippingAddress?.zipcode }}</td>
                     </tr>
                     <tr>
-                        <td>Full Name: {{ shippingAddress?.full_name }}</td>
+                        <td>Full Name: {{ shippingAddress?.fullName }}</td>
                     </tr>
                     <tr>
                         <td>Mobile: {{ shippingAddress?.phone }}</td>
@@ -24,8 +24,16 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer text-right">
-            <button (click)="onDelivery()" class="btn btn-primary">Continue to Payment</button>
+        <div class="card-footer">
+            <div class="row">
+                <div class="text-left col-md-6">
+                    <a href="" [routerLink]="[checkoutAddressUrl]" class="btn btn-secondary">Previous</a>
+                </div>
+                <div class="text-right col-md-6">
+                    <button (click)="onDelivery()" class="btn btn-primary">Continue to Payment</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </main-cart>

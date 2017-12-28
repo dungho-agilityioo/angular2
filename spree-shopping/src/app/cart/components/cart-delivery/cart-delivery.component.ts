@@ -23,6 +23,7 @@ export class CartDeliveryComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   shippingAddress: Address;
   orderState: String;
+  checkoutAddressUrl: string;
 
   constructor(
     private orderService: OrderService,
@@ -31,10 +32,10 @@ export class CartDeliveryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.orderService.order$.subscribe( res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
-        this.shippingAddress = order.ship_address;
+    this.checkoutAddressUrl = `/${cartConfig.PATH_NAME.CHECKOUT_ADDRESS}`;
+    this.subscription = this.orderService.order$.subscribe( order => {
+      if (!_.isEmpty(order) && !order.error ) {
+        this.shippingAddress = order.shipAddress;
         this.orderState = order.state;
 
         this.cd.markForCheck();
