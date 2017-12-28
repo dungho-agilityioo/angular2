@@ -27,12 +27,11 @@ export class MainHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cartService.cart$.subscribe( res => {
-      if (!_.isEmpty(res)) {
-        const order: Order = res.json();
+    this.cartService.cart$.subscribe( order => {
+      if (!_.isEmpty(order) && !order.error) {
         this.orderTotal = {
           total: order.total,
-          itemCount: order.total_quantity
+          itemCount: order.totalQuantity
         };
       }
     });

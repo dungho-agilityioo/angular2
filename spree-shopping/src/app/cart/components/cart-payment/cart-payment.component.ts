@@ -28,16 +28,14 @@ export class CartPaymentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.orderService.order$.subscribe( res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
-
+    this.subscription = this.orderService.order$.subscribe( order => {
+      if (!_.isEmpty(order) && !order.error) {
         this.orderTotal = {
           number: order.number,
-          itemTotal: order.item_total,
+          itemTotal: order.itemTotal,
           total: order.total,
-          itemCount: order.total_quantity,
-          taxTotal: order.tax_total
+          itemCount: order.totalQuantity,
+          taxTotal: order.taxTotal
         };
 
         this.cd.markForCheck();

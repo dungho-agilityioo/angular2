@@ -13,17 +13,17 @@ export class Variant {
   height: string;
   width: string;
   depth: string;
-  is_master: boolean;
+  isMaster: boolean;
   slug: string;
   description: string;
-  track_inventory: boolean;
-  cost_price: string;
-  option_values: OptionValue[];
-  total_on_hand: number;
-  display_price: string;
-  options_text: string;
-  in_stock: boolean;
-  is_backorderable: boolean;
-  is_destroyed: boolean;
+  trackInventory: boolean;
+  costPrice: string;
+  optionValues: OptionValue[];
+  totalOnHand: number;
+  displayPrice: string;
+  optionsText: string;
+  inStock: boolean;
+  isBackorderable: boolean;
+  isDestroyed: boolean;
   images: Image[];
 }

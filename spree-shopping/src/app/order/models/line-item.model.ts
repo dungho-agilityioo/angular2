@@ -7,9 +7,9 @@ export class LineItem {
   id: number;
   quantity: number;
   price: number;
-  single_display_amount: number;
+  singleDisplayAmount: number;
   total: number;
-  display_amount: number;
-  variant_id: number;
+  displayAmount: number;
+  variantId: number;
   variant: Variant;
 }

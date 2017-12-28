@@ -1,7 +1,7 @@
 export class ProductProperty {
   id: number;
-  product_id: number;
-  property_id: number;
+  productId: number;
+  propertyId: number;
   value: string;
-  property_name: string;
+  propertyName: string;
 }

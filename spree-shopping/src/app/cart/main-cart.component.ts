@@ -29,19 +29,15 @@ export class MainCartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.orderService.order$.subscribe(res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
-
-        if ( !order.errors ) {
-          this.orderTotal = {
-            itemTotal: order.item_total,
-            total: order.total,
-            itemCount: order.total_quantity,
-            taxTotal: order.tax_total
-          };
-          this.cd.markForCheck();
-        }
+    this.subscription = this.orderService.order$.subscribe(order => {
+      if (!_.isEmpty(order) && !order.error) {
+        this.orderTotal = {
+          itemTotal: order.itemTotal,
+          total: order.total,
+          itemCount: order.totalQuantity,
+          taxTotal: order.taxTotal
+        };
+        this.cd.markForCheck();
       }
     });
   }

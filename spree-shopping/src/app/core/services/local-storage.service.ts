@@ -52,7 +52,7 @@ export class LocalStorageService {
   getUserApiKey() {
     const user: User = this.getItem(this.userKey);
 
-    return user ? user.spree_api_key : null;
+    return user ? user.spreeApiKey : null;
   }
 
   getUser() {

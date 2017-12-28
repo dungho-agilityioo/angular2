@@ -32,9 +32,9 @@ export class OrderService {
     private httpService: HttpService,
     private localStorageService: LocalStorageService
   ) {
-    this.order$.subscribe(res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
+    this.order$.subscribe(order => {
+      if (!_.isEmpty(order)) {
+        // const order = res.json();
         this.orderNumber = order.number;
       }
     });
@@ -69,9 +69,6 @@ export class OrderService {
     return Observable.create(obs => {
       this.getOrCreateOrderNumber()
         .switchMap((order) => {
-          if (typeof order !== 'object') {
-            order = order.json();
-          }
           if (_.isUndefined(lineItemId)) {
             return this.updateLineItem(variantId, quantity);
           } else {
@@ -80,6 +77,12 @@ export class OrderService {
         })
         .switchMap((res) => {
           lineItem = res;
+          if ( res.error ) {
+            this.httpService.loading$.next({
+              loading: false, hasError: true, hasMsg: res.error
+            });
+            return Observable.of([]);
+          }
           return this.getCurrentOrder();
         })
         .subscribe(res => {
@@ -218,10 +221,7 @@ export class OrderService {
 
     return this.httpService.get(
         paymentMethodUrl
-      ).map(res => {
-        const payments = res.json();
-        return payments;
-      });
+      );
   }
 
   /**
@@ -275,7 +275,7 @@ export class OrderService {
     return this.httpService.get(
         orderSearchUrl,
         null, headers
-      ).map( res => res.json() );
+      );
   }
 
   /**

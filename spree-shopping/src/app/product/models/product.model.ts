@@ -12,18 +12,18 @@ export class Product {
   name: string;
   description: string;
   price: string;
-  display_price: string;
-  available_on: string;
+  displayPrice: string;
+  availableOn: string;
   slug: string;
-  meta_description: string;
-  meta_keywords: string;
-  shipping_category_id: number;
-  taxon_ids: number[];
-  total_on_hand: number;
-  has_variants: boolean;
+  metaDescription: string;
+  metaKeywords: string;
+  shippingCategoryId: number;
+  taxonIds: number[];
+  totalOnHand: number;
+  hasVariants: boolean;
   master: Variant;
   variants: Variant[];
-  option_types: OptionType[];
-  product_properties: ProductProperty[];
+  optionTypes: OptionType[];
+  productProperties: ProductProperty[];
   classifications: Classification[];
 }

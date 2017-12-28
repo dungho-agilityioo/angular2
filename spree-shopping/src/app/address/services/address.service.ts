@@ -29,9 +29,9 @@ export class AddressService {
    */
   initAddressForm(address: Address): FormGroup {
     return this.fb.group({
-      'firstname': [address.firstname, Validators.required],
-      'lastname': [address.lastname, Validators.required],
-      'address1': [address.address1, Validators.required],
+      'firstname': [address.firstName, Validators.required],
+      'lastname': [address.lastName, Validators.required],
+      'address1': [address.address, Validators.required],
       'city': [address.city, Validators.required],
       'phone': [address.phone, [
                       Validators.required,
@@ -39,7 +39,7 @@ export class AddressService {
                     ]
                   ],
       'zipcode': [address.zipcode, Validators.required],
-      'state_id': [address.state_id, Validators.required]
+      'state_id': [address.stateId, Validators.required]
     });
   }
 

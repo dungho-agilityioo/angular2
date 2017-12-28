@@ -48,12 +48,9 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.orderService.order$.subscribe(res => {
-      if (!_.isEmpty(res)) {
-        const order = res.json();
-        if (order.state !== 'complete') {
-          this.lineItems = [...order.line_items];
-        }
+    this.subscription = this.orderService.order$.subscribe(order => {
+      if (!_.isEmpty(order) && !order.errors && order.state !== 'complete') {
+        this.lineItems = [...order.lineItems];
         this.cd.markForCheck();
       }
     });
@@ -87,10 +84,9 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
 
     this.productService.getProducts(page)
       .subscribe(result => {
-        if (!_.isEmpty(result)) {
-          result = result.json();
-          this.totalItems = result.total_count;
-          this.currentPage = result.current_page;
+        if (!_.isEmpty(result) && !result.errors ) {
+          this.totalItems = result.totalCount;
+          this.currentPage = result.currentPage;
           this.products = [...result.products];
           this.cd.markForCheck();
         }
