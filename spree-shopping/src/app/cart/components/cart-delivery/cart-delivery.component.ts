@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 import * as _ from 'lodash';
 
 import { OrderService } from 'app/order/services/order.service';
-import { Address } from 'app/address/models/address';
+import { Address } from 'app/address/models/address.model';
 import * as cartConfig from 'app/cart/cart-config';
 
 @Component({
