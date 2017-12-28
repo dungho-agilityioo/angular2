@@ -1,5 +1,25 @@
-<a routerLink="/cart" class="align-middle">
-    <span class="badge badge-pill badge-default">
-      Cart: ( {{ orderTotal.itemCount || 'Empty' }} ) {{ orderTotal.total | currency:'USD':'$'}}
-  </span>
-</a>
+<ul class="nav nav-pills">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"></i>
+        </a>
+        <!-- if user not logged in -->
+        <div class="dropdown-menu" *ngIf="!isAuthenticated">
+            <a class="dropdown-item" href="#" [routerLink]="[userUrl.login]">Login</a>
+            <a class="dropdown-item" href="#" [routerLink]="[userUrl.signup]">Sign Up</a>
+        </div>
+        <!-- if user logged in -->
+        <div class="dropdown-menu" *ngIf="isAuthenticated">
+            <a class="dropdown-item" href="javascription:void()">My Profile</a>
+            <a class="dropdown-item" href="#" [routerLink]="[userUrl.order]">My Orders</a>
+            <a class="dropdown-item" href="javascription:void()">Saved Addresses</a>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" (click)="logout()">Logout</button>
+        </div>
+    </li>
+    <li class="nav-item align-middle">
+        <a routerLink="/cart" class="text-white nav-link">
+            Cart: ( {{ orderTotal.itemCount || 'Empty' }} ) {{ orderTotal.total | currency:'USD':'$'}}
+        </a>
+    </li>
+</ul>

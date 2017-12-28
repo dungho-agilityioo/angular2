@@ -15,7 +15,8 @@
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <profile-dropdown [orderTotal]="orderTotal"></profile-dropdown>
+            <profile-dropdown [isAuthenticated]="isAuthenticated" [orderTotal]="orderTotal" [userUrl]="userUrl" [authService]="authService">
+            </profile-dropdown>
         </div>
     </div>
 </nav>

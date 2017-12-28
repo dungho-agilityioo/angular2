@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 
 import { FormatUrlImagePipe } from './pipes/format-url-image.pipe';
 import {TruncatePipe } from './pipes/truncate.pipe';
-import { CartService } from './services/cart.service';
 import { PaginationService } from './services/pagination.service';
+import { AuthService } from 'app/auth/services/auth.service';
+import { OrderService } from 'app/order/services/order.service';
 
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { MainFooterComponent } from './components/main-footer/main-footer.component';
@@ -34,7 +35,8 @@ const PIPES: any[] = [
 
 const PROVIDERS = [
   PaginationService,
-  CartService
+  AuthService,
+  OrderService
 ];
 
 @NgModule({

@@ -15,7 +15,6 @@ import * as _ from 'lodash';
 
 import { LocalStorageService } from 'app/core/services/local-storage.service';
 import { HttpService } from 'app/core/services/http.service';
-import { CartService } from 'app/shared/services/cart.service';
 import * as orderConfig from 'app/order/order-config';
 
 import { LineItem } from 'app/order/models/line-item.model';
@@ -24,21 +23,12 @@ import { environment } from 'env/environment';
 
 @Injectable()
 export class OrderService {
-  orderNumber: String;
   order$: Subject<any> = new BehaviorSubject<any>([]);
 
   constructor(
-    private cartService: CartService,
     private httpService: HttpService,
     private localStorageService: LocalStorageService
-  ) {
-    this.order$.subscribe(order => {
-      if (!_.isEmpty(order)) {
-        // const order = res.json();
-        this.orderNumber = order.number;
-      }
-    });
-  }
+  ) {}
 
   /**
    * Add product to cart
@@ -87,7 +77,6 @@ export class OrderService {
         })
         .subscribe(res => {
           this.order$.next(res);
-          this.cartService.cart$.next(res);
           obs.next(lineItem);
         });
     });
@@ -256,7 +245,6 @@ export class OrderService {
     return this.getCurrentOrder()
       .do(res => {
         this.order$.next(res);
-        this.cartService.cart$.next(res);
       });
   }
 
@@ -321,12 +309,13 @@ export class OrderService {
       this.httpService.post(
         'orders.json', {}, headers
       )
-        .map(res => {
-          const order = res.json();
-          this.localStorageService.setOrder({
-            number: order.number,
-            token: order.token
-          });
+        .map(order => {
+          if ( !_.isEmpty(order) && !order.error ) {
+            this.localStorageService.setOrder({
+              number: order.number,
+              token: order.token
+            });
+          }
           return order;
         }).subscribe(res => {
           return obs.next(res);
