@@ -35,7 +35,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   orderState: String;
   address: Address = new Address();
-  email: String;
+  cartCheckoutUrl: String;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,18 +47,16 @@ export class AddressComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.subscription = this.orderService.order$.subscribe(res => {
+    this.cartCheckoutUrl = `/${cartConfig.PATH_NAME.CHECKOUT_CART}`;
+    this.subscription = this.orderService.order$.subscribe(order => {
 
-      if (!_.isEmpty(res)) {
-        const order = res.json();
-        if ( !order.errors ) {
-          this.orderState = order.state;
+      if (!_.isEmpty(order) && !order.error ) {
+        this.orderState = order.state;
 
-          if (_.isObject(order.ship_address)) {
-            // this.addressForm = this.addressService.initAddressForm(order.ship_address);
-            const addressValue = _.pick(order.ship_address, ['firstname', 'lastname', 'address1', 'city', 'state_id', 'zipcode', 'phone']);
-            this.addressForm.setValue(addressValue);
-          }
+        if (_.isObject(order.ship_address)) {
+          // this.addressForm = this.addressService.initAddressForm(order.ship_address);
+          const addressValue = _.pick(order.ship_address, ['firstname', 'lastname', 'address1', 'city', 'state_id', 'zipcode', 'phone']);
+          this.addressForm.setValue(addressValue);
         }
       }
     });
@@ -77,8 +75,7 @@ export class AddressComponent implements OnInit, OnDestroy {
         addressAttributes = this.addressService.createAddresAttributes(address);
         this.subscription = this.orderService.updateOrder(addressAttributes)
           .subscribe(
-            res => {
-              const data = res.json();
+            data => {
               const errors = data.errors;
 
               if ( !errors ) {
