@@ -5,41 +5,47 @@
         </div>
         <div class="card-block">
             <div class="row">
-                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('firstname').touched && !addressForm.get('firstname').valid }">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('firstName').touched && !addressForm.get('firstName').valid }">
                     <label class="form-control-label">First Name <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="firstname" [(ngModel)]="firstname">
-                    <control-messages [control]="addressForm.controls.firstname" controlName="First Name"></control-messages>
+                    <input type="text" class="form-control" formControlName="firstName" [(ngModel)]="firstName">
+                    <control-messages [control]="addressForm.controls.firstName" controlName="First Name"></control-messages>
                 </div>
-                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('lastname').touched && !addressForm.get('lastname').valid }">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('lastName').touched && !addressForm.get('lastName').valid }">
                     <label class="form-control-label">Last Name <span class="required">*</span></label>
-                    <input type="text" class="form-control" [formControl]="addressForm.get('lastname')" [(ngModel)]="lastname">
-                    <control-messages [control]="addressForm.controls.lastname" controlName="Last Name"></control-messages>
+                    <input type="text" class="form-control" [formControl]="addressForm.get('lastName')" [(ngModel)]="lastName">
+                    <control-messages [control]="addressForm.controls.lastName" controlName="Last Name"></control-messages>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-12" [ngClass]="{ 'has-danger': addressForm.get('address1').touched && !addressForm.get('address1').valid }">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('countryId').touched && !addressForm.get('countryId').valid }">
+                    <label class="form-control-label">Country <span class="required">*</span></label>
+                    <control-messages [control]="addressForm.controls.countryId" controlName="State"></control-messages>
+                    <select2 [options]="countries" formControlName="countryId" [(ngModel)]="countryId" (onSelect)="onSelectCountry($event)"></select2>
+                </div>
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('stateId').touched && !addressForm.get('stateId').valid }">
+                    <label class="form-control-label">State <span class="required">*</span></label>
+                    <select2 [options]="states" formControlName="stateId" [(ngModel)]="stateId"></select2>
+                    <control-messages [control]="addressForm.controls.stateId" controlName="State"></control-messages>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('address').touched && !addressForm.get('address').valid }">
                     <label class="form-control-label">Street Address <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="address1" [(ngModel)]="address1">
-                    <control-messages [control]="addressForm.controls.address1" controlName="Street Address"></control-messages>
+                    <input type="text" class="form-control" formControlName="address" [(ngModel)]="address">
+                    <control-messages [control]="addressForm.controls.address" controlName="Street Address"></control-messages>
                 </div>
-            </div>
-            <div class="row">
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('city').touched && !addressForm.get('city').valid }">
                     <label class="form-control-label">City <span class="required">*</span></label>
                     <input type="text" class="form-control" formControlName="city" [(ngModel)]="city">
                     <control-messages [control]="addressForm.controls.city" controlName="City"></control-messages>
                 </div>
-                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('state_id').touched && !addressForm.get('state_id').valid }">
-                    <label class="form-control-label">State <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="state_id" [(ngModel)]="state_id">
-                    <control-messages [control]="addressForm.controls.state_id" controlName="state_id"></control-messages>
-                </div>
+
             </div>
             <div class="row">
-                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('zipcode').touched && !addressForm.get('zipcode').valid }">
+                <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('zipCode').touched && !addressForm.get('zipCode').valid }">
                     <label class="form-control-label">Zipcode <span class="required">*</span></label>
-                    <input type="text" class="form-control" formControlName="zipcode" [(ngModel)]="zipcode">
-                    <control-messages [control]="addressForm.controls.zipcode" controlName="Zipcode"></control-messages>
+                    <input type="text" class="form-control" formControlName="zipCode" [(ngModel)]="zipCode">
+                    <control-messages [control]="addressForm.controls.zipCode" controlName="Zip Code"></control-messages>
                 </div>
                 <div class="form-group col-md-6" [ngClass]="{ 'has-danger': addressForm.get('phone').touched && !addressForm.get('phone').valid }">
                     <label class="form-control-label">Phone <span class="required">*</span></label>

@@ -19,15 +19,20 @@ import * as _ from 'lodash';
 
 import { OrderService } from 'app/order/services/order.service';
 import { AddressService } from './services/address.service';
-import { Address } from 'app/address/models/address';
+import { Address } from 'app/address/models/address.model';
 import * as cartConfig from 'app/cart/cart-config';
+import * as addressConfig from 'app/address/address-config';
 import { ValidationService } from 'app/core/services/validation.service';
+import { State } from './models/state.model';
+import { Country } from './models/country.model';
+import { SelectOption } from 'app/address/models/select-option.model';
+
 
 @Component({
   selector: 'address-form',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressComponent implements OnInit, OnDestroy {
   addressForm: FormGroup;
@@ -36,6 +41,8 @@ export class AddressComponent implements OnInit, OnDestroy {
   orderState: String;
   address: Address = new Address();
   cartCheckoutUrl: String;
+  countries: Array<SelectOption> = [];
+  states: Array<SelectOption> = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,49 +57,99 @@ export class AddressComponent implements OnInit, OnDestroy {
     this.cartCheckoutUrl = `/${cartConfig.PATH_NAME.CHECKOUT_CART}`;
     this.subscription = this.orderService.order$.subscribe(order => {
 
-      if (!_.isEmpty(order) && !order.error ) {
+      if (!_.isEmpty(order) && !order.error) {
         this.orderState = order.state;
+        const shipAddress = order.shipAddress;
 
-        if (_.isObject(order.ship_address)) {
-          // this.addressForm = this.addressService.initAddressForm(order.ship_address);
-          const addressValue = _.pick(order.ship_address, ['firstname', 'lastname', 'address1', 'city', 'state_id', 'zipcode', 'phone']);
+        if (_.isObject(shipAddress)) {
+          const addressValue = _.pick(
+              shipAddress,
+              Object.keys(addressConfig.MAP_FIELDS)
+            );
+          if (shipAddress.countryId) {
+            this.getStatesByCountry(shipAddress.countryId);
+          }
           this.addressForm.setValue(addressValue);
         }
       }
     });
-
     this.addressForm = this.addressService.initAddressForm(this.address);
+    this.getCountries();
+  }
+
+  /**
+   * Get state by country id
+   * @param countryId
+   */
+  private getStatesByCountry(countryId: number): void {
+    this.addressService.getStatesByCountry(countryId)
+      .subscribe(states => {
+        this.states = [];
+        states.forEach((state, index) => {
+          this.states.push({
+            id: state.id,
+            text: state.name
+          });
+        });
+        this.states = [...this.states];
+        this.cd.markForCheck();
+      });
+  }
+
+  /**
+   * Get and push to countries array
+   */
+  private getCountries(): void {
+    this.addressService.getCountries()
+      .subscribe(countries => {
+        countries.forEach((country, index) => {
+          this.countries.push({
+            id: country.id,
+            text: country.name
+          });
+        });
+        this.countries = [...this.countries];
+        this.cd.markForCheck();
+      });
+  }
+
+  /**
+   * Get state when Country select change
+   */
+  onSelectCountry(country: SelectOption) {
+    this.getStatesByCountry(country.id);
   }
 
   saveAddress(address) {
+
     if (this.orderState === 'address') {
       const values = this.addressForm.value;
       const keys = Object.keys(values);
       let addressAttributes;
 
       // if form valid
-      if ( this.addressForm.valid) {
+      if (this.addressForm.valid) {
         addressAttributes = this.addressService.createAddresAttributes(address);
         this.subscription = this.orderService.updateOrder(addressAttributes)
           .subscribe(
-            data => {
-              const errors = data.errors;
+          data => {
+            const errors = data.errors;
 
-              if ( !errors ) {
-                this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
-              } else {
-                // display error message
-                keys.forEach( val => {
+            if (!errors) {
+              this.router.navigate([cartConfig.PATH_NAME.CHECKOUT_DELIVERY]);
+            } else {
+              // display error message
+              keys.forEach(val => {
 
-                  const shipVal = `ship_address.${val}`;
+                const shipVal = `ship_address.${val}`;
 
-                  if (errors[shipVal]) {
-                    this.validatonService.pushErrorToForm(this.addressForm, val, `${val} ${errors[shipVal][0]}`);
-                  }
-                });
-                this.cd.markForCheck();
-              }
+                if (errors[shipVal]) {
+                  this.validatonService.pushErrorToForm(this.addressForm, val, `${val} ${errors[shipVal][0]}`);
+                }
+              });
+              this.cd.markForCheck();
             }
+          }
           );
       } else {
         // else form invalid, reset message error to show default error on view
@@ -110,7 +167,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if ( !_.isUndefined(this.subscription)) {
+    if (!_.isUndefined(this.subscription)) {
       this.subscription.unsubscribe();
     }
   }

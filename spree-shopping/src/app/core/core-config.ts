@@ -11,5 +11,6 @@ export const VALIDATION = {
 export const MAP_FIELDS = {
   'firstname': 'firstName',
   'lastname': 'lastName',
-  'address1': 'address'
+  'address1': 'address',
+  'zipcode': 'zipCode'
 };
