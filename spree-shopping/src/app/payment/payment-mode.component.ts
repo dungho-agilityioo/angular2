@@ -40,7 +40,7 @@ export class PaymentModeComponent implements OnInit {
   makePayment() {
     this.orderService.availablePaymentMethods()
       .switchMap( (payment) => {
-        const selectdMode = this.paymentService.getDefaultMode(payment.payment_methods);
+        const selectdMode = this.paymentService.getDefaultMode(payment.paymentMethods);
 
         return this.orderService.createNewPayment(selectdMode.id, this.orderTotal.total);
       })

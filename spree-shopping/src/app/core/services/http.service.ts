@@ -72,6 +72,10 @@ export class HttpService {
         body,
         this.requestOptions(null, headers)
       )
+      .map( res => {
+        const rs = Serializer.deserialize(res.json());
+        return rs;
+      })
       .catch(this.onCatch.bind(this))
       .do((res: Response) => {
         this.onSubscribeSuccess(res);
@@ -93,6 +97,10 @@ export class HttpService {
         body,
         this.requestOptions(null, headers)
       )
+      .map( res => {
+        const rs = Serializer.deserialize(res.json());
+        return rs;
+      })
       .catch(this.onCatch.bind(this));
   }
 
@@ -187,7 +195,7 @@ export class HttpService {
    * @param caught
    */
   private onCatch(error: any, caught: Observable<any>): Observable<any> {
-    return Observable.of(error);
+    return Observable.of(error.json());
   }
 
   /**
