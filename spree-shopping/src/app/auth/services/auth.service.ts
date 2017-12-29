@@ -76,6 +76,7 @@ export class AuthService {
    */
   logout() {
     this.localStorageService.removeUser();
+    this.authStatus$.next([]);
     this.router.navigate(['/']);
   }
 

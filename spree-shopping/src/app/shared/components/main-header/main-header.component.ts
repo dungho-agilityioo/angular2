@@ -32,8 +32,7 @@ export class MainHeaderComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private cd: ChangeDetectorRef
-  ) { }
-
+  ) {}
   ngOnInit() {
     this.orderService.order$.subscribe( order => {
       if (!_.isEmpty(order) && !order.error) {
@@ -46,10 +45,10 @@ export class MainHeaderComponent implements OnInit {
     });
 
     this.authService.authStatus$.subscribe( res => {
-      if ( this.authService.isLoggedIn() ) {
-        this.isAuthenticated = true;
-      } else {
+      if ( _.isEmpty(res) || ! this.authService.isLoggedIn() ) {
         this.isAuthenticated = false;
+      } else {
+        this.isAuthenticated = true;
       }
       this.cd.markForCheck();
     });
