@@ -21,7 +21,7 @@ import {
 export class AddToCartComponent implements OnInit {
   @Input() variantId: number;
   @Input() quantity: number;
-  @Output() btnCartClick = new EventEmitter();
+  @Output() btnCartClick = new EventEmitter<{variantId: number, quantity: number}>();
   constructor() { }
 
   ngOnInit() {

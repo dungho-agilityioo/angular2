@@ -1,10 +1,12 @@
 import {
   Component,
   OnInit,
+  OnChanges,
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  SimpleChanges
 } from '@angular/core';
 
 import * as _ from 'lodash';
@@ -26,7 +28,7 @@ import {
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnChanges {
   @Input() pageOptions: PagerOptions;
   @Output() pagerSelected = new EventEmitter();
 
@@ -44,9 +46,22 @@ export class PaginationComponent implements OnInit {
   constructor(private paginationService: PaginationService) { }
 
   ngOnInit() {
-    console.log('on pagination ', this.pageOptions);
     // initialize to page currentPage
     this.setPage(this.pageOptions.currentPage);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes ', changes);
+    this.pager = _.assignIn({}, this.pageOptions, {pages: [1]});
+    // this.pager.totalItems = this.pageOptions.totalItems;
+    // const pageOptions = changes.pageOptions;
+    // if ( !_.isUndefined(pageOptions.previousValue) &&
+    //   pageOptions.currentValue.totalItems !== pageOptions.previousValue.totalItems ) {
+
+    //     this.setPage(
+    //       changes.pageOptions.currentValue.currentPage
+    //     );
+    // }
   }
 
   /**

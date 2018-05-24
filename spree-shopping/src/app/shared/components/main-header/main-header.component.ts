@@ -45,11 +45,7 @@ export class MainHeaderComponent implements OnInit {
     });
 
     this.authService.authStatus$.subscribe( res => {
-      if ( _.isEmpty(res) || ! this.authService.isLoggedIn() ) {
-        this.isAuthenticated = false;
-      } else {
-        this.isAuthenticated = true;
-      }
+      this.isAuthenticated = ( !_.isEmpty(res) && this.authService.isLoggedIn() );
       this.cd.markForCheck();
     });
 

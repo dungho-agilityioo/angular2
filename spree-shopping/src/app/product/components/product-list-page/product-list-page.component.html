@@ -14,7 +14,7 @@
                         <img itemprop="image" class="card-img-top mx-auto d-block" alt="{{product.name}}" [attr.src]="product.master.images[0]?.productUrl | formaturlimage ">
                         <div class="card-block">
                             <div class="card-subtitle mb-2 text-muted">
-                                {{ product.name }}
+                                {{ product.name | truncate:25 }}
                             </div>
                             <h5>{{ product.price | currency:'USD':'$'}}</h5>
                             <p class="card-text">{{ product.description | truncate:40 }}</p>

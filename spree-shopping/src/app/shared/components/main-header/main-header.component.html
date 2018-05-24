@@ -8,13 +8,13 @@
         <div class="collapse navbar-collapse" id="navbarsExampleContainer">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    <a class="nav-link" routerLink="">Home</a>
+                    <a class="nav-link" [routerLink]="['/']">Home</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-md-0">
+            <!-- <form class="form-inline my-2 my-md-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </form> -->
             <profile-dropdown [isAuthenticated]="isAuthenticated" [orderTotal]="orderTotal" [userUrl]="userUrl" [authService]="authService">
             </profile-dropdown>
         </div>
